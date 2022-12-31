@@ -15,7 +15,7 @@ export default function Home() {
       </Head>
      
       <main>
-        <h1 className='text-4xl text-green-500 font-bold'> Techacks 3.0 </h1>
+        <h1 className='text-4xl text-blue-500 font-bold'> Techacks 3.0 </h1>
       </main>
     </>
   )

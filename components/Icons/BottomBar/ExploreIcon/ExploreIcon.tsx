@@ -22,7 +22,7 @@ const ExploreIcon = () => {
                 'w-10 h-10 bg-white  outline-none flex justify-center items-center rounded-md'
             )} >
                 <div className={router?.pathname === "/explore" ? (
-                    'w-10 h-10 bg-[#00FCB0] flex justify-center items-center rounded-md absolute bottom-1 right-1'
+                    'w-10 h-10 bg-[#00FCB0] flex justify-center items-center rounded-md absolute bottom-1 right-1 border-2 border-black'
                 ) : (
                     'w-10 h-10 bg-white flex justify-center items-center rounded-md'
                 )}>

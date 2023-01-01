@@ -1,17 +1,38 @@
 import { useRouter } from 'next/router'
 import React from 'react'
-
-// ---- Icons -----
-import {GiHamburgerMenu} from "react-icons/gi"
+import BellIcon from '../../Icons/Header/BellIcon/BellIcon'
+import MessagesIcon from '../../Icons/Header/MessagesIcon/MessagesIcon'
+import SignInAndSignUpButtonsGroup from '../Buttons/SignInAndSignUp/SignInAndSignUpButtonsGroup'
+import SearchBarIcon from '../../Icons/Header/SearchBarIcon/SearchBarIcon'
+import SearchBar from './components/SearchBar/SearchBar'
+import PlusIcon from '../../Icons/Header/PlusIcon/PlusIcon'
 
 const Header = () => {
   const router = useRouter()
+  const isUser = true
 
   return (
-    <div className='fixed top-0 w-full h-[7vh] bg-gray-500 py-4 px-3 flex justify-between items-center'>
+    <div className='fixed top-0 w-full h-[10vh] bg-white border-b border-b-black py-4 px-3 flex justify-between items-center'>
 
-      {/* <GiHamburgerMenu /> */}
-      <h1 className='text-4xl text-red-400 font-bold' onClick={() => console.log(router)}> LOG ROUTER </h1>
+      {/*  DEMO LOGO  */}
+      <div className='w-10 h-10 rounded-full bg-BrutalOrange1' />
+
+      <SearchBar />
+
+      {isUser && (
+        <div className='flex justify-between items-center space-x-4'>
+          <SearchBarIcon />
+          <PlusIcon />
+          <BellIcon />
+          <MessagesIcon />
+        </div>
+      )}
+
+      {!isUser && (
+        <div className='flex justify-between items-center space-x-4'>
+          <SignInAndSignUpButtonsGroup />
+        </div>
+      )}
 
     </div>
   )

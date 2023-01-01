@@ -9,7 +9,7 @@ interface IHomeLayoutProps {
   children: React.ReactNode
 }
 
-const HomeLayout = ( {children}:IHomeLayoutProps ) => {
+const BaseOneLayout = ( {children}:IHomeLayoutProps ) => {
   return (
     <div className='w-full flex justify-between items-center max-h-screen overflow-hidden'>
         <Head>
@@ -31,4 +31,4 @@ const HomeLayout = ( {children}:IHomeLayoutProps ) => {
   )
 }
 
-export default HomeLayout
+export default BaseOneLayout

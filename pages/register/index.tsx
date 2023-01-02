@@ -7,6 +7,8 @@ import {AiOutlineLoading3Quarters} from "react-icons/ai"
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from "../../firebaseConfig"
 import { useRouter } from 'next/router'
+import { SignInWithGoogleFunction } from "../../utils/SignInWithGoogle/SignInWithGoogle"
+import { SignInWithFacebookFunction } from "../../utils/SignInWithFacebook/SignInWithFacebook"
 
 const index = () => {
   const router = useRouter()
@@ -73,11 +75,21 @@ const index = () => {
 
           {/* ---- Continue with google and facebook ----- */}
           <div className='flex justify-start items-center space-x-5'>
-            <button type='button' title='google' className='bg-white w-14 h-14 rounded-full flex justify-center items-center border-2 border-gray-200'>
+            <button onClick={() => {
+                SignInWithGoogleFunction()
+                router.push("/")
+            }} type='button' title='google' className='bg-white w-14 h-14 rounded-full flex justify-center items-center border-2 border-gray-200'>
               <FcGoogle className='w-10 h-10' />
             </button>
 
-            <button type='button' title='facebnook' className='w-14 h-14 rounded-full flex justify-center items-center border-2 border-gray-200'>
+            <button 
+            onClick={() => {
+              SignInWithFacebookFunction()
+              router.push("/")
+            }}
+            type='button' 
+            title='facebnook' 
+            className='w-14 h-14 rounded-full flex justify-center items-center border-2 border-gray-200'>
               <MdOutlineFacebook className='text-blue-500 w-10 h-10' />
             </button>
           </div>
@@ -130,7 +142,11 @@ const index = () => {
             <div className='w-full flex justify-end items-center py-5'>
               <button
                 onClick={() => {
-                  signUp()
+                  if( userNameInputValue && emailInputValue && passwordInputValue ) {
+                    signUp()
+                  } else {
+                    alert("Fill the required fields")
+                  }
                 }}
                 type='button'
                 title='singIn'

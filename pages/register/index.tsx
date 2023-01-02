@@ -57,12 +57,12 @@ const index = () => {
   }
 
   return (
-    <div className='fixed inset-0 w-[100%] h-[100vh] bg-BrutalOrange1 flex flex-row justify-center lg:justify-end items-center lg:px-32 xl:px-40 2xl:px-72 scrollbar-hide'>
+    <div className='fixed inset-0 w-[100%] h-[100vh] bg-BrutalOrange1 flex flex-row justify-center lg:justify-end items-center lg:px-32 xl:px-40 2xl:px-72 '>
 
       {/* <Image src={blueLinesBG} alt='bg' className='fixed inset-0 w-[100%] h-[100vh] z-10' draggable="false" /> */}
 
       {!isLoading && (
-        <div className='z-20 w-full h-[90vh] mb-[10vh] lg:mb-0 sm:w-[70%] sm:h-[70vh] md:w-[70%] lg:w-[60%] xl:w-[40%] 2xl:w-[35%] bg-white rounded-md flex flex-col justify-start items-start pt-10 pb-5 px-5 space-y-5 overflow-x-hidden overflow-y-scroll'>
+        <div className='z-20 w-full h-[90vh] mb-[10vh] lg:mb-0 sm:w-[70%] sm:h-[70vh] md:w-[70%] lg:w-[60%] xl:w-[40%] 2xl:w-[35%] bg-white rounded-md flex flex-col justify-start items-start pt-10 pb-5 px-5 space-y-5 overflow-x-hidden overflow-y-scroll scrollbar-hide'>
 
           {/* ---- LOGO ---- */}
           <div className='flex justify-center items-center space-x-3'>
@@ -162,7 +162,7 @@ const index = () => {
 
 
       {isLoading && (
-        <div className='z-50 fixed inset-0 w-full h-screen flex justify-center items-center bg-white'>
+        <div className='z-50 fixed inset-0 w-full h-screen flex justify-center items-center bg-white scrollbar-hide'>
             <AiOutlineLoading3Quarters className='animate-spin text-2xl text-BrutalBlack1' />
         </div>
       )}

@@ -5,7 +5,7 @@ import MessagesIcon from '../../Icons/Header/MessagesIcon/MessagesIcon'
 import SignInAndSignUpButtonsGroup from '../Buttons/SignInAndSignUp/SignInAndSignUpButtonsGroup'
 import SearchBarIcon from '../../Icons/Header/SearchBarIcon/SearchBarIcon'
 import SearchBar from './components/SearchBar/SearchBar'
-import PlusIcon from '../../Icons/Header/PlusIcon/PlusIcon'
+// import PlusIcon from '../../Icons/Header/PlusIcon/PlusIcon'
 import CreateOptionsModal from '../Modals/CreateOptionsModal/CreateOptionsModal'
 
 

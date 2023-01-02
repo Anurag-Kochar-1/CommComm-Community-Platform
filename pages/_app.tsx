@@ -1,11 +1,15 @@
 import '../styles/globals.css'
 import type { AppProps } from 'next/app'
 import BaseOneLayout from '../components/layouts/BaseOne/BaseOneLayout'
+import { Provider } from 'react-redux'
+import store from "../redux/store"
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <BaseOneLayout>
-      <Component {...pageProps} />
-    </BaseOneLayout>
+    <Provider store={store}>
+      <BaseOneLayout>
+        <Component {...pageProps} />
+      </BaseOneLayout>
+    </Provider>
   )
 }

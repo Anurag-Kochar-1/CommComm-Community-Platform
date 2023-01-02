@@ -23,7 +23,7 @@ const HomeIcon = () => {
                 'w-10 h-10 bg-white  outline-none flex justify-center items-center rounded-md' 
             )} >
                 <div className={router?.pathname === "/" ? (
-                    'w-10 h-10 bg-BrutalRed1 flex justify-center items-center rounded-md absolute bottom-1 right-1 border-2 border-black hover:bottom-0 hover:right-0'
+                    'w-10 h-10 bg-BrutalRed1 flex justify-center items-center rounded-md absolute bottom-1 right-1 border-2 border-black active:bottom-0 active:right-0'
                 ) : (
                     'w-10 h-10 bg-white flex justify-center items-center rounded-md'
                 )}>

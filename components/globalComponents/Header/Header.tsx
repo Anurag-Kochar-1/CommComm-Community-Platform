@@ -6,25 +6,26 @@ import SignInAndSignUpButtonsGroup from '../Buttons/SignInAndSignUp/SignInAndSig
 import SearchBarIcon from '../../Icons/Header/SearchBarIcon/SearchBarIcon'
 import SearchBar from './components/SearchBar/SearchBar'
 import PlusIcon from '../../Icons/Header/PlusIcon/PlusIcon'
-import { getAuth } from 'firebase/auth'
-import { auth } from '../../../firebaseConfig'
+import CreateOptionsModal from '../Modals/CreateOptionsModal/CreateOptionsModal'
+
 
 const Header = () => {
   const router = useRouter()
-  const isUser = false;
+  const isUser = true
 
   return (
     <div className='fixed top-0 w-full h-[10vh] bg-white border-b border-b-black py-4 px-3 md:px-5 flex justify-between items-center'>
 
       {/*  DEMO LOGO  */}
-      <div className='w-10 h-10 rounded-full bg-BrutalOrange1' />
+      <div className='w-10 h-10 rounded-full bg-BrutalOrange1' onClick={() => console.log(1)}/>
 
       <SearchBar />
 
       {isUser && (
         <div className='flex justify-between items-center space-x-4'>
           <SearchBarIcon />
-          <PlusIcon />
+          {/* <PlusIcon /> */}
+          <CreateOptionsModal />
           <BellIcon />
           <MessagesIcon />
         </div>

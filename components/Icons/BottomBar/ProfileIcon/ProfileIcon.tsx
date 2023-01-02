@@ -5,8 +5,9 @@ import { BiErrorCircle } from "react-icons/bi"
 
 const ProfileIcon = () => {
   const router = useRouter()
+  const isUser = false
   return (
-    <Link href={"/profile"}>
+    <Link href={isUser ? "/profile" : "/register"}>
 
       {/* <button type='button' title='home' className={router?.pathname === "/" ? (
                 'w-10 h-10 bg-[#FF9C6F] outline-none flex justify-center items-center rounded-md border border-black border-b-2 border-r-2 border-b-black border-r-black'

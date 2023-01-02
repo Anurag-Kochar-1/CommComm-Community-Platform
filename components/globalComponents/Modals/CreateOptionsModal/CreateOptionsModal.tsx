@@ -3,6 +3,7 @@ import { Fragment, useState } from 'react'
 import PlusIcon from '../../../Icons/Header/PlusIcon/PlusIcon'
 import { useDispatch, useSelector } from "react-redux"
 import { setIsCreateOptionsModalOpen } from "../../../../redux/slices/modalSlice"
+import CrossIcon from '../../../Icons/General/CrossIcon/CrossIcon'
 
 export default function CreateOptionsModal() {
     const dispatch = useDispatch()
@@ -26,7 +27,7 @@ export default function CreateOptionsModal() {
                         leaveFrom="opacity-100"
                         leaveTo="opacity-0"
                     >
-                        <div className="fixed inset-0 bg-black bg-opacity-25" />
+                        <div className="fixed inset-0 bg-black bg-opacity-30" />
                     </Transition.Child>
 
                     <div className="fixed inset-0 overflow-y-auto">
@@ -40,16 +41,28 @@ export default function CreateOptionsModal() {
                                 leaveFrom="opacity-100 scale-100"
                                 leaveTo="opacity-0 scale-95"
                             >
-                                <Dialog.Panel className="z-20 w-[70%] h-[40vh] sm:w-[40%] md:w-[30%] lg:w-[25%] xl:w-[20%] scrollbar-hide bg-green-400 rounded-md flex flex-col justify-start items-start overflow-x-hidden overflow-y-scroll">
-                                    {/* <Dialog.Title
-                                        as="h3"
-                                        className="text-lg font-medium leading-6 text-gray-900"
-                                    >
-                                        Tit le
-                                    </Dialog.Title> */}
-                                
+                                <Dialog.Panel className="w-[70%] sm:w-[50%] md:w-[40%] lg:w-[35%] xl:w-[25%] 2xl:w-[20%] scrollbar-hide bg-transparent flex flex-col justify-start items-start overflow-x-hidden overflow-y-scroll border-2 border-black">
 
-                                    
+                                    <div className='w-full h-full bg-[#FEFFF4] flex flex-col justify-start items-start px-5 py-6 md:py-12'>
+
+                                        <div className='w-full py-2 space-y-6 flex flex-col justify-start items-center my-4 hover:cursor-pointer'>
+                                            <div className='w-full h-16 relative bg-black border-2 border-black flex justify-between items-center'>
+                                                <div className='w-full h-16 absolute right-1 bottom-1 flex justify-center items-center bg-BrutalBlue1 border-2 border-black active:right-0 active:bottom-0'>
+                                                    <p className='font-bold text-base text-black'> Upload Post </p>
+                                                </div>
+                                            </div>
+
+                                            <div className='w-full h-16 relative bg-black border-2 border-black flex justify-between items-center hover:cursor-pointer'>
+                                                <div className='w-full h-16 absolute right-1 bottom-1 flex justify-center items-center bg-BrutalPurple1 border-2 border-black active:right-0 active:bottom-0'>
+                                                    <p className='font-bold text-base text-black'> Create Community </p>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+
+
                                 </Dialog.Panel>
                             </Transition.Child>
                         </div>
@@ -59,3 +72,6 @@ export default function CreateOptionsModal() {
         </>
     )
 }
+
+
+

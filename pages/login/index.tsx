@@ -1,9 +1,24 @@
 import Link from 'next/link'
-import React from 'react'
+import React, { useState } from 'react'
 import { FcGoogle } from 'react-icons/fc'
 import { MdOutlineFacebook } from 'react-icons/md'
+import { signInWithEmailAndPassword } from "firebase/auth"
+import { auth } from '../../firebaseConfig'
 
 const index = () => {
+  const [emailInputValue, setEmailInputValue] = useState<string>("")
+  const [passwordInputValue, setPasswordInputValue] = useState<string>("")
+
+  const logIn = () => {
+    signInWithEmailAndPassword(auth, emailInputValue, passwordInputValue)
+    .then((userCredential) => {
+      console.log(userCredential.user)
+    })
+    .catch((error) => {
+      console.log(error?.errormessage);
+    });
+  }
+ 
   return (
     <div className='Z-50 fixed inset-0 w-[100%] h-[100vh] bg-BrutalRed1 flex flex-row justify-center lg:justify-end items-center lg:px-32 xl:px-40 2xl:px-72'>
 
@@ -26,6 +41,8 @@ const index = () => {
 
             <div className='w-[100%] h-10 relative bg-black flex justify-start items-center'>
               <input
+                value={emailInputValue}
+                onChange={(e) => setEmailInputValue(e.target.value)}
                 type="email"
                 placeholder='Email address'
                 className='w-full h-10 absolute right-1 bottom-1 outline-none focus:ring-0 px-2 placeholder:px-2 border-2 border-black'
@@ -34,6 +51,8 @@ const index = () => {
 
             <div className='w-[100%] h-10 relative bg-black flex justify-start items-center'>
               <input
+                value={passwordInputValue}
+                onChange={(e) => setPasswordInputValue(e.target.value)}
                 type="password"
                 placeholder='Password'
                 className='w-full h-10 absolute right-1 bottom-1 outline-none focus:ring-0 px-2 placeholder:px-2 border-2 border-black'
@@ -45,13 +64,13 @@ const index = () => {
           <div className='w-full flex justify-end items-center py-5'>
             <button type='button' title='singIn' className='w-20 md:w-32 h-[4.5vh] relative flex justify-center items-center bg-black rounded-sm border-2 border-black'>
               <span className='w-20 md:w-32 h-[4.5vh] absolute bottom-[2px] right-[2px] bg-BrutalBlue1  flex justify-center items-center rounded-sm border-2 border-black active:right-0 active:bottom-0 hover:right-0 hover:bottom-0'>
-                <p className='text-xs md:text-sm font-medium'> Continue  </p>
+                <p className='text-xs md:text-sm font-medium' onClick={logIn}> Login  </p>
               </span>
             </button>
           </div>
         </div>
 
-        <span className='mx-auto'> Or </span>
+        <span className='mx-auto' onClick={() => console.log(auth?.currentUser)}> Or </span>
 
         {/* ---- Continue with google and facebook ----- */}
         <div className='w-full flex flex-col justify-start items-center space-y-3'>

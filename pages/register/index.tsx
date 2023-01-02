@@ -1,17 +1,32 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { FcGoogle } from "react-icons/fc"
 import { MdOutlineFacebook } from "react-icons/md"
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import {auth} from "../../firebaseConfig"
 
 const index = () => {
-  const [emailInputValue, setEmailInputValue] = useState<string>("")  
+  const [emailInputValue, setEmailInputValue] = useState<string>("")
   const [userNameInputValue, setUserNameInputValue] = useState<string>("")
-  const [passwordInputValue, setPasswordInputValue] = useState <string> ("")
+  const [passwordInputValue, setPasswordInputValue] = useState<string>("")
+
+  const signUp = () => {
+    createUserWithEmailAndPassword(auth, emailInputValue, passwordInputValue)
+    .then((response) => {
+      console.log(response)
+      
+    }).catch((error) => {
+      console.log(error?.message)
+    })
+
+    setEmailInputValue("")
+    setPasswordInputValue("")
+  }
 
   return (
     <div className='fixed inset-0 w-[100%] h-[100vh] bg-BrutalOrange1 flex flex-row justify-center lg:justify-end items-center lg:px-32 xl:px-40 2xl:px-72 scrollbar-hide'>
-   
+
       {/* <Image src={blueLinesBG} alt='bg' className='fixed inset-0 w-[100%] h-[100vh] z-10' draggable="false" /> */}
 
       <div className='z-20 w-full h-[90vh] mb-[10vh] lg:mb-0 sm:w-[70%] sm:h-[70vh] md:w-[70%] lg:w-[60%] xl:w-[40%] 2xl:w-[35%] bg-white rounded-md flex flex-col justify-start items-start pt-10 pb-5 px-5 space-y-5 overflow-x-hidden overflow-y-scroll'>
@@ -36,7 +51,7 @@ const index = () => {
           </button>
         </div>
 
-        <span className='mx-auto'> Or </span>
+        <span className='mx-auto' onClick={() => console.log(auth?.currentUser)}> Or </span>
 
         {/* ---- Sign up with email */}
         <div className='w-full h-full flex flex-col items-start justify-start'>
@@ -82,13 +97,13 @@ const index = () => {
 
           {/* ---- Continue Button div ---- */}
           <div className='w-full flex justify-end items-center py-5'>
-            <button 
-            onClick={() => {
-              
-            }}
-            type='button' 
-            title='singIn' 
-            className='w-20 md:w-32 h-[4.5vh] relative flex justify-center items-center bg-black rounded-sm border-2 border-black'>
+            <button
+              onClick={() => {
+                signUp()
+              }}
+              type='button'
+              title='singIn'
+              className='w-20 md:w-32 h-[4.5vh] relative flex justify-center items-center bg-black rounded-sm border-2 border-black'>
               <span className='w-20 md:w-32 h-[4.5vh] absolute bottom-[2px] right-[2px] bg-BrutalBlue1  flex justify-center items-center rounded-sm border-2 border-black active:right-0 active:bottom-0 hover:right-0 hover:bottom-0'>
                 <p className='text-xs md:text-sm font-medium'> Continue  </p>
               </span>

@@ -6,10 +6,11 @@ import SignInAndSignUpButtonsGroup from '../Buttons/SignInAndSignUp/SignInAndSig
 import SearchBarIcon from '../../Icons/Header/SearchBarIcon/SearchBarIcon'
 import SearchBar from './components/SearchBar/SearchBar'
 import PlusIcon from '../../Icons/Header/PlusIcon/PlusIcon'
+import { auth } from '../../../firebaseConfig'
 
 const Header = () => {
   const router = useRouter()
-  const isUser = false
+  const isUser = false  
 
   return (
     <div className='fixed top-0 w-full h-[10vh] bg-white border-b border-b-black py-4 px-3 md:px-5 flex justify-between items-center'>

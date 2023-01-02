@@ -18,7 +18,8 @@ module.exports = {
 
       fontFamily: {
         Overpass: "Overpass, cursive"
-      }
+      },
+
     },
   },
   safelist: [
@@ -45,5 +46,7 @@ module.exports = {
     }
     
   ],
-  plugins: [],
+  plugins: [
+    require('tailwind-scrollbar-hide')
+  ],
 }

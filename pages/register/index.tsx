@@ -1,16 +1,20 @@
+import React, {useState} from 'react'
+import Image from 'next/image'
 import Link from 'next/link'
-import React from 'react'
 import { FcGoogle } from "react-icons/fc"
 import { MdOutlineFacebook } from "react-icons/md"
-import blueLinesBG from "../../public/images/bg/blueLinesBG.png"
 
 const index = () => {
-  const inputTailwindStyle: string = "bg-green-400 font-bold py-2"
+  const [emailInputValue, setEmailInputValue] = useState<string>("")  
+  const [userNameInputValue, setUserNameInputValue] = useState<string>("")
+  const [passwordInputValue, setPasswordInputValue] = useState <string> ("")
 
   return (
-    <div className='Z-50 fixed inset-0 w-[100%] h-[100vh] bg-BrutalOrange1 flex flex-row justify-center lg:justify-end items-center lg:px-32 xl:px-40 2xl:px-72'>
+    <div className='fixed inset-0 w-[100%] h-[100vh] bg-BrutalOrange1 flex flex-row justify-center lg:justify-end items-center lg:px-32 xl:px-40 2xl:px-72 scrollbar-hide'>
+   
+      {/* <Image src={blueLinesBG} alt='bg' className='fixed inset-0 w-[100%] h-[100vh] z-10' draggable="false" /> */}
 
-      <div className='w-full h-[90vh] mb-[10vh] lg:mb-0 sm:w-[70%] sm:h-[70vh] md:w-[70%] lg:w-[60%] xl:w-[40%] 2xl:w-[35%] bg-white rounded-md flex flex-col justify-start items-start pt-10 pb-5 px-5 space-y-5 overflow-x-hidden overflow-y-scroll'>
+      <div className='z-20 w-full h-[90vh] mb-[10vh] lg:mb-0 sm:w-[70%] sm:h-[70vh] md:w-[70%] lg:w-[60%] xl:w-[40%] 2xl:w-[35%] bg-white rounded-md flex flex-col justify-start items-start pt-10 pb-5 px-5 space-y-5 overflow-x-hidden overflow-y-scroll'>
 
         {/* ---- LOGO ---- */}
         <div className='flex justify-center items-center space-x-3'>
@@ -43,6 +47,9 @@ const index = () => {
 
             <div className='w-[90%] h-10 relative bg-black flex justify-start items-center'>
               <input
+                value={emailInputValue}
+                onChange={(e) => setEmailInputValue(e.target.value)}
+                required
                 type="email"
                 placeholder='Email address'
                 className='w-full h-10 absolute right-1 bottom-1 outline-none focus:ring-0 px-2 placeholder:px-2 border-2 border-black'
@@ -51,6 +58,9 @@ const index = () => {
 
             <div className='w-[90%] h-10 relative bg-black flex justify-start items-center'>
               <input
+                value={userNameInputValue}
+                onChange={(e) => setUserNameInputValue(e.target.value)}
+                required
                 type="text"
                 placeholder='Username'
                 className='w-full h-10 absolute right-1 bottom-1 outline-none focus:ring-0 px-2 placeholder:px-2 border-2 border-black'
@@ -59,6 +69,9 @@ const index = () => {
 
             <div className='w-[90%] h-10 relative bg-black flex justify-start items-center'>
               <input
+                value={passwordInputValue}
+                onChange={(e) => setPasswordInputValue(e.target.value)}
+                required
                 type="password"
                 placeholder='Password'
                 className='w-full h-10 absolute right-1 bottom-1 outline-none focus:ring-0 px-2 placeholder:px-2 border-2 border-black'
@@ -69,7 +82,13 @@ const index = () => {
 
           {/* ---- Continue Button div ---- */}
           <div className='w-full flex justify-end items-center py-5'>
-            <button type='button' title='singIn' className='w-20 md:w-32 h-[4.5vh] relative flex justify-center items-center bg-black rounded-sm border-2 border-black'>
+            <button 
+            onClick={() => {
+              
+            }}
+            type='button' 
+            title='singIn' 
+            className='w-20 md:w-32 h-[4.5vh] relative flex justify-center items-center bg-black rounded-sm border-2 border-black'>
               <span className='w-20 md:w-32 h-[4.5vh] absolute bottom-[2px] right-[2px] bg-BrutalBlue1  flex justify-center items-center rounded-sm border-2 border-black active:right-0 active:bottom-0 hover:right-0 hover:bottom-0'>
                 <p className='text-xs md:text-sm font-medium'> Continue  </p>
               </span>

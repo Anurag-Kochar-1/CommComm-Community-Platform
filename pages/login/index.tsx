@@ -4,25 +4,33 @@ import { FcGoogle } from 'react-icons/fc'
 import { MdOutlineFacebook } from 'react-icons/md'
 import { signInWithEmailAndPassword } from "firebase/auth"
 import { auth } from '../../firebaseConfig'
+import { useRouter } from 'next/router'
+import { AiOutlineLoading3Quarters } from 'react-icons/ai'
 
 const index = () => {
+  const router = useRouter()
   const [emailInputValue, setEmailInputValue] = useState<string>("")
   const [passwordInputValue, setPasswordInputValue] = useState<string>("")
+  const [isLoading, setIsLoading] = useState<boolean>(false)
 
   const logIn = () => {
+    setIsLoading(true)
     signInWithEmailAndPassword(auth, emailInputValue, passwordInputValue)
     .then((userCredential) => {
-      console.log(userCredential.user)
+      setIsLoading(false)
+      router.push("/")
     })
     .catch((error) => {
-      console.log(error?.errormessage);
+      alert(error?.errormessage);
+      setIsLoading(false)
     });
   }
  
   return (
     <div className='Z-50 fixed inset-0 w-[100%] h-[100vh] bg-BrutalRed1 flex flex-row justify-center lg:justify-end items-center lg:px-32 xl:px-40 2xl:px-72'>
 
-      <div className='w-full h-[90vh] mb-[10vh] lg:mb-0 sm:w-[70%] sm:h-[70vh] md:w-[70%] lg:w-[60%] xl:w-[40%] 2xl:w-[35%] bg-white rounded-md flex flex-col justify-start items-start pt-10 pb-5 px-5 space-y-5 overflow-x-hidden overflow-y-scroll'>
+      {!isLoading && (
+        <div className='w-full h-[90vh] mb-[10vh] lg:mb-0 sm:w-[70%] sm:h-[70vh] md:w-[70%] lg:w-[60%] xl:w-[40%] 2xl:w-[35%] bg-white rounded-md flex flex-col justify-start items-start pt-10 pb-5 px-5 space-y-5 overflow-x-hidden overflow-y-scroll'>
 
         {/* ---- LOGO ---- */}
         <div className='flex justify-center items-center space-x-3'>
@@ -100,6 +108,13 @@ const index = () => {
         </div>
 
       </div>
+      )}
+
+      {isLoading && (
+        <div className='z-50 fixed inset-0 w-full h-screen flex justify-center items-center bg-white'>
+            <AiOutlineLoading3Quarters className='animate-spin text-2xl text-BrutalBlack1' />
+        </div>
+      )}
     </div>
   )
 }

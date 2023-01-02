@@ -1,10 +1,11 @@
-import { Dialog, Transition } from '@headlessui/react'
 import { Fragment, useState } from 'react'
+import { Dialog, Transition } from '@headlessui/react'
 import {FcGoogle} from "react-icons/fc"
 import {MdOutlineFacebook} from "react-icons/md"
 
 export default function SignUpModal() {
-    let [isOpen, setIsOpen] = useState(false)
+    const [isOpen, setIsOpen] = useState(false)
+    const [createAccountPageNumber, setCreateAccountPageNumber] = useState<number>(1)
 
     function closeModal() {
         setIsOpen(false)
@@ -81,6 +82,19 @@ export default function SignUpModal() {
                                                     <span className='flex-1 text-white'> Continue with Facebook </span>
                                                 </button>
                                             </div>
+
+                                            <span> or </span>
+
+                                            <input 
+                                            type="email" 
+                                            placeholder='email..'
+                                            />
+
+                                            <button type='button' title='continue' onClick={() => setCreateAccountPageNumber(2)}>
+                                                Continue
+                                            </button>
+
+
                                             
 
                                             <div className="mt-4">

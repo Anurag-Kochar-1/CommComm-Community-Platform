@@ -14,12 +14,12 @@ const ProfileIcon = () => {
                 'w-10 h-10 bg-white flex justify-center items-center' 
             )} > */}
 
-      <button type='button' title='profile' className={router?.pathname === "/profile" ? (
+      <button type='button' title='profile' className={router?.pathname === "/login" || router?.pathname === "/register"  ? (
         'w-10 h-10 bg-black outline-none flex justify-center items-center rounded-md relative '
       ) : (
         'w-10 h-10 bg-white  outline-none flex justify-center items-center rounded-md'
       )} >
-        <div className={router?.pathname === "/profile" ? (
+        <div className={router?.pathname === "/login" || router?.pathname === "/register" ? (
           'w-10 h-10 bg-BrutalPurple1 flex justify-center items-center rounded-md absolute bottom-1 right-1 border-2 border-black hover:bottom-0 hover:right-0'
         ) : (
           'w-10 h-10 bg-white flex justify-center items-center rounded-md'
@@ -27,6 +27,7 @@ const ProfileIcon = () => {
           <BiErrorCircle className='text-2xl' />
         </div>
       </button>
+      
     </Link>
   )
 }

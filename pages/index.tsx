@@ -12,7 +12,7 @@ export default function Home() {
       <h1 className='text-4xl text-blue-500 font-bold mt-[7vh]'> Home  </h1>
 
 
-      <SignUpModal />
+      {/* <SignUpModal /> */}
     </main>
   )
 }

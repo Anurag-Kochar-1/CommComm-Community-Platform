@@ -23,7 +23,7 @@ const index = ({ communityData }: any) => {
       <main className='w-full h-full flex flex-col justify-start items-center bg-blue-900 pt-12 pb-36'>
         {/* <h1 className='mt-10' onClick={() => console.log(id)}> Community ID - {router.query.id} : blog </h1> */}
 
-        {/* <p>
+        <p>
         Strings are left as-is
 Numbers are converted to their string representation
 Arrays have their elements cast to strings after which they are joined by commas (,)
@@ -379,7 +379,7 @@ Other objects are converted to the string [object Object] where Object is the na
 Numbers are converted to their string representation
 Arrays have their elements cast to strings after which they are joined by commas (,)
 Other objects are converted to the string [object Object] where Object is the name of the constructor of the object
-        </p> */}
+        </p>
       </main>
     </CommunityLayout>
   )

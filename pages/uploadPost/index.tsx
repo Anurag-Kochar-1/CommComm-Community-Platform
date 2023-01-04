@@ -158,7 +158,7 @@ const uploadPost = () => {
 
 
   return (
-    <main className='w-full lg:w-[70%] h-[80vh] lg:h-[90vh] mt-[10vh] mb-[10vh] lg:mb-0 bg-[#FFDCA8] flex flex-col justify-center items-center'>
+    <main className='w-full lg:w-[70%] h-[80vh] lg:h-[90vh] mt-[10vh] mb-[10vh] lg:mb-0 bg-BgBrutalSkin1 flex flex-col justify-center items-center'>
 
       {/*  Large Screen  */}
       <div className='hidden lg:inline-flex flex-col relative w-[80%] lg:w-[70%] xl:w-[65%] h-[45vh] bg-black justify-center items-center rounded-md' onClick={() => {
@@ -174,8 +174,8 @@ const uploadPost = () => {
               onClick={() => setPostType('caption')}
               className={postType === "caption" ? "w-full h-full flex justify-center items-center space-x-3 border-r border-b border-r-gray-300  border-black py-3 hover:cursor-pointer" : "w-full h-full flex justify-center items-center space-x-3 border-r border-b border-r-gray-300  border-b-gray-400 py-3 hover:cursor-pointer"}
             >
-              <BsTextCenter className={postType === "caption" ? 'text-BrutalPurple1 w-5 h-5' : 'text-darkColor w-5 h-5'} />
-              <span className={postType === "caption" ? 'text-BrutalPurple1 font-bold text-base' : 'font-medium text-dakrColor text-base'}> Caption </span>
+              <BsTextCenter className={postType === "caption" ? 'text-BrutalPurple2 w-5 h-5' : 'text-darkColor w-5 h-5'} />
+              <span className={postType === "caption" ? 'text-BrutalPurple2 font-bold text-base' : 'font-medium text-dakrColor text-base'}> Caption </span>
             </button>
 
             <button
@@ -183,8 +183,8 @@ const uploadPost = () => {
               onClick={() => setPostType('image')}
               className={postType === "image" ? "w-full h-full flex justify-center items-center space-x-3 border-r border-b border-r-gray-300  border-black py-3 hover:cursor-pointer" : "w-full h-full flex justify-center items-center space-x-3 border-r border-b border-r-gray-300  border-b-gray-400 py-3 hover:cursor-pointer"}
             >
-              <BsImage className={postType === "image" ? 'text-BrutalPurple1 w-5 h-5' : 'text-darkColor w-5 h-5'} />
-              <span className={postType === "image" ? 'text-BrutalPurple1 font-bold text-base' : 'font-medium text-dakrColor text-base'}>  Image  </span>
+              <BsImage className={postType === "image" ? 'text-BrutalPurple2 w-5 h-5' : 'text-darkColor w-5 h-5'} />
+              <span className={postType === "image" ? 'text-BrutalPurple2 font-bold text-base' : 'font-medium text-dakrColor text-base'}>  Image  </span>
             </button>
 
             <button
@@ -192,8 +192,8 @@ const uploadPost = () => {
               onClick={() => setPostType('video')}
               className={postType === "video" ? "w-full h-full flex justify-center items-center space-x-3  border-b border-black py-3 hover:cursor-pointer" : "w-full h-full flex justify-center items-center space-x-3 border-b border-b-gray-400 py-3 hover:cursor-pointer"}
             >
-              <BsCameraVideo className={postType === "video" ? 'text-BrutalPurple1 w-5 h-5' : 'text-darkColor w-5 h-5'} />
-              <span className={postType === "video" ? 'text-BrutalPurple1 font-bold text-base' : 'font-medium text-dakrColor text-base'}>Video  </span>
+              <BsCameraVideo className={postType === "video" ? 'text-BrutalPurple2 w-5 h-5' : 'text-darkColor w-5 h-5'} />
+              <span className={postType === "video" ? 'text-BrutalPurple2 font-bold text-base' : 'font-medium text-dakrColor text-base'}>Video  </span>
             </button>
           </div>
 
@@ -263,8 +263,8 @@ const uploadPost = () => {
                   type='button'
                   title='post'
                   className='w-[40%] h-10 relative flex justify-center items-center bg-black rounded-sm border-2 border-black '>
-                  <span className='w-full h-10 absolute bottom-[2px] right-[2px] bg-BrutalPurple1 flex justify-center items-center rounded-sm border-2 border-black active:right-0 active:bottom-0 hover:right-0 hover:bottom-0'>
-                    <p className='text-xs md:text-sm font-medium'> POST  </p>
+                  <span className='w-full h-10 absolute bottom-[2px] right-[2px] bg-BrutalPurple2 flex justify-center items-center rounded-sm border-2 border-black active:right-0 active:bottom-0 hover:right-0 hover:bottom-0'>
+                    <p className='text-sm font-semibold'> POST  </p>
                   </span>
                 </button>
 
@@ -341,8 +341,8 @@ const uploadPost = () => {
                   type='button'
                   title='post'
                   className='w-[40%] h-10 relative flex justify-center items-center bg-black rounded-sm border-2 border-black'>
-                  <span className='w-full h-10 absolute bottom-[2px] right-[2px] bg-BrutalPurple1 flex justify-center items-center rounded-sm border-2 border-black active:right-0 active:bottom-0 hover:right-0 hover:bottom-0'>
-                    <p className='text-xs md:text-sm font-medium'> POST  </p>
+                  <span className='w-full h-10 absolute bottom-[2px] right-[2px] bg-BrutalPurple2 flex justify-center items-center rounded-sm border-2 border-black active:right-0 active:bottom-0 hover:right-0 hover:bottom-0'>
+                    <p className='text-xs md:text-sm font-semibold'> POST  </p>
                   </span>
                 </button>
 
@@ -417,8 +417,8 @@ const uploadPost = () => {
                   type='button'
                   title='post'
                   className='w-[40%] h-10 relative flex justify-center items-center bg-black rounded-sm border-2 border-black'>
-                  <span className='w-full h-10 absolute bottom-[2px] right-[2px] bg-BrutalPurple1 flex justify-center items-center rounded-sm border-2 border-black active:right-0 active:bottom-0 hover:right-0 hover:bottom-0'>
-                    <p className='text-xs md:text-sm font-medium'> POST  </p>
+                  <span className='w-full h-10 absolute bottom-[2px] right-[2px] bg-BrutalPurple2 flex justify-center items-center rounded-sm border-2 border-black active:right-0 active:bottom-0 hover:right-0 hover:bottom-0'>
+                    <p className='text-xs md:text-sm font-semibold'> POST  </p>
                   </span>
                 </button>
 

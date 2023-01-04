@@ -46,27 +46,27 @@ export default function CreateOptionsModal() {
                             >
                                 <Dialog.Panel className="w-[70%] sm:w-[50%] md:w-[40%] lg:w-[35%] xl:w-[25%] 2xl:w-[20%] scrollbar-hide bg-transparent flex flex-col justify-start items-start overflow-x-hidden overflow-y-scroll border-2 border-black">
 
-                                    <div className='w-full h-full bg-[#FEFFF4] flex flex-col justify-start items-start px-5 py-6 md:py-12'>
+                                    <div className='w-full h-full bg-BgBrutalSkin1 flex flex-col justify-start items-start px-5 py-6 md:py-12'>
 
-                                        <div 
-                                        onClick={() => {
-                                            router.push("/uploadPost")  
-                                            closeModal()
-                                          }}
-                                        className='w-full py-2 space-y-6 flex flex-col justify-start items-center my-4 hover:cursor-pointer'>
+                                        <div
+                                            onClick={() => {
+                                                router.push("/uploadPost")
+                                                closeModal()
+                                            }}
+                                            className='w-full py-2 space-y-6 flex flex-col justify-start items-center my-4 hover:cursor-pointer'>
                                             <div className='w-full h-16 relative bg-black border-2 border-black flex justify-between items-center'>
-                                                <div className='w-full h-16 absolute right-1 bottom-1 flex justify-center items-center bg-BrutalBlue1 border-2 border-black active:right-0 active:bottom-0'>
+                                                <div className='w-full h-16 absolute right-1 bottom-1 flex justify-center items-center bg-BrutalAqua1 border-2 border-black active:right-0 active:bottom-0'>
                                                     <p className='font-bold text-base text-black'> Upload Post </p>
                                                 </div>
                                             </div>
 
-                                            <div 
-                                            onClick={() => {
-                                              router.push("/createCommunity")  
-                                              closeModal()
-                                            }}
-                                            className='w-full h-16 relative bg-black border-2 border-black flex justify-between items-center hover:cursor-pointer'>
-                                                <div className='w-full h-16 absolute right-1 bottom-1 flex justify-center items-center bg-BrutalPurple1 border-2 border-black active:right-0 active:bottom-0'>
+                                            <div
+                                                onClick={() => {
+                                                    router.push("/createCommunity")
+                                                    closeModal()
+                                                }}
+                                                className='w-full h-16 relative bg-black border-2 border-black flex justify-between items-center hover:cursor-pointer'>
+                                                <div className='w-full h-16 absolute right-1 bottom-1 flex justify-center items-center bg-BrutalPurple2 border-2 border-black active:right-0 active:bottom-0'>
                                                     <p className='font-bold text-base text-black'> Create Community </p>
                                                 </div>
                                             </div>

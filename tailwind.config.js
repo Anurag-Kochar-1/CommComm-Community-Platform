@@ -13,7 +13,13 @@ module.exports = {
         BrutalYellow1 : "#fff503",
         BrutalGreen1 : "#00ff75",
         BrutalPurple1 : "#dd7dff",
-        BrutalBlack1 : "#000000"
+        BrutalBlack1 : "#000000",
+
+        BgBrutalSkin1: "#FFDCA8",
+        BrutalAqua1: "#15FDD3",
+        BrutalPurple2: "#C83FD3",
+        BrutalGreen2: "#11EA50",
+
       },
 
       fontFamily: {
@@ -43,7 +49,21 @@ module.exports = {
     },
     {
       pattern: /(bg|text|border)-BrutalBlack1/,
-    }
+    },
+
+    ,
+    {
+      pattern: /(bg|text|border)-BgBrutalSkin1/,
+    },
+    {
+      pattern: /(bg|text|border)-BrutalAqua1/,
+    },
+    {
+      pattern: /(bg|text|border)-BrutalPurple2/,
+    },
+    {
+      pattern: /(bg|text|border)-BrutalGreen2/,
+    },
     
   ],
   plugins: [

@@ -15,7 +15,7 @@ import Link from 'next/link'
 
 const Header = () => {
   const router = useRouter()
-  const isUser = false
+  const isUser = auth?.currentUser
 
  
 
@@ -23,11 +23,11 @@ const Header = () => {
     <div className='fixed top-0 w-full h-[10vh] bg-white border-b border-b-black py-4 px-3 md:px-5 flex justify-between items-center'>
 
       {/*  DEMO LOGO  */}
-      <Link href={'/'} className='w-10 h-10 rounded-full bg-BrutalOrange1' onClick={() => console.log(1)} />
+      <Link href={'/'} className='w-10 h-10 rounded-full bg-BrutalOrange1' onClick={() => console.log(isUser)} />
 
       <SearchBar />
 
-      {isUser && (
+      {isUser !== null && (
         <div className='flex justify-between items-center space-x-4'>
           <SearchBarIcon />
           {/* <PlusIcon /> */}
@@ -37,7 +37,7 @@ const Header = () => {
         </div>
       )}
 
-      {!isUser && (
+      {isUser === null && (
         <div className='flex justify-between items-center space-x-4'>
           <SignInAndSignUpButtonsGroup />
         </div>

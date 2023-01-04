@@ -33,10 +33,10 @@ const TopSection = () => {
                 <div className='w-full flex justify-between items-center pt-5 '>
                     <h2 className='text-lg lg:text-2xl font-semibold text-black'> {communityData?.communityName} </h2>
 
-                    <div className='relative w-16 h-7 bg-black border border-black flex justify-center items-center rounded-full'>
+                    <div className='relative w-16 h-7  lg:w-20 lg:h-10 bg-black border border-black flex justify-center items-center rounded-full'>
                         <button
                             type='button'
-                            className='w-16 h-7 absolute right-[2px] bottom-[2px] bg-BrutalGreen1 text-sm font-medium text-black border border-black active:right-0 active:bottom-0 rounded-full'>
+                            className='w-16 h-7 lg:w-20 lg:h-10 absolute right-[2px] bottom-[2px] bg-BrutalGreen1 text-sm font-medium text-black border border-black active:right-0 active:bottom-0 rounded-full'>
                             Join
                         </button>
                     </div>
@@ -58,12 +58,12 @@ const TopSection = () => {
 
                 {/* Tags */}
                 <div className='w-full flex justify-start items-center space-x-5 flex-wrap '>
-                    <div className='relative w-32 h-7 bg-black border border-black flex justify-center items-center my-2'>
-                        <div className={`absolute w-32 h-7 flex justify-center items-center right-[2px] bottom-[2px] border border-black bg-blue-500 text-xs font-medium hover:cursor-pointer`} > {communityData?.communityCategory.toUpperCase()} </div>
+                    <div className='relative w-32 h-7 bg-black border border-black flex justify-center items-center my-2 rounded-sm'>
+                        <div className={`absolute w-32 h-7 flex justify-center items-center right-[2px] bottom-[2px] border border-black bg-blue-500 text-xs font-medium hover:cursor-pointer rounded-sm`} > {communityData?.communityCategory.toUpperCase()} </div>
                     </div>
 
-                    <div className='relative w-32 h-7 bg-black border border-black flex justify-center items-center my-2'>
-                        <div className={`absolute w-32 h-7 flex justify-center items-center right-[2px] bottom-[2px] border border-black bg-yellow-500 text-xs font-medium hover:cursor-pointer`} > {communityData?.communitySubCategory.toUpperCase()} </div>
+                    <div className='relative w-32 h-7 bg-black border border-black flex justify-center items-center my-2 rounded-sm'>
+                        <div className={`absolute w-32 h-7 flex justify-center items-center right-[2px] bottom-[2px] border border-black bg-yellow-500 text-xs font-medium hover:cursor-pointer rounded-sm`} > {communityData?.communitySubCategory.toUpperCase()} </div>
                     </div>
                 </div>
                 

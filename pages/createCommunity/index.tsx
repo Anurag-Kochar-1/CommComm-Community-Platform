@@ -55,7 +55,7 @@ const index = () => {
   }
 
   return (
-    <div className='fixed inset-0 w-[100%] h-[100vh] bg-BrutalBlue1 flex flex-row justify-center lg:justify-end items-center lg:px-32 xl:px-40 2xl:px-72 '>
+    <div className='fixed inset-0 w-[100%] h-[100vh] bg-BrutalOrange1 flex flex-row justify-center lg:justify-end items-center lg:px-32 xl:px-40 2xl:px-72 '>
 
       <div className='z-20 w-full h-[90vh] mb-[10vh] lg:mb-0 sm:w-[70%] sm:h-[70vh] md:w-[70%] lg:w-[60%] xl:w-[40%] 2xl:w-[35%] bg-white rounded-md flex flex-col justify-start items-start pt-10 pb-5 px-5 space-y-5 overflow-x-hidden overflow-y-scroll scrollbar-hide'>
 
@@ -66,7 +66,7 @@ const index = () => {
         </div>
 
         {/* ---- Heading ----- */}
-        <h1 className='text-3xl font-bold' onClick={() => console.log(communityCategory + " ___ " + communitySubCategory + `___ Name -> ${communityNameInputValue}`)}> Log Create a Community </h1>
+        <h1 className='text-3xl font-bold' onClick={() => console.log(communityCategory + " ___ " + communitySubCategory + `___ Name -> ${communityNameInputValue}`)}> Create a Community </h1>
 
 
         {/* ---- Fill community details ---- */}

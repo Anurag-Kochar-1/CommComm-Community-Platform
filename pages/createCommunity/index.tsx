@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { communityCategoriesArray, communitySubCategoriesArray } from "../../constants/createCommunityPage/communityCategories"
+import { addDoc, collection } from 'firebase/firestore'
+import { db, auth } from '../../firebaseConfig'
 
 
 
@@ -9,6 +11,36 @@ const index = () => {
   const [communityCategory, setCommunityCategory] = useState<string>(communityCategoriesArray[0].label)
   const [communitySubCategory, setCommunitySubCategory] = useState<string>(communitySubCategoriesArray[0].parentLabel)
   const [isDemoOpen, setIsDemoOpen] = useState<boolean>(true)
+
+  const communitiesCollectionRef = collection(db, "communities")
+
+
+  const createCommunity = async  () => {
+    if(!communityNameInputValue || communityCategory === "Choose Category" || communitySubCategory ===  "Choose Sub Category" ) {
+      console.log("-------- Error")
+    } else {
+      console.log("creating community")
+      const addingCommunityDoc = await addDoc(communitiesCollectionRef, {
+        communityID : "",
+        communityName: communityNameInputValue,
+        communityCategory: communityCategory,
+        communitySubCategory : communitySubCategory,
+        communityLogo : null,
+        communityBanner : null,
+        communityMembersID : [auth?.currentUser?.uid],
+        communityOwnerID: auth?.currentUser?.uid,
+        communityOwnerDisplayName: auth?.currentUser?.displayName,
+        communityOwnerEmail: auth.currentUser?.email,
+        communityPostsID: []
+      })
+
+
+
+      // resetting states
+      setCommunityNameInputValue("")
+
+    }
+  }
 
   return (
     <div className='fixed inset-0 w-[100%] h-[100vh] bg-BrutalBlue1 flex flex-row justify-center lg:justify-end items-center lg:px-32 xl:px-40 2xl:px-72 '>
@@ -22,7 +54,7 @@ const index = () => {
         </div>
 
         {/* ---- Heading ----- */}
-        <h1 className='text-3xl font-bold' onClick={() => console.log(communityCategory + " ___ " + communitySubCategory)}> Log Create a Community </h1>
+        <h1 className='text-3xl font-bold' onClick={() => console.log(communityCategory + " ___ " + communitySubCategory + `___ Name -> ${communityNameInputValue}`)}> Log Create a Community </h1>
 
 
         {/* ---- Fill community details ---- */}
@@ -113,7 +145,7 @@ const index = () => {
                   key={"Choose Sub Category"}
                   value={"Choose Sub Category"}
                   className='bg-white px-2 py-3 text-black text-base'
-                > {"First Choose Category"} </option>
+                > {"Choose Sub Category"} </option>
 
               </select>
             </div>}
@@ -125,7 +157,7 @@ const index = () => {
           {/* ---- Create Button div ---- */}
           <div className='w-full h-full flex justify-end items-center py-5'>
             <button
-
+              onClick={createCommunity}
               type='button'
               title='singIn'
               className='w-20 md:w-32 h-[4.5vh] relative flex justify-center items-center bg-black rounded-sm border-2 border-black'>

@@ -34,7 +34,7 @@ export const communitySubCategoriesArray = [
         parentValue:"Choose Sub Category",
         parentLabel: "Choose Sub Category",
         subCategories: [
-            {label: "Choose Sub Category", value: "choose Sub Category", id: 0.11 },
+            {label: "Choose Sub Category", value: "Choose Sub Category", id: 0.11 },
         ]
     },
 
@@ -43,7 +43,7 @@ export const communitySubCategoriesArray = [
         parentValue:"coding",
         parentLabel: "Coding",
         subCategories: [
-            {label: "Coding Sub Category", value: "choose Sub Category", id: 0.101 },
+            {label: "Coding Sub Category", value: "Choose Sub Category", id: 0.101 },
             {label: "Web Development", value: "web-development", id: 1.1 },
             {label: "Mobile Development", value: "mobile-development", id: 1.2 },
             {label: "DSA", value: "dsa", id: 1.3 },
@@ -55,7 +55,7 @@ export const communitySubCategoriesArray = [
         parentValue:"book-reading",
         parentLabel: "Book Reading",
         subCategories: [
-            {label: "Book Reading Sub Category", value: "choose Sub Category", id: 0.201 },
+            {label: "Book Reading Sub Category", value: "Choose Sub Category", id: 0.201 },
             {label: "Fiction", value: "fiction", id: 2.1 },
             {label: "Non Fiction", value: "non-fiction", id: 2.2 },
             {label: "Biography", value: "biography", id: 2.3 },

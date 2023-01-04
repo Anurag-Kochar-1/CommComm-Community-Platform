@@ -24,10 +24,9 @@ const index = () => {
         <h1 className='text-3xl font-bold' onClick={() => console.log(communityCategory + " ___ " + communitySubCategory)}> Log Create a Community </h1>
 
 
-        {/* ---- Enter details ---- */}
+        {/* ---- Fill community details ---- */}
         <div className='w-full h-full flex flex-col items-start justify-start'>
           <p className='font-medium text-sm text-gray-900'> Your own community where you and others can build good habits and skills with the support of each other  </p>
-          {/* <span className='text-base font-normal'> Already have an account? <Link className='text-blue-500 hover:cursor-pointer' href='/login'> Sign in </Link> </span> */}
 
           <div className='w-full flex flex-col justify-between items-start space-y-4 py-3 mt-4'>
 
@@ -44,10 +43,9 @@ const index = () => {
             </div>
 
             {/* ---- Category ---- */}
-            <div className='w-[90%] h-10 relative bg-black flex justify-start items-center'>
+            <div className='w-[90%] h-10 relative bg-black flex justify-start items-center '>
               <select
                 title='choose'
-                // className='outline-none border-none w-full px-2 py-2 bg-gray-400 placeholder:text-darkColor placeholder:text-sm placeholder:text-opacity-50 text-darkColor'
                 className='w-full h-10 absolute right-1 bottom-1 outline-none focus:ring-0 px-2 placeholder:px-2 border-2 border-black'
                 value={communityCategory}
                 onChange={(e) => {
@@ -60,21 +58,18 @@ const index = () => {
                     <option
                       key={category.id}
                       value={category.value}
-                      className='form-select bg-lightColor px-2 py-3 text-darkColor text-base'
+                      className='bg-white px-2 py-3 text-black text-base'
                     > {category.label} </option>
                   )
                 })}
               </select>
             </div>
 
-
-
-
             {/* Sub Categories */}
-            <div className='w-[90%] h-10 relative bg-black flex justify-start items-center'>
-              <select 
-              title='choose' 
-              className='w-full h-10 absolute right-1 bottom-1 outline-none focus:ring-0 px-2 placeholder:px-2 border-2 border-black'
+            {communityCategory !== communityCategoriesArray[0].label && <div className='w-[90%] h-10 relative bg-black flex justify-start items-center'>
+              <select
+                title='choose'
+                className='w-full h-10 absolute right-1 bottom-1 outline-none focus:ring-0 px-2 placeholder:px-2 border-2 border-black'
                 value={communitySubCategory}
                 onChange={(e) => setCommunitySubCategory(e.target.value)}
               >
@@ -93,7 +88,7 @@ const index = () => {
                         key={sub.id}
                         value={sub.value}
                         onChange={() => setCommunitySubCategory(sub.value)}
-                        className='form-select bg-lightColor px-2 py-3 text-darkColor text-base'
+                        className='bg-white px-2 py-3 text-black text-base'
                       > {sub.label} </option>
                     })
                   )
@@ -102,21 +97,38 @@ const index = () => {
                 }
 
               </select>
-            </div>
+            </div>}
+
+
+            {/* Demo */}
+            {communityCategory === communityCategoriesArray[0].label && <div className='w-[90%] h-10 relative bg-BrutalPurple1 flex justify-start items-center'>
+              <select
+                title='Choose Sub Category'
+                className='w-full h-10 absolute right-1 bottom-1 outline-none focus:ring-0 px-2 placeholder:px-2 border-2 border-black'
+              >
+
+                <option
+                  key={"Choose Sub Category"}
+                  value={"Choose Sub Category"}
+                  className='bg-white px-2 py-3 text-black text-base'
+                > {"First Choose Category"} </option>
+
+              </select>
+            </div>}
 
 
           </div>
 
 
-          {/* ---- Continue Button div ---- */}
-          <div className='w-full flex justify-end items-center py-5'>
+          {/* ---- Create Button div ---- */}
+          <div className='w-full h-full flex justify-end items-center py-5'>
             <button
 
               type='button'
               title='singIn'
               className='w-20 md:w-32 h-[4.5vh] relative flex justify-center items-center bg-black rounded-sm border-2 border-black'>
-              <span className='w-20 md:w-32 h-[4.5vh] absolute bottom-[2px] right-[2px] bg-BrutalBlue1  flex justify-center items-center rounded-sm border-2 border-black active:right-0 active:bottom-0 hover:right-0 hover:bottom-0'>
-                <p className='text-xs md:text-sm font-medium'> Continue  </p>
+              <span className='w-20 md:w-32 h-[4.5vh] absolute bottom-[2px] right-[2px] bg-BrutalGreen1  flex justify-center items-center rounded-sm border-2 border-black active:right-0 active:bottom-0 hover:right-0 hover:bottom-0'>
+                <p className='text-xs md:text-sm font-medium'> Create  </p>
               </span>
             </button>
           </div>

@@ -32,7 +32,7 @@ export const communitySubCategoriesArray = [
     {
         id: 0.1,
         parentValue:"Choose Sub Category",
-        parentLabel: "choose Sub Category",
+        parentLabel: "Choose Sub Category",
         subCategories: [
             {label: "Choose Sub Category", value: "choose Sub Category", id: 0.11 },
         ]

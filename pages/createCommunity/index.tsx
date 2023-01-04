@@ -4,10 +4,12 @@ import { communityCategoriesArray, communitySubCategoriesArray } from "../../con
 import { addDoc, arrayUnion, collection, doc, updateDoc } from 'firebase/firestore'
 import { db, auth } from '../../firebaseConfig'
 import { useRouter } from 'next/router'
+import { useAuthState } from 'react-firebase-hooks/auth'
 
 
 
 const index = () => {
+  const [user, loading] = useAuthState(auth)
   const router = useRouter()
   const [communityNameInputValue, setCommunityNameInputValue] = useState<string>("")
   const [communityCategory, setCommunityCategory] = useState<string>(communityCategoriesArray[0].label)
@@ -61,6 +63,13 @@ const index = () => {
 
     }
   }
+
+
+  useEffect(() => {
+    if(!user && loading === false) {
+      router.push("/register")
+    }
+    },[loading])
 
   return (
     <div className='fixed inset-0 w-[100%] h-[100vh] bg-BrutalOrange1 flex flex-row justify-center lg:justify-end items-center lg:px-32 xl:px-40 2xl:px-72 '>

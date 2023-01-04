@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import { addDoc, arrayUnion, collection, doc, getDocs, query, updateDoc, where } from 'firebase/firestore'
 import { BsCameraVideo, BsImage, BsTextCenter } from 'react-icons/bs'
 import { GrAdd } from 'react-icons/gr'
-import { communityCategoriesArray } from '../../constants/createCommunityPage/communityCategories'
 import { auth, db, storage } from '../../firebaseConfig'
 import { useAuthState } from "react-firebase-hooks/auth"
 import { RxImage } from 'react-icons/rx'
@@ -432,9 +431,151 @@ const uploadPost = () => {
 
       {/*  Small Screen  */}
       <div className='lg:hidden w-full h-full bg-BgBrutalSkin1 flex flex-col justify-start items-center'>
-        <div className='w-full flex space-x-2 justify-start items-center mb-4 bg-lightColor px-3'>
-          
+
+        <div className='w-full flex space-x-2 justify-start items-center mb-4 bg-lightColor px-3 py-5'>
+          <p className='text-lg font-normal' onClick={() => console.log( selectedCommunity )}>Posting to  </p>
+
+          {/* dropdown */}
+          <div className='w-[40%] h-10 relative bg-black flex justify-start items-center '>
+                  <select
+                    title='choose'
+                    className='w-full h-10 absolute right-[2px] bottom-[2px] outline-none focus:ring-0 px-2 placeholder:px-2 border-2 border-black hover:cursor-pointer '
+                    value={selectedCommunity}
+                    onChange={(e) => setSelectedCommunity(e.target.value)}>
+
+                    {userJoinedCommunitiesState && (
+                      userJoinedCommunitiesState.map((community) => {
+                        return (
+                          <option
+                            key={community?.communityID}
+                            className='text-base bg-white text-black'
+                            value={community?.communityID}
+                          // onChange={() => setSelectedCommunity(community?.communityID)}
+                          >
+                            {community.communityName}
+                          </option>
+                        )
+                      })
+                    )}
+                  </select>
+          </div>
         </div>
+
+        <form className='w-full h-full space-y-3'>
+          <input 
+            type="text"
+            placeholder="An interesting title"
+            className='w-full border-none outline-none text-lg bg-BgBrutalSkin1 font-InriaSans font-semibold focus:ring-0 px-4 placeholder:text-black'
+            autoFocus
+            onChange={(e) => setPostTitleInputValue(e.target.value) }
+            value={postTitleInputValue}
+          />
+
+          {postType === "caption" && (
+            <textarea 
+            typeof='text'
+            placeholder='Add caption'
+            className='w-full min-h-[75%] border-none outline-none bg-BgBrutalSkin1 font-InriaSans font-medium focus:ring-0 px-4 placeholder:text-black'
+            onChange={(e) => setPostCaptionInputValue(e.target.value)}
+            value={postCaptionInputValue}
+            />
+          )}
+
+          {postType === "image" && (
+            <div className='w-full flex justify-start items-center px-3 py-2'>
+              <div className='w-32 h-32 rounded-sm border border-dashed border-BrutalPurple2 flex justify-center items-center '>
+                <label className='w-full h-full flex justify-center items-center hover:cursor-pointer'>
+                  <input type="file" placeholder='image' accept="image/*" hidden
+                  onChange={(e) => {
+                    const imageFile = e.target.files
+                    setImage([imageFile])
+                    // setImage( URL.createObjectURL(imageFile[0]) )
+
+                  }}
+                  />
+                  <RxImage className='text-2xl text-BrutalPurple2' />
+
+
+                </label>
+              </div>
+            </div>
+          )}
+
+          {postType === "video" && (
+            <div className='w-full flex justify-start items-center px-3 py-2'>
+              <div className='w-32 h-32 rounded-sm border border-dashed border-BrutalPurple2 flex justify-center items-center '>
+                  <label className='w-full h-full flex justify-center items-center hover:cursor-pointer'>
+                    <input type="file" placeholder='image' accept="video/*" hidden
+                    onChange={(e) => {
+                      const videoFile = e.target.files
+                      setVideo([videoFile])
+                    }}
+                    />
+                  <RiVideoAddFill className='text-2xl text-BrutalPurple2' />
+                </label>
+              </div>
+            </div>
+          )}
+
+        </form>
+
+        <div className=' fixed bottom-[10vh] z-30 px-5 w-full h-[15vh] border-t border-t-black flex justify-between items-center'>
+            <div className='w-full flex justify-start items-center space-x-2'>
+              <button 
+              type='button'
+              onClick={() => {
+                setPostType("caption")
+                setImage([])
+                setVideo([])
+              }}
+              className={postType === "caption" ? "px-3 py-3 rounded-md bg-brandColor flex justify-center items-center active:bg-midColor space-x-2" : "px-3 py-3 rounded-md bg-gray-200 flex justify-center items-center active:bg-midColor space-x-2"}
+              > 
+                <BsTextCenter className={postType === "caption" ? 'text-lightColor opacity-70' : 'text-darkColor opacity-70' } />
+                <span className={ postType === "caption" ? 'hidden sm:inline-block text-lightColor  text-sm font-normal font-poppins' : 'hidden text-darkColor sm:inline-block text-sm font-normal font-poppins'}> Caption </span>
+              </button>
+
+              <button 
+              type='button'
+              onClick={() => {
+                setPostType("image")
+                setPostCaptionInputValue("")
+                setVideo([])
+              }}
+              className={postType === "image" ? "px-3 py-3 rounded-md bg-brandColor flex justify-center items-center active:bg-midColor space-x-2" : "px-3 py-3 rounded-md bg-gray-200 flex justify-center items-center active:bg-midColor space-x-2"}
+              > 
+                <BsImage className={postType === "image" ? 'text-lightColor opacity-70' : 'text-darkColor opacity-70' } />
+                <span className={ postType === "image" ? 'hidden sm:inline-block text-lightColor  text-sm font-normal font-poppins' : 'hidden text-darkColor sm:inline-block text-sm font-normal font-poppins'}> Image </span>
+              </button>
+
+              <button 
+              type='button'
+              onClick={() => {
+                setPostType("video")
+                setPostCaptionInputValue("")
+                setImage([])
+              }}
+              className={postType === "video" ? "px-3 py-3 rounded-md bg-brandColor flex justify-center items-center active:bg-midColor space-x-2" : "px-3 py-3 rounded-md bg-gray-200 flex justify-center items-center active:bg-midColor space-x-2"}
+              > 
+                <BsCameraVideo className={postType === "video" ? 'text-lightColor opacity-70' : 'text-darkColor opacity-70' } />
+                <span className={ postType === "video" ? 'hidden sm:inline-block text-lightColor  text-sm font-normal font-poppins' : 'hidden text-darkColor sm:inline-block text-sm font-normal font-poppins'}> Video </span>
+              </button>
+            </div>
+
+            <button
+            type='button'
+            className='px-5 py-1 bg-brandColor text-lightColor font-poppins text-sm rounded-sm'
+            onClick={() => {
+              if(postType === "caption") {
+                addPost(null, null)
+              } else if (postType === "image") {
+                uploadImage()
+              } else if (postType === "video") {
+                uploadVideo()
+              }
+            }}
+            > Post  </button>
+        </div>
+
       
       </div>
 

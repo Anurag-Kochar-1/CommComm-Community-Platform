@@ -23,7 +23,9 @@ module.exports = {
       },
 
       fontFamily: {
-        Overpass: "Overpass, cursive"
+        Overpass: "Overpass, cursive",
+        BebasNeue : "Bebas Neue, arial",
+        InriaSans: 'Inria Sans, cursive'  
       },
 
     },

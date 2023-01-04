@@ -31,7 +31,7 @@ const TopSection = () => {
 
                 {/* Name and join buton */}
                 <div className='w-full flex justify-between items-center pt-5 '>
-                    <h2 className='text-lg lg:text-2xl font-semibold text-black'> {communityData?.communityName} </h2>
+                    <h2 className='text-lg lg:text-2xl font-bold font-BebasNeue  text-black'> {communityData?.communityName} </h2>
 
                     <div className='relative w-16 h-7  lg:w-20 lg:h-10 bg-black border border-black flex justify-center items-center rounded-full'>
                         <button
@@ -45,15 +45,15 @@ const TopSection = () => {
 
                 {/* total Members and online members */}
                 <div className='w-full flex justify-start items-center space-x-2 '>
-                    <p className='text-black text-sm font-light'> {communityData?.communityMembersID?.length} members </p>
-                    <p className='text-black text-sm font-light'> {communityData?.communityMembersID?.length} online </p>
+                    <p className='text-black text-sm font-light font-InriaSans'> {communityData?.communityMembersID?.length} members </p>
+                    <p className='text-black text-sm font-light font-InriaSans'> {communityData?.communityMembersID?.length} online </p>
                 </div>
 
                 {/* Community Description */}
                 <div className='w-full flex justify-start items-center space-x-2 hover:cursor-pointer '>
-                    {communityData?.communityDescription.length > 130 && <p className='text-black font-normal text-sm'> {communityData?.communityDescription.slice(0, 130)}..... <span className='text-blue-700 opacity-70 font-normal text-sm hover:cursor-pointer'> read more </span> </p>}
+                    {communityData?.communityDescription.length > 130 && <p className='text-black font-normal font-InriaSans text-sm'> {communityData?.communityDescription.slice(0, 130)}..... <span className='text-blue-700 opacity-70 font-normal text-sm hover:cursor-pointer'> read more </span> </p>}
 
-                    {communityData?.communityDescription.length <= 130 && <p className='text-black font-normal text-sm'> {communityData?.communityDescription} </p>}
+                    {communityData?.communityDescription.length <= 130 && <p className='text-black font-normal font-InriaSans text-sm'> {communityData?.communityDescription} </p>}
                 </div>
 
                 {/* Tags */}

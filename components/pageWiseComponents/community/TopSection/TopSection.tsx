@@ -2,6 +2,7 @@ import Image from 'next/image'
 import React from 'react'
 import { useSelector } from 'react-redux'
 import demoLogo from "../../../../public/images/bg/demo.jpg"
+import NavTabs from '../NavTabs/NavTabs'
 import TagBox from '../TagBox/TagBox'
 
 
@@ -10,7 +11,7 @@ const TopSection = () => {
     const communityData: any = useSelector((state: any) => state.communityData.currentCommunityData[0])
 
     return (
-        <div className='w-full flex flex-col items-center justify-start bg-[#ffffff] border-b-2 border-b-black '>
+        <div className='w-full flex flex-col items-center justify-start bg-white border-b-2 border-b-black'>
             {/* ---- Banner ----  */}
             <div
                 className='w-full bg-black h-[25vh] lg:h-[20vh] flex justify-start items-end'
@@ -65,9 +66,13 @@ const TopSection = () => {
                         <div className={`absolute w-32 h-7 flex justify-center items-center right-[2px] bottom-[2px] border border-black bg-yellow-500 text-xs font-medium hover:cursor-pointer`} > {communityData?.communitySubCategory.toUpperCase()} </div>
                     </div>
                 </div>
+                
 
 
             </section>
+
+
+            <NavTabs />
 
         </div>
     )

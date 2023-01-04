@@ -130,14 +130,14 @@ const uploadPost = () => {
                   <select
                     title='choose'
                     className='w-full h-10 absolute right-[2px] bottom-[2px] outline-none focus:ring-0 px-2 placeholder:px-2 border-2 border-black hover:cursor-pointer '
-                    value={userJoinedCommunitiesState[0]?.communityID}
+                    value={selectedCommunity}
                     onChange={(e) => setSelectedCommunity(e.target.value)}>
 
                     {userJoinedCommunitiesState && (
                       userJoinedCommunitiesState.map((community) => {
                         return (
                           <option
-                            key={community.communityID}
+                            key={community?.communityID}
                             className='text-base bg-white text-black'
                             value={community?.communityID}
                             // onChange={() => setSelectedCommunity(community?.communityID)}

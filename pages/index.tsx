@@ -11,7 +11,7 @@ import Link from 'next/link'
 export default function Home() {
   const router = useRouter()
   return (
-    <main className='w-full lg:w-[70%] h-[80vh] lg:h-[90vh] mt-[10vh] mb-[10vh] lg:mb-0 bg-gray-300 flex flex-col justify-start items-center'>
+    <main className='w-full lg:w-[70%] h-[80vh] lg:h-[90vh] mt-[10vh] mb-[10vh] lg:mb-0 bg-BgBrutalSkin1 flex flex-col justify-start items-center'>
       <h1 className='text-4xl text-blue-500 font-bold mt-[7vh]' onClick={() => console.log(auth?.currentUser)}> Home  : LOG USER</h1>
       <h1 className='text-4xl text-red-500 font-bold mt-[7vh]' onClick={() =>  {
         signOut(auth)

@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { BsCameraVideo, BsImage, BsTextCenter } from 'react-icons/bs'
 import { GrAdd } from 'react-icons/gr'
+import { communityCategoriesArray } from '../../constants/createCommunityPage/communityCategories'
 
 const uploadPost = () => {
 
@@ -10,47 +11,52 @@ const uploadPost = () => {
   const [image, setImage] = useState<any[]>([])
   const [video, setVideo] = useState<any[]>([])
 
-  return (
-    <main className='w-full lg:w-[70%] h-[80vh] lg:h-[90vh] mt-[10vh] mb-[10vh] lg:mb-0 bg-white flex flex-col justify-center items-center'>
+  const [communityCategory, setCommunityCategory] = useState<string>(communityCategoriesArray[0].label)
 
-      {/*  Large Screen  */}  
-      <div className='hidden lg:inline-flex relative w-[80%] h-[45vh] bg-black justify-center items-center rounded-md'>
-        <div className='w-full absolute right-1 bottom-1 bg-white border-2 border-BrutalBlack1 rounded-md' >
+  return (
+    <main className='w-full lg:w-[70%] h-[80vh] lg:h-[90vh] mt-[10vh] mb-[10vh] lg:mb-0 bg-[#FFDCA8] flex flex-col justify-center items-center'>
+
+      {/*  Large Screen  */}
+      <div className='hidden lg:inline-flex flex-col relative w-[80%] lg:w-[70%] xl:w-[65%] h-[45vh] bg-black justify-center items-center rounded-md'>
+
+        <div className='w-full h-full absolute right-1 bottom-1 bg-white border-2 border-BrutalBlack1 rounded-md' >
+          {/* TABS */}
           <div className='flex justify-between items-center rounded-md '>
             <button
               type='button'
               onClick={() => setPostType('caption')}
-              className={postType === "caption" ? "w-full h-full flex justify-center items-center space-x-3 border-r border-b border-r-gray-300  border-brandColor py-3 hover:cursor-pointer" : "w-full h-full flex justify-center items-center space-x-3 border-r border-b border-r-gray-300  border-b-gray-400 py-3 hover:cursor-pointer"}
+              className={postType === "caption" ? "w-full h-full flex justify-center items-center space-x-3 border-r border-b border-r-gray-300  border-black py-3 hover:cursor-pointer" : "w-full h-full flex justify-center items-center space-x-3 border-r border-b border-r-gray-300  border-b-gray-400 py-3 hover:cursor-pointer"}
             >
-              <BsTextCenter className={postType === "caption" ? 'text-brandColor w-5 h-5' : 'text-darkColor w-5 h-5'} />
-              <span className={postType === "caption" ? 'font-medium text-brandColor text-base' : 'font-medium text-dakrColor text-base'}> Caption </span>
+              <BsTextCenter className={postType === "caption" ? 'text-black w-5 h-5' : 'text-darkColor w-5 h-5'} />
+              <span className={postType === "caption" ? 'font-medium text-black text-base' : 'font-medium text-dakrColor text-base'}> Caption </span>
             </button>
 
             <button
               type='button'
               onClick={() => setPostType('image')}
-              className={postType === "image" ? "w-full h-full flex justify-center items-center space-x-3 border-r border-b border-r-gray-300  border-brandColor py-3 hover:cursor-pointer" : "w-full h-full flex justify-center items-center space-x-3 border-r border-b border-r-gray-300  border-b-gray-400 py-3 hover:cursor-pointer"}
+              className={postType === "image" ? "w-full h-full flex justify-center items-center space-x-3 border-r border-b border-r-gray-300  border-black py-3 hover:cursor-pointer" : "w-full h-full flex justify-center items-center space-x-3 border-r border-b border-r-gray-300  border-b-gray-400 py-3 hover:cursor-pointer"}
             >
-              <BsImage className={postType === "image" ? 'text-brandColor w-5 h-5' : 'text-darkColor w-5 h-5'} />
-              <span className={postType === "image" ? 'font-medium text-brandColor text-base' : 'font-medium text-dakrColor text-base'}>  Image  </span>
+              <BsImage className={postType === "image" ? 'text-black w-5 h-5' : 'text-darkColor w-5 h-5'} />
+              <span className={postType === "image" ? 'font-medium text-black text-base' : 'font-medium text-dakrColor text-base'}>  Image  </span>
             </button>
 
             <button
               type='button'
               onClick={() => setPostType('video')}
-              className={postType === "video" ? "w-full h-full flex justify-center items-center space-x-3  border-b border-brandColor py-3 hover:cursor-pointer" : "w-full h-full flex justify-center items-center space-x-3 border-b border-b-gray-400 py-3 hover:cursor-pointer"}
+              className={postType === "video" ? "w-full h-full flex justify-center items-center space-x-3  border-b border-black py-3 hover:cursor-pointer" : "w-full h-full flex justify-center items-center space-x-3 border-b border-b-gray-400 py-3 hover:cursor-pointer"}
             >
-              <BsCameraVideo className={postType === "video" ? 'text-brandColor w-5 h-5' : 'text-darkColor w-5 h-5'} />
-              <span className={postType === "video" ? 'font-medium text-brandColor text-base' : 'font-medium text-dakrColor text-base'}>Video  </span>
+              <BsCameraVideo className={postType === "video" ? 'text-black w-5 h-5' : 'text-darkColor w-5 h-5'} />
+              <span className={postType === "video" ? 'font-medium text-black text-base' : 'font-medium text-dakrColor text-base'}>Video  </span>
             </button>
           </div>
 
 
           {postType === "caption" && (
-            <div className='w-full bg-lightColor h-[40vh] flex flex-col items-center justify-between space-y-2 py-5 rounded-md'>
+            <div className='w-full h-[40vh] flex flex-col items-center justify-between space-y-2 py-5 rounded-md'>
 
               {/* TITLE */}
-              <div className='w-full h-full flex flex-col justify-start items-center space-y-2 bg-lightColor'>
+              <div className='w-full h-full flex flex-col justify-start items-center space-y-2 bg-lightColor '>
+
                 <div className='w-[90%] h-10 relative bg-black flex justify-start items-center border border-black'>
                   <input
                     value={postTitleInputValue}
@@ -73,14 +79,43 @@ const uploadPost = () => {
                 </div>
               </div>
 
-              <div className='w-full flex justify-end items-center px-5 py-2 rounded-md '>
+              {/*  Post Button */}
+              <div className='w-full flex justify-between items-center px-10 py-3 rounded-md'>
+
+                <div className='w-[40%] h-10 relative bg-black flex justify-start items-center '>
+                  <select
+                    title='choose'
+                    className='w-full h-10 absolute right-[2px] bottom-[2px] outline-none focus:ring-0 px-2 placeholder:px-2 border-2 border-black hover:cursor-pointer '
+                    value={communityCategory}
+                    onChange={(e) => {
+                      setCommunityCategory(e.target.value)
+                    }}
+                  >
+                    {communityCategoriesArray && communityCategoriesArray?.map((category) => {
+                      return (
+                        <option
+                          key={category.id}
+                          value={category.value}
+                          className='bg-white px-2 py-3 text-black text-base'
+                        > {category.label} </option>
+                      )
+                    })}
+                  </select>
+                </div>
+
+
                 <button
-                  type='button'
                   onClick={() => {
                     // addPost(null, null)
                   }}
-                  className='px-4 py-1 border-none outline-none bg-BrutalOrange1 rounded-sm text-white font-medium text-base'
-                > Post </button>
+                  type='button'
+                  title='post'
+                  className='w-[40%] h-10 relative flex justify-center items-center bg-black rounded-sm border-2 border-black'>
+                  <span className='w-full h-10 absolute bottom-[2px] right-[2px] bg-BrutalPurple1 flex justify-center items-center rounded-sm border-2 border-black active:right-0 active:bottom-0 hover:right-0 hover:bottom-0'>
+                    <p className='text-xs md:text-sm font-medium'> Post  </p>
+                  </span>
+                </button>
+
               </div>
             </div>
           )}
@@ -100,7 +135,7 @@ const uploadPost = () => {
                 </div>
 
                 <div className='w-full flex justify-center items-center py-2 bg-lightColor'>
-                  <div className='w-32 h-32 rounded-sm border border-dashed bg-lightColor border-brandColor flex justify-center items-center '>
+                  <div className='w-32 h-32 rounded-sm border border-dashed bg-lightColor border-black flex justify-center items-center '>
                     <label className='w-full h-full flex justify-center items-center hover:cursor-pointer'>
                       <input type="file" placeholder='image' accept="image/*" hidden
                         onChange={(e) => {
@@ -117,14 +152,21 @@ const uploadPost = () => {
 
               </div>
 
-              <div className='w-full flex justify-end items-center px-5 py-2'>
-                <button
-                  type='button'
-                  onClick={() => {
-                    // uploadImage()
-                  }}
-                  className='px-4 py-1 border-none outline-none bg-BrutalOrange1 rounded-sm text-white font-medium text-base'
-                > Post </button>
+              <div className='w-full flex justify-end items-center px-5 py-2 bg-red-400'>
+                {/*  Post Button */}
+                <div className='w-full flex justify-end items-center px-10 py-3 rounded-md'>
+                  <button
+                    onClick={() => {
+                      // addPost(null, null)
+                    }}
+                    type='button'
+                    title='post'
+                    className='w-20 h-10 relative flex justify-center items-center bg-black rounded-sm border-2 border-black'>
+                    <span className='w-20 h-10 absolute bottom-[2px] right-[2px] bg-BrutalPurple1  flex justify-center items-center rounded-sm border-2 border-black active:right-0 active:bottom-0 hover:right-0 hover:bottom-0'>
+                      <p className='text-xs md:text-sm font-medium'> Post  </p>
+                    </span>
+                  </button>
+                </div>
               </div>
             </div>
           )}
@@ -160,13 +202,20 @@ const uploadPost = () => {
               </div>
 
               <div className='w-full flex justify-end items-center px-5 py-2'>
-                <button
-                  type='button'
-                  onClick={() => {
-                    // uploadVideo()
-                  }}
-                  className='px-4 py-1 border-none outline-none bg-BrutalOrange1 rounded-sm text-white font-medium text-base'
-                > Post </button>
+                {/*  Post Button */}
+                <div className='w-full flex justify-end items-center px-10 py-3 rounded-md'>
+                  <button
+                    onClick={() => {
+                      // addPost(null, null)
+                    }}
+                    type='button'
+                    title='post'
+                    className='w-20 h-10 relative flex justify-center items-center bg-black rounded-sm border-2 border-black'>
+                    <span className='w-20 h-10 absolute bottom-[2px] right-[2px] bg-BrutalPurple1  flex justify-center items-center rounded-sm border-2 border-black active:right-0 active:bottom-0 hover:right-0 hover:bottom-0'>
+                      <p className='text-xs md:text-sm font-medium'> Post  </p>
+                    </span>
+                  </button>
+                </div>
               </div>
             </div>
           )}

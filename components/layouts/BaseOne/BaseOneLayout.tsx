@@ -10,6 +10,7 @@ interface IHomeLayoutProps {
 }
 
 const BaseOneLayout = ( {children}:IHomeLayoutProps ) => {
+  // console.log(`-------------- BaseOneLayout is running`)
   return (
     <div className='w-full flex justify-between items-center max-h-screen overflow-hidden'>
         <Head>

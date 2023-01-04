@@ -31,7 +31,10 @@ const uploadPost = () => {
     })
 
     setUserJoinedCommunitiesState(queryData.docs.map((doc: any) => ({ ...doc.data(), id: doc.id })));
-    setSelectedCommunity(userJoinedCommunitiesState[0]?.communityID)
+
+    
+
+    
   }
 
 
@@ -39,9 +42,16 @@ const uploadPost = () => {
   useEffect(() => {
     if (user && !loading) {
       fetchUserJoinedAndOwnedCommunities()
-
+      // setSelectedCommunity(userJoinedCommunitiesState[0]?.communityID)
     }
   }, [loading])
+
+  useEffect(() => {
+    if (userJoinedCommunitiesState) {
+      console.log("second useEffect is running")
+      setSelectedCommunity(userJoinedCommunitiesState[0]?.communityID)
+    }
+  }, [userJoinedCommunitiesState])
 
 
 
@@ -130,6 +140,7 @@ const uploadPost = () => {
                             key={community.communityID}
                             className='text-base bg-white text-black'
                             value={community?.communityID}
+                            // onChange={() => setSelectedCommunity(community?.communityID)}
                           >
                             {community.communityName}
                           </option>

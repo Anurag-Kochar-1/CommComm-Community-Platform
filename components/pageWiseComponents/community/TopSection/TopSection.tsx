@@ -1,4 +1,6 @@
 import Image from 'next/image'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
 import React from 'react'
 import { useSelector } from 'react-redux'
 import demoLogo from "../../../../public/images/bg/demo.jpg"
@@ -7,11 +9,13 @@ import TagBox from '../TagBox/TagBox'
 
 
 const TopSection = () => {
+    const router = useRouter()
+    const {id} = router.query
 
     const communityData: any = useSelector((state: any) => state.communityData.currentCommunityData[0])
 
     return (
-        <div className='w-full flex flex-col items-center justify-start bg-BgBrutalSkin1 border-b-2 border-b-black'>
+        <div className='w-full flex flex-col items-center justify-start bg-BgBrutalSkin1 border-b border-b-black'>
             {/* ---- Banner ----  */}
             <div
                 className='w-full bg-black h-[25vh] lg:h-[20vh] flex justify-start items-end'
@@ -51,7 +55,7 @@ const TopSection = () => {
 
                 {/* Community Description */}
                 <div className='w-full flex justify-start items-center space-x-2 hover:cursor-pointer '>
-                    {communityData?.communityDescription.length > 130 && <p className='text-black font-normal font-InriaSans text-sm'> {communityData?.communityDescription.slice(0, 130)}..... <span className='text-blue-700 opacity-70 font-normal text-sm hover:cursor-pointer'> read more </span> </p>}
+                    {communityData?.communityDescription.length > 130 && <p className='text-black font-normal font-InriaSans text-sm'> {communityData?.communityDescription.slice(0, 130)}..... <Link href={`/community/${id}/About`} className='text-blue-700 opacity-70 font-normal text-sm hover:cursor-pointer'> read more </Link> </p>}
 
                     {communityData?.communityDescription.length <= 130 && <p className='text-black font-normal font-InriaSans text-sm'> {communityData?.communityDescription} </p>}
                 </div>

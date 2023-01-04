@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { communityCategoriesArray, communitySubCategoriesArray } from "../../constants/createCommunityPage/communityCategories"
-import { addDoc, collection, doc, updateDoc } from 'firebase/firestore'
+import { addDoc, arrayUnion, collection, doc, updateDoc } from 'firebase/firestore'
 import { db, auth } from '../../firebaseConfig'
 import { useRouter } from 'next/router'
 
@@ -44,8 +44,16 @@ const index = () => {
         communityID: addingCommunityDoc?.id
       })
 
+      // updating user 
+      const userRef = doc(db, "users", auth?.currentUser?.uid as string)
+      const updateUser = await updateDoc(userRef, {
+          communitiesJoinedID: arrayUnion(communityRef.id),
+          communitiesOwnedID: arrayUnion(communityRef.id),
+      })
+
 
       router.push(`/community/${addingCommunityDoc.id}`)
+
       // resetting states
       setCommunityNameInputValue("")
 

@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { communityCategoriesArray, communitySubCategoriesArray } from "../../constants/createCommunityPage/communityCategories"
-import { addDoc, collection } from 'firebase/firestore'
+import { addDoc, collection, doc, updateDoc } from 'firebase/firestore'
 import { db, auth } from '../../firebaseConfig'
+import { useRouter } from 'next/router'
 
 
 
 const index = () => {
+  const router = useRouter()
   const [communityNameInputValue, setCommunityNameInputValue] = useState<string>("")
   const [communityCategory, setCommunityCategory] = useState<string>(communityCategoriesArray[0].label)
   const [communitySubCategory, setCommunitySubCategory] = useState<string>(communitySubCategoriesArray[0].parentLabel)
@@ -31,13 +33,23 @@ const index = () => {
         communityOwnerID: auth?.currentUser?.uid,
         communityOwnerDisplayName: auth?.currentUser?.displayName,
         communityOwnerEmail: auth.currentUser?.email,
-        communityPostsID: []
+        communityPostsID: [],
+        communityDescription: ""
+      })
+
+      const communityRef = doc(db, "communities", addingCommunityDoc.id)
+
+      // adding communityID manually hehe
+      await updateDoc(communityRef, {
+        communityID: addingCommunityDoc?.id
       })
 
 
-
+      router.push(`/community/${addingCommunityDoc.id}`)
       // resetting states
       setCommunityNameInputValue("")
+
+      
 
     }
   }
@@ -71,7 +83,7 @@ const index = () => {
                 required
                 type="email"
                 placeholder='Community Name'
-                className='w-full h-10 absolute right-1 bottom-1 outline-none focus:ring-0 px-2 placeholder:px-2 border-2 border-black'
+                className='w-full h-10 absolute right-1 bottom-1 text-black placeholder:text-black outline-none focus:ring-0 px-2 placeholder:px-2 border-2 border-black'
               />
             </div>
 

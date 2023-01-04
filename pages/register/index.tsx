@@ -10,6 +10,10 @@ import { useRouter } from 'next/router'
 import { SignInWithGoogleFunction } from "../../utils/SignInWithGoogle/SignInWithGoogle"
 import { SignInWithFacebookFunction } from "../../utils/SignInWithFacebook/SignInWithFacebook"
 
+import blueLinesBG from "../../public/images/bg/blueLinesBG.svg"
+import pattern1 from "../../public/images/bg/pattern1.svg"
+import jigsaw from "../../public/images/bg/jigsaw.svg"
+ 
 const index = () => {
   const router = useRouter()
   const [emailInputValue, setEmailInputValue] = useState<string>("")
@@ -57,9 +61,11 @@ const index = () => {
   }
 
   return (
-    <div className='fixed inset-0 w-[100%] h-[100vh] bg-BrutalOrange1 flex flex-row justify-center lg:justify-end items-center lg:px-32 xl:px-40 2xl:px-72 '>
+    <div className='fixed inset-0 w-[100%] h-[100vh] bg-BrutalBlue1 flex flex-row justify-center lg:justify-end items-center lg:px-32 xl:px-40 2xl:px-72'>
 
-      {/* <Image src={blueLinesBG} alt='bg' className='fixed inset-0 w-[100%] h-[100vh] z-10' draggable="false" /> */}
+      {/* <img src={blueLinesBG} alt='bg' className='fixed inset-0 z-10 w-full h-full' draggable="false" /> */}
+
+
 
       {!isLoading && (
         <div className='z-20 w-full h-[90vh] mb-[10vh] lg:mb-0 sm:w-[70%] sm:h-[70vh] md:w-[70%] lg:w-[60%] xl:w-[40%] 2xl:w-[35%] bg-white rounded-md flex flex-col justify-start items-start pt-10 pb-5 px-5 space-y-5 overflow-x-hidden overflow-y-scroll scrollbar-hide'>

@@ -10,6 +10,7 @@ import { RiVideoAddFill } from 'react-icons/ri'
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage"
 import { v4 as uuidv4 } from "uuid"
 import { useRouter } from 'next/router'
+import { AiOutlineLoading3Quarters } from 'react-icons/ai'
 
 const uploadPost = () => {
   const router = useRouter()
@@ -427,6 +428,23 @@ const uploadPost = () => {
           )}
         </div>
       </div>
+
+
+      {/*  Small Screen  */}
+      <div className='lg:hidden w-full h-full bg-BgBrutalSkin1 flex flex-col justify-start items-center'>
+        <div className='w-full flex space-x-2 justify-start items-center mb-4 bg-lightColor px-3'>
+          
+        </div>
+      
+      </div>
+
+
+      {isPostPosting && (
+        <div className='z-40 w-[100%] h-[100vh] fixed inset-0 flex flex-col justify-center items-center bg-BgBrutalSkin1 space-y-5'> 
+          <p className='text-4xl font-bold text-black'> POSTING... </p>
+          <AiOutlineLoading3Quarters className="w-10 h-10 text-black animate-spin" />
+      </div>
+      )}
     </main>
   )
 }

@@ -7,7 +7,7 @@ interface IProps {
 }
 
 const CommunityLayout = ({children}: IProps) => {
-    console.log(`----------------------------- CommunityLayout is running`)
+    // console.log(`----------------------------- CommunityLayout is running`)
   return (
     <div className='w-full lg:w-[60%] h-[80vh] lg:h-[90vh] mt-[10vh] mb-[10vh] lg:mb-0 flex flex-col justify-start items-center overflow-x-hidden overflow-y-visible'>
 

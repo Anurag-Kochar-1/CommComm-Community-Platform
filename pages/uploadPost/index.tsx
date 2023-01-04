@@ -1,23 +1,57 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { collection, getDocs, query, where } from 'firebase/firestore'
 import { BsCameraVideo, BsImage, BsTextCenter } from 'react-icons/bs'
 import { GrAdd } from 'react-icons/gr'
 import { communityCategoriesArray } from '../../constants/createCommunityPage/communityCategories'
+import { auth, db } from '../../firebaseConfig'
+import { useAuthState } from "react-firebase-hooks/auth"
 
 const uploadPost = () => {
-
+  const [user, loading] = useAuthState(auth)
   const [postType, setPostType] = useState<string>("caption")
   const [postTitleInputValue, setPostTitleInputValue] = useState<string>("")
   const [postCaptionInputValue, setPostCaptionInputValue] = useState<string>("")
   const [image, setImage] = useState<any[]>([])
   const [video, setVideo] = useState<any[]>([])
 
-  const [communityCategory, setCommunityCategory] = useState<string>(communityCategoriesArray[0].label)
+  const [userJoinedCommunitiesState, setUserJoinedCommunitiesState] = useState<any[] | []>([])
+  const [selectedCommunity, setSelectedCommunity] = useState<any | null>(null)
+
+
+
+  const communityCollectionRef = collection(db, "communities")
+
+  const fetchUserJoinedAndOwnedCommunities = async () => {
+    console.log(` ---- fetchUserJoinedAndOwnedCommunities is running ----`)
+    const userJoinedCommunitiesArray: any[] = []
+    const queryTheUser = query(communityCollectionRef, where("communityMembersID", "array-contains", auth?.currentUser?.uid))
+    const queryData = await getDocs(queryTheUser)
+    queryData.forEach((doc) => {
+      userJoinedCommunitiesArray.push(doc.data())
+    })
+
+    setUserJoinedCommunitiesState(queryData.docs.map((doc: any) => ({ ...doc.data(), id: doc.id })));
+    setSelectedCommunity(userJoinedCommunitiesState[0]?.communityID)
+  }
+
+
+
+  useEffect(() => {
+    if (user && !loading) {
+      fetchUserJoinedAndOwnedCommunities()
+
+    }
+  }, [loading])
+
+
 
   return (
     <main className='w-full lg:w-[70%] h-[80vh] lg:h-[90vh] mt-[10vh] mb-[10vh] lg:mb-0 bg-[#FFDCA8] flex flex-col justify-center items-center'>
 
       {/*  Large Screen  */}
-      <div className='hidden lg:inline-flex flex-col relative w-[80%] lg:w-[70%] xl:w-[65%] h-[45vh] bg-black justify-center items-center rounded-md'>
+      <div className='hidden lg:inline-flex flex-col relative w-[80%] lg:w-[70%] xl:w-[65%] h-[45vh] bg-black justify-center items-center rounded-md' onClick={() => {
+
+      }}>
 
         <div className='w-full h-full absolute right-1 bottom-1 bg-white border-2 border-BrutalBlack1 rounded-md' >
           {/* TABS */}
@@ -79,27 +113,29 @@ const uploadPost = () => {
                 </div>
               </div>
 
-              {/*  Post Button */}
+              {/*  Post Button and Select Community */}
               <div className='w-full flex justify-between items-center px-10 py-3 rounded-md'>
 
                 <div className='w-[40%] h-10 relative bg-black flex justify-start items-center '>
                   <select
                     title='choose'
                     className='w-full h-10 absolute right-[2px] bottom-[2px] outline-none focus:ring-0 px-2 placeholder:px-2 border-2 border-black hover:cursor-pointer '
-                    value={communityCategory}
-                    onChange={(e) => {
-                      setCommunityCategory(e.target.value)
-                    }}
-                  >
-                    {communityCategoriesArray && communityCategoriesArray?.map((category) => {
-                      return (
-                        <option
-                          key={category.id}
-                          value={category.value}
-                          className='bg-white px-2 py-3 text-black text-base'
-                        > {category.label} </option>
-                      )
-                    })}
+                    value={userJoinedCommunitiesState[0]?.communityID}
+                    onChange={(e) => setSelectedCommunity(e.target.value)}>
+
+                    {userJoinedCommunitiesState && (
+                      userJoinedCommunitiesState.map((community) => {
+                        return (
+                          <option
+                            key={community.communityID}
+                            className='text-base bg-white text-black'
+                            value={community?.communityID}
+                          >
+                            {community.communityName}
+                          </option>
+                        )
+                      })
+                    )}
                   </select>
                 </div>
 
@@ -107,6 +143,8 @@ const uploadPost = () => {
                 <button
                   onClick={() => {
                     // addPost(null, null)
+                    console.log(`selectedCommunity => ${selectedCommunity}`);
+                    console.log(userJoinedCommunitiesState);
                   }}
                   type='button'
                   title='post'

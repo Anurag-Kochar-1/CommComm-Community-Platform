@@ -11,7 +11,7 @@ import CreateOptionsModal from '../Modals/CreateOptionsModal/CreateOptionsModal'
 
 const Header = () => {
   const router = useRouter()
-  const isUser = true
+  const isUser = false
 
   return (
     <div className='fixed top-0 w-full h-[10vh] bg-white border-b border-b-black py-4 px-3 md:px-5 flex justify-between items-center'>

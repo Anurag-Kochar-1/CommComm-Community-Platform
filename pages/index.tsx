@@ -3,6 +3,7 @@ import { Inter } from '@next/font/google'
 import { useRouter } from 'next/router'
 import { auth } from '../firebaseConfig'
 import { signOut } from 'firebase/auth'
+import Link from 'next/link'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -15,6 +16,9 @@ export default function Home() {
         signOut(auth)
         console.log("Signed Out!!!")
       } }> Sign out </h1>
+
+
+      <Link href={'/createCommunity'} className="my-12"> Create community </Link>
 
 
       

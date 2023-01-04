@@ -9,6 +9,7 @@ import SearchBar from './components/SearchBar/SearchBar'
 import CreateOptionsModal from '../Modals/CreateOptionsModal/CreateOptionsModal'
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { auth } from '../../../firebaseConfig'
+import Link from 'next/link'
 
 
 
@@ -22,7 +23,7 @@ const Header = () => {
     <div className='fixed top-0 w-full h-[10vh] bg-white border-b border-b-black py-4 px-3 md:px-5 flex justify-between items-center'>
 
       {/*  DEMO LOGO  */}
-      <div className='w-10 h-10 rounded-full bg-BrutalOrange1' onClick={() => console.log(1)} />
+      <Link href={'/'} className='w-10 h-10 rounded-full bg-BrutalOrange1' onClick={() => console.log(1)} />
 
       <SearchBar />
 

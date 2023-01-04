@@ -13,6 +13,7 @@ const CommunityLayout = ({children}: IProps) => {
 
         <TopSection />
         {/* <NavTabs /> */}
+        {/* ------- NOW AB TOPSECTION KE ANDAR HAI EZ PZ-------   */}
 
 
         {children}

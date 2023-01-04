@@ -1,14 +1,23 @@
+import React, {useEffect} from 'react'
 import { useRouter } from 'next/router'
-import React from 'react'
+import CommunityLayout from '../../../../components/layouts/Community/CommunityLayout'
 
-const textChannelID  = () => {
-    const router = useRouter()
-    const { TextChannelID } = router.query
+const textChannelID = () => {
+  const router = useRouter()
+  const { TextChannelID } = router.query
+  const { id } = router.query
+
+  useEffect(() => {
+    
+  },[])
+
   return (
-    <div className='mt-60'>
-        TextChannelID hai - {TextChannelID}
+    <CommunityLayout>
+      <main className='w-full h-full flex flex-col justify-start items-center bg-orange-900 pt-12 pb-36'>
+        TextChannelID hai - {TextChannelID} of comm id - {id}
 
-    </div>
+      </main>
+    </CommunityLayout>
   )
 }
 

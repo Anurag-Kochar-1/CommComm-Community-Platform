@@ -2,8 +2,8 @@ import React from 'react'
 
 const LeftSideBar = () => {
   return (
-    <div className='hidden lg:inline-flex w-[20%] h-[93vh] mt-[7vh] bg-gray-600'>
-        LeftSideBar
+    <div className='hidden lg:inline-flex w-[20%] h-[93vh] mt-[7vh] bg-gray-600 justify-center items-center'>
+        <h1 className='font-medium text-2xl text-white'> LeftSideBar </h1>
     </div>
   )
 }

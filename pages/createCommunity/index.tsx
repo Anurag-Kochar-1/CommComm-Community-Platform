@@ -8,6 +8,7 @@ const index = () => {
   const [communityNameInputValue, setCommunityNameInputValue] = useState<string>("")
   const [communityCategory, setCommunityCategory] = useState<string>(communityCategoriesArray[0].label)
   const [communitySubCategory, setCommunitySubCategory] = useState<string>(communitySubCategoriesArray[0].parentLabel)
+  const [isDemoOpen, setIsDemoOpen] = useState<boolean>(true)
 
   return (
     <div className='fixed inset-0 w-[100%] h-[100vh] bg-BrutalBlue1 flex flex-row justify-center lg:justify-end items-center lg:px-32 xl:px-40 2xl:px-72 '>
@@ -50,7 +51,8 @@ const index = () => {
                 value={communityCategory}
                 onChange={(e) => {
                   setCommunityCategory(e.target.value)
-                  setCommunityNameInputValue("")
+                  setCommunitySubCategory(communitySubCategoriesArray[0].parentLabel)
+                  setIsDemoOpen(false)
                 }}
               >
                 {communityCategoriesArray && communityCategoriesArray?.map((category) => {
@@ -100,7 +102,7 @@ const index = () => {
             </div>}
 
 
-            {/* Demo */}
+            {/* Demo  communityCategory === communityCategoriesArray[0].label */}
             {communityCategory === communityCategoriesArray[0].label && <div className='w-[90%] h-10 relative bg-BrutalPurple1 flex justify-start items-center'>
               <select
                 title='Choose Sub Category'

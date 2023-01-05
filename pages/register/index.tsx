@@ -83,7 +83,7 @@ const Index = () => {
   }
 
   return (
-    <div className='fixed inset-0 w-[100%] h-[100vh] bg-gradient-to-r from-slate-500 to-slate-800 flex flex-row justify-center lg:justify-end items-center lg:px-28 xl:px-52 2xl:px-60'>
+    <div className='fixed inset-0 w-[100%] h-[100vh] bg-white lg:bg-gradient-to-r from-slate-500 to-slate-800 flex flex-row justify-center lg:justify-end items-center lg:px-28 xl:px-52 2xl:px-60'>
 
       {/* <img src={blueLinesBG} alt='bg' className='fixed inset-0 z-10 w-full h-full' draggable="false" /> */}
 

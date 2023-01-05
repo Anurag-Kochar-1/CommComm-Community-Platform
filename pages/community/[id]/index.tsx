@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { doc, getDoc } from 'firebase/firestore'
+import { collection, doc, getDoc, getDocs } from 'firebase/firestore'
 import { useRouter } from 'next/router'
 import CommunityLayout from '../../../components/layouts/Community/CommunityLayout'
 import NavTabs from '../../../components/pageWiseComponents/community/NavTabs/NavTabs'
@@ -7,20 +7,32 @@ import TopSection from '../../../components/pageWiseComponents/community/TopSect
 import { db } from '../../../firebaseConfig'
 import { useDispatch } from 'react-redux'
 import { setCurrentCommunityData } from "../../../redux/slices/communityDataSlice"
+import PostFeed from '../../../components/globalComponents/Posts/PostFeed/PostFeed'
+import { setCurrentCommunityPostsData } from '../../../redux/slices/postsDataSlice'
+import { IPost } from '../../../customTypesAndInterfaces/Posts/postInterface'
 
-const index = ({ communityData }: any) => {
+const index = ({ communityData, currentCommunityPosts }: any) => {
   const router = useRouter()
   const { id } = router.query
   const dispatch = useDispatch()
 
+  
+  const fetchCommunityPosts = async () => {
+    const communityRef = doc(db, "communities", id as string)
+
+  }
+
   useEffect(() => {
     dispatch(setCurrentCommunityData([communityData]))
+    dispatch(setCurrentCommunityPostsData(currentCommunityPosts))
   }, [id])
 
   return (
     <CommunityLayout>
       <main className='w-full bg-BgBrutalSkin1 flex flex-col justify-start items-center pt-12 pb-36'>
-        {/* <h1 className='mt-10' onClick={() => console.log(id)}> Community ID - {router.query.id} : blog </h1> */}
+        {/* <h1 className='mt-10' onClick={() => console.log(currentCommunityPosts)}> Community ID - {router.query.id} : currentCommunityPosts </h1> */}
+
+        <PostFeed />
 
         {/* <p>
         Strings are left as-is
@@ -389,13 +401,37 @@ export default index
 
 export const getServerSideProps = async ({ params }: any) => {
   const { id }: string | any = params
+
+  // fetching community Details
   const communityRef = doc(db, "communities", id as string)
   const res = await getDoc(communityRef)
   const communityData = res.data()
 
 
+  // fetching community posts 
+  const allCommunityPosts:IPost[] = []
+  const currentCommunityPosts:IPost[] = []
+  const postCollectionRef = collection(db, "posts")
+  const allPostsData = await getDocs(postCollectionRef)
+
+  allPostsData?.forEach((post) => {
+    allCommunityPosts.push(post?.data() as IPost)
+  })
+
+  allCommunityPosts.filter((post) => {
+    if(post.postCreateAtCommunityID === id) {
+      currentCommunityPosts.push(post)
+    } else {
+      return;
+    }
+  })
+
+
   return {
-    props: { communityData }
+    props: { 
+      communityData,
+      currentCommunityPosts
+     }
   };
 }
 

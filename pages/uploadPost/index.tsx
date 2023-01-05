@@ -100,7 +100,6 @@ const uploadPost = () => {
         postCreatorName: user?.displayName,
         postCreateAtCommunityID: selectedCommunity,
         upvotedByUserID: [],
-        downvotedByUserID: []
       })
 
       // Upading post to add ID manually

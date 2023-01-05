@@ -67,7 +67,7 @@ const Index = ({ allCommunityMessage }: any) => {
   return (
     <CommunityLayout>
       <main className='w-full h-full flex flex-col justify-between items-center bg-BgBrutalSkin1 pb-5 sm:px-4'>
-        <h1 onClick={() => console.log(realTimeMessagesState)}>  lOG realTimeMessagesState </h1>
+        {/* <h1 onClick={() => console.log(realTimeMessagesState)}>  lOG realTimeMessagesState </h1> */}
 
 
         <div className='w-full  overflow-x-hidden overscroll-y-scroll space-y-3 pb-40 px-3 bg-white py-5 rounded-md scrollbar-hide'>
@@ -140,11 +140,6 @@ export const getServerSideProps = async ({ params }: any) => {
   res.forEach((message) => {
     return allCommunityMessage.push(message.data())
   })
-
-
-  // fetching community posts 
-
-
 
   return {
     props: {

@@ -7,6 +7,7 @@ import { auth, db } from '../../../../firebaseConfig'
 import { AiOutlineLike, AiTwotoneLike, AiOutlineShareAlt } from "react-icons/ai"
 import { MdOutlineModeComment } from "react-icons/md"
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 
 interface IProps {
     postData: IPost
@@ -14,6 +15,7 @@ interface IProps {
 }
 
 const PostCard = ({ postData, postedAt }: IProps) => {
+    const router = useRouter()
     const [user, loading] = useAuthState(auth)
     const [communityDetails, setCommunityDetails] = useState<ICommunityData[]>([])
     const [isPostLiked, setIsPostLiked] = useState<Boolean>(false)
@@ -34,42 +36,58 @@ const PostCard = ({ postData, postedAt }: IProps) => {
 
 
     const unLikePost = async () => {
-        setIsPostLiked(false)
-        setPostLikeCount(postLikeCount - 1)
-
-        const userRef = doc(db, "users", user?.uid as string)
-        const postRef = doc(db, "posts", postData.postID)
-
-        // Updating Post
-        await updateDoc(postRef, {
-            upvotedByUserID: arrayRemove(user?.uid)
-        })
-
-
-        // Updating User
-        await updateDoc(userRef, {
-            likedPostsID: arrayRemove(postData.postID)
-        })
+        if(!user && !loading) {
+            router.push("/register")
+        } else if (user && !loading) {
+            try {
+                setIsPostLiked(false)
+                setPostLikeCount(postLikeCount - 1)
+    
+                const userRef = doc(db, "users", user?.uid as string)
+                const postRef = doc(db, "posts", postData.postID)
+    
+                // Updating Post
+                await updateDoc(postRef, {
+                    upvotedByUserID: arrayRemove(user?.uid)
+                })
+    
+    
+                // Updating User
+                await updateDoc(userRef, {
+                    likedPostsID: arrayRemove(postData.postID)
+                })
+            } catch (error) {
+                console.log(error);
+            }
+        }
     }
 
     const likePost = async () => {
-        setIsPostLiked(true)
-        setPostLikeCount(postLikeCount + 1)
+        if (!user && !loading) {
+            router.push("/register")
+        } else if (user && !loading) {
+            try {
+                setIsPostLiked(true)
+                setPostLikeCount(postLikeCount + 1)
 
 
-        const userRef = doc(db, "users", user?.uid as string)
-        const postRef = doc(db, "posts", postData.postID)
+                const userRef = doc(db, "users", user?.uid as string)
+                const postRef = doc(db, "posts", postData.postID)
 
-        // Updating Post
-        await updateDoc(postRef, {
-            upvotedByUserID: arrayUnion(user?.uid)
-        })
+                // Updating Post
+                await updateDoc(postRef, {
+                    upvotedByUserID: arrayUnion(user?.uid)
+                })
 
 
-        // Updating User
-        await updateDoc(userRef, {
-            likedPostsID: arrayUnion(postData.postID)
-        })
+                // Updating User
+                await updateDoc(userRef, {
+                    likedPostsID: arrayUnion(postData.postID)
+                })
+            } catch (error) {
+                console.log(error)
+            }
+        }
     }
 
     const checkIsUserJoinedInCommunity = () => {
@@ -79,6 +97,8 @@ const PostCard = ({ postData, postedAt }: IProps) => {
             } else {
                 setIsUserJoinedInCommunity(false)
             }
+        } else if (!user && !loading) {
+            setIsUserJoinedInCommunity(false)
         }
     }
 
@@ -86,12 +106,14 @@ const PostCard = ({ postData, postedAt }: IProps) => {
     const checkIsPostLikedByUser = () => {
         if (user?.uid && !loading) {
             postData.upvotedByUserID.map((user2: any) => {
-                if(user2 == user.uid) {
+                if (user2 == user.uid) {
                     setIsPostLiked(true)
                 } else {
                     setIsPostLiked(false)
                 }
             })
+        } else {
+            setIsPostLiked(false)
         }
     }
 

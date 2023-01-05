@@ -17,6 +17,8 @@ const LeaveCommunity = async (userID: string, communityID: string) => {
         await updateDoc(userRef, {
             communitiesJoinedID: arrayRemove(communityID)
         })
+
+        console.log(`LEFT !!!`);
     } catch (error) {
         alert("Try Again")
     }

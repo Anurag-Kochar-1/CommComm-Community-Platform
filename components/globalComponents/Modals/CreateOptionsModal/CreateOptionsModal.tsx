@@ -48,9 +48,8 @@ export default function CreateOptionsModal() {
 
                                     <div className='w-full h-full bg-BgBrutalSkin1 flex flex-col justify-start items-start px-5 py-6 md:py-12'>
 
-                                        <div
+                                        <Link href={'/UploadPost'}
                                             onClick={() => {
-                                                router.push("/UploadPost")
                                                 closeModal()
                                             }}
                                             className='w-full py-2 space-y-6 flex flex-col justify-start items-center my-4 hover:cursor-pointer'>
@@ -60,18 +59,17 @@ export default function CreateOptionsModal() {
                                                 </div>
                                             </div>
 
-                                            <div
+                                            <Link href={'/createCommunity'}
                                                 onClick={() => {
-                                                    router.push("/createCommunity")
                                                     closeModal()
                                                 }}
                                                 className='w-full h-16 relative bg-black border-2 border-black flex justify-between items-center hover:cursor-pointer'>
                                                 <div className='w-full h-16 absolute right-1 bottom-1 flex justify-center items-center bg-BrutalPurple2 border-2 border-black active:right-0 active:bottom-0'>
                                                     <p className='font-bold text-base text-black'> Create Community </p>
                                                 </div>
-                                            </div>
+                                            </Link>
 
-                                        </div>
+                                        </Link>
                                     </div>
 
 

@@ -1,21 +1,41 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { useAuthState } from 'react-firebase-hooks/auth'
 import { useSelector } from 'react-redux'
+import { auth } from '../../../../firebaseConfig'
 import demoLogo from "../../../../public/images/bg/demo.jpg"
 import NavTabs from '../NavTabs/NavTabs'
 import TagBox from '../TagBox/TagBox'
 
 
 const TopSection = () => {
+    const [user, loading] = useAuthState(auth)
     const router = useRouter()
     const {id} = router.query
+    const [isUserJoinedInCommunity, setIsUserJoinedInCommunity] = useState<boolean>(false)
 
     const communityData: any = useSelector((state: any) => state.communityData.currentCommunityData[0])
 
+    useEffect(() => {
+        if(communityData && user?.uid && !loading) {
+            if(communityData?.communityMembersID.includes(user.uid)){
+                setIsUserJoinedInCommunity(true)
+                console.log(`ANS -> ${communityData?.communityMembersID.includes(user.uid)}`)
+            } else if (!communityData?.communityMembersID.includes(user.uid)) {
+                setIsUserJoinedInCommunity(false)
+                console.log(`ANS -> ${communityData?.communityMembersID.includes(user.uid)}`)
+            }
+        }
+
+    },[communityData, loading])
+
+
+    
+
     return (
-        <div className='w-full flex flex-col items-center justify-start bg-BgBrutalSkin1 border-b border-b-black'>
+        <div className='w-full flex flex-col items-center justify-start bg-BgBrutalSkin1 border-b border-b-black' onClick={() => console.log(communityData)}>
             {/* ---- Banner ----  */}
             <div
                 className='w-full bg-black h-[25vh] lg:h-[20vh] flex justify-start items-end'
@@ -41,7 +61,7 @@ const TopSection = () => {
                         <button
                             type='button'
                             className='w-16 h-9 lg:w-20 lg:h-10 absolute right-1 bottom-1 bg-BrutalGreen2 text-xl font-medium text-black border border-black active:right-0 active:bottom-0 rounded-full font-BebasNeue'>
-                            Join
+                             {isUserJoinedInCommunity ? "JOINED" : "JOIN"}
                         </button>
                     </div>
 

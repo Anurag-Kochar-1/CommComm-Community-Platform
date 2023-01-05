@@ -9,6 +9,7 @@ import { MdOutlineModeComment } from "react-icons/md"
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { JoinCommunity } from '../../../../utils/Community/JoinCommunity'
+import { LeaveCommunity } from '../../../../utils/Community/LeaveCommunity'
 
 interface IProps {
     postData: IPost
@@ -21,6 +22,8 @@ const PostCard = ({ postData, postedAt }: IProps) => {
     const [communityDetails, setCommunityDetails] = useState<ICommunityData[]>([])
     const [isPostLiked, setIsPostLiked] = useState<Boolean>(false)
     const [isUserJoinedInCommunity, setIsUserJoinedInCommunity] = useState<boolean>(false)
+    const [isUserMember, setIsUserMember] = useState<boolean>(false)
+    const [isJoinedBtnClicked, setIsJoinedBtnClicked] = useState<boolean>(false)
     const [postLikeCount, setPostLikeCount] = useState<number>(postData.upvotedByUserID.length)
 
 
@@ -31,28 +34,29 @@ const PostCard = ({ postData, postedAt }: IProps) => {
             const data = res.data()
             setCommunityDetails([data as ICommunityData])
 
+            
         }
 
     }
 
 
     const unLikePost = async () => {
-        if(!user && !loading) {
+        if (!user && !loading) {
             router.push("/register")
         } else if (user && !loading) {
             try {
                 setIsPostLiked(false)
                 setPostLikeCount(postLikeCount - 1)
-    
+
                 const userRef = doc(db, "users", user?.uid as string)
                 const postRef = doc(db, "posts", postData.postID)
-    
+
                 // Updating Post
                 await updateDoc(postRef, {
                     upvotedByUserID: arrayRemove(user?.uid)
                 })
-    
-    
+
+
                 // Updating User
                 await updateDoc(userRef, {
                     likedPostsID: arrayRemove(postData.postID)
@@ -104,6 +108,25 @@ const PostCard = ({ postData, postedAt }: IProps) => {
     }
 
 
+    // const checkIsUserMember = async () => {
+    //     if (user && !loading) {
+    //         const userRef = doc(db, "users", user?.uid as string)
+    //         const communityRef = doc(db, "communities", postData?.postCreateAtCommunityID)
+
+    //         const communityData = await getDoc(communityRef)
+    //         // communityData.data((dataDoc: any) => {
+    //         //     console.log(dataDoc)
+    //         // })
+
+    //         console.log(`CHECKING`)
+    //         console.log(communityData.data());
+
+    //         communityData.data()
+            
+    //     }
+    // }
+
+
     const checkIsPostLikedByUser = () => {
         if (user?.uid && !loading) {
             postData.upvotedByUserID.map((user2: any) => {
@@ -120,13 +143,34 @@ const PostCard = ({ postData, postedAt }: IProps) => {
 
     useEffect(() => {
         fetchCommunityDetails()
-        checkIsUserJoinedInCommunity1()
+        // checkIsUserJoinedInCommunity1()
 
         checkIsPostLikedByUser()
+
+
+        if(postData.postCreatorID === user?.uid) {
+            setIsUserJoinedInCommunity(true)
+        }
+
+       
     }, [loading])
 
+
+    useEffect(() => {
+        if(communityDetails[0] && user?.uid && !loading) {
+            if(communityDetails[0]?.communityMembersID.includes(user.uid)){
+                setIsUserJoinedInCommunity(true)
+                console.log(`ANS -> ${communityDetails[0]?.communityMembersID.includes(user.uid)}`)
+            } else if (!communityDetails[0]?.communityMembersID.includes(user.uid)) {
+                setIsUserJoinedInCommunity(false)
+                console.log(`ANS -> ${communityDetails[0]?.communityMembersID.includes(user.uid)}`)
+            }
+        }
+
+    },[communityDetails, loading])
+
     return (
-        <div className='w-full sm:w-[70%] md:w-[60%] lg:w-[70%] xl:w-[50%] bg-white border md:border-2 border-black flex flex-col justify-start items-center p-2 md:p-4 rounded-sm md:rounded-md' onClick={() => console.log(postData)}>
+        <div className='w-full sm:w-[70%] md:w-[60%] lg:w-[70%] xl:w-[50%] bg-white border md:border-2 border-black flex flex-col justify-start items-center p-2 md:p-4 rounded-sm md:rounded-md' onClick={() => console.log(isUserJoinedInCommunity)}>
 
             {/* Create details --- At Community Page */}
             <div className='w-full flex justify-between items-center space-x-2 py-2'>
@@ -138,10 +182,18 @@ const PostCard = ({ postData, postedAt }: IProps) => {
                     <button type='button' className='relative w-14 h-6 bg-black border border-black flex justify-center items-center rounded-full'>
                         <span
                             onClick={() => {
-                                JoinCommunity(user?.uid as string, postData.postCreateAtCommunityID as string)
+                                if(isUserJoinedInCommunity == false) {
+                                    JoinCommunity(user?.uid as string, postData.postCreateAtCommunityID as string)
+                                    setIsUserJoinedInCommunity(true)
+                                }
+
+                                if(isJoinedBtnClicked == true) {
+                                    LeaveCommunity(user?.uid as string, postData.postCreateAtCommunityID as string)
+                                    setIsUserJoinedInCommunity(false)
+                                }
                             }}
                             className='w-14 h-6 absolute right-1 bottom-1 bg-BrutalGreen2 text-lg font-medium text-black border border-black active:right-0 active:bottom-0 rounded-full font-BebasNeue'>
-                            Join
+                            {isUserJoinedInCommunity ? "JOINED" : "JOIN"}
                         </span>
                     </button>
                 ) : null}

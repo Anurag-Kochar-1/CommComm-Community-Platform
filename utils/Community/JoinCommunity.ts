@@ -17,6 +17,8 @@ const JoinCommunity = async (userID: string, communityID: string) => {
         await updateDoc(userRef, {
             communitiesJoinedID: arrayUnion(communityID)
         })
+
+        console.log(`JOINED !!!`);
     } catch (error) {
         alert("Try Again")
     }

@@ -20,6 +20,8 @@ module.exports = {
         BrutalPurple2: "#C83FD3",
         BrutalGreen2: "#11EA50",
 
+        BgSecondaryBrutalSkin1: "#FFE5C0"
+
       },
 
       fontFamily: {
@@ -65,6 +67,11 @@ module.exports = {
     },
     {
       pattern: /(bg|text|border)-BrutalGreen2/,
+    },
+
+    ,
+    {
+      pattern: /(bg|text|border)-BgSecondaryBrutalSkin1/,
     },
     
   ],

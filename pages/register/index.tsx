@@ -12,12 +12,14 @@ import { SignInWithFacebookFunction } from "../../utils/SignInWithFacebook/SignI
 import { useDispatch } from 'react-redux'
 import { setIsBottomBarVisible } from "../../redux/slices/bottomBarSlice"
 import { doc, setDoc } from 'firebase/firestore'
+import { useAuthState } from 'react-firebase-hooks/auth'
 
 // import blueLinesBG from "../../public/images/bg/blueLinesBG.svg"
 // import pattern1 from "../../public/images/bg/pattern1.svg"
 // import jigsaw from "../../public/images/bg/jigsaw.svg"
  
 const Index = () => {
+  const [user, loading] = useAuthState(auth)
   const router = useRouter()
   const dispatch = useDispatch()
   const [emailInputValue, setEmailInputValue] = useState<string>("")
@@ -105,7 +107,9 @@ const Index = () => {
           <div className='flex justify-start items-center space-x-5'>
             <button onClick={() => {
                 SignInWithGoogleFunction()
-                router.push("/")
+                if(user && !loading) {
+                  router.push('/')
+                }
             }} type='button' title='google' className='bg-white w-14 h-14 rounded-full flex justify-center items-center border-2 border-gray-200'>
               <FcGoogle className='w-10 h-10' />
             </button>
@@ -113,7 +117,9 @@ const Index = () => {
             <button 
             onClick={() => {
               SignInWithFacebookFunction()
-              router.push("/")
+                if(user && !loading) {
+                  router.push('/')
+                }
             }}
             type='button' 
             title='facebnook' 

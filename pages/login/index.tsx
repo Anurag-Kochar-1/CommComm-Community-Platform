@@ -10,9 +10,11 @@ import { SignInWithGoogleFunction } from "../../utils/SignInWithGoogle/SignInWit
 import { SignInWithFacebookFunction } from "../../utils/SignInWithFacebook/SignInWithFacebook"
 import { useDispatch } from 'react-redux'
 import { setIsBottomBarVisible } from '../../redux/slices/bottomBarSlice'
+import { useAuthState } from 'react-firebase-hooks/auth'
 
 
 const Index = () => {
+  const [user, loading] = useAuthState(auth)
   const dispatch = useDispatch()
   const router = useRouter()
   const [emailInputValue, setEmailInputValue] = useState<string>("")
@@ -45,7 +47,7 @@ const Index = () => {
           </div>
 
           {/* ---- Heading ----- */}
-          <h1 className='text-3xl font-bold'> Sign in </h1>
+          <h1 className='text-3xl font-bold'> Log in </h1>
 
           {/* ---- Sign up with email */}
           <div className='w-full flex flex-col items-start justify-start'>
@@ -77,7 +79,7 @@ const Index = () => {
             {/* ---- Continue Button div ---- */}
             <div className='w-full flex justify-end items-center py-5'>
               <button type='button' title='singIn' className='w-20 md:w-32 h-10 relative flex justify-center items-center bg-black rounded-sm border-2 border-black'>
-                <span className='w-20 md:w-32 h-10 absolute bottom-[2px] right-[2px] bg-BrutalBlue1  flex justify-center items-center rounded-sm border-2 border-black active:right-0 active:bottom-0 hover:right-0 hover:bottom-0'>
+                <span className='w-20 md:w-32 h-10 absolute bottom-[2px] right-[2px] bg-BrutalBlue1  flex justify-center items-center rounded-sm border-2 border-black active:right-0 active:bottom-0'>
                   <p className='text-xs md:text-sm font-medium' onClick={() => {
                     if (emailInputValue && passwordInputValue) {
                       logIn()
@@ -106,7 +108,9 @@ const Index = () => {
 
             <button onClick={() => {
               SignInWithGoogleFunction()
-              router.push("/")
+              if(user && !loading) {
+                  router.push('/')
+                }
             }}
               type='button'
               title='sign'
@@ -119,7 +123,9 @@ const Index = () => {
 
             <button onClick={() => {
               SignInWithFacebookFunction()
-              router.push("/")
+              if(user && !loading) {
+                  router.push('/')
+                }
             }}
             type='button' 
             title='sign' 

@@ -96,7 +96,7 @@ const Index = () => {
           <div className='w-full flex flex-col justify-between items-start space-y-4 py-3 mt-4'>
 
             {/* ---- Name ---- */}
-            <div className='w-[90%] h-10 relative bg-black flex justify-start items-center'  onMouseEnter={() => dispatch(setIsBottomBarVisible(false))} onMouseLeave={() => dispatch(setIsBottomBarVisible(true))}>>
+            <div className='w-[90%] h-10 relative bg-black flex justify-start items-center'  onMouseEnter={() => dispatch(setIsBottomBarVisible(false))} onMouseLeave={() => dispatch(setIsBottomBarVisible(true))}>
               <input
                 value={communityNameInputValue}
                 onChange={(e) => setCommunityNameInputValue(e.target.value)}

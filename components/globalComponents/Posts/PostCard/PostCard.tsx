@@ -8,6 +8,7 @@ import { AiOutlineLike, AiTwotoneLike, AiOutlineShareAlt } from "react-icons/ai"
 import { MdOutlineModeComment } from "react-icons/md"
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { JoinCommunity } from '../../../../utils/Community/JoinCommunity'
 
 interface IProps {
     postData: IPost
@@ -90,7 +91,7 @@ const PostCard = ({ postData, postedAt }: IProps) => {
         }
     }
 
-    const checkIsUserJoinedInCommunity = () => {
+    const checkIsUserJoinedInCommunity1 = () => {
         if (user && !loading) {
             if (postData.postCreatorID === user?.uid) {
                 setIsUserJoinedInCommunity(true)
@@ -119,7 +120,7 @@ const PostCard = ({ postData, postedAt }: IProps) => {
 
     useEffect(() => {
         fetchCommunityDetails()
-        checkIsUserJoinedInCommunity()
+        checkIsUserJoinedInCommunity1()
 
         checkIsPostLikedByUser()
     }, [loading])
@@ -136,6 +137,9 @@ const PostCard = ({ postData, postedAt }: IProps) => {
                 {!isUserJoinedInCommunity ? (
                     <button type='button' className='relative w-14 h-6 bg-black border border-black flex justify-center items-center rounded-full'>
                         <span
+                            onClick={() => {
+                                JoinCommunity(user?.uid as string, postData.postCreateAtCommunityID as string)
+                            }}
                             className='w-14 h-6 absolute right-1 bottom-1 bg-BrutalGreen2 text-lg font-medium text-black border border-black active:right-0 active:bottom-0 rounded-full font-BebasNeue'>
                             Join
                         </span>

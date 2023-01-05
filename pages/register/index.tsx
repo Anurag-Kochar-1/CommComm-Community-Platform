@@ -5,12 +5,13 @@ import { FcGoogle } from "react-icons/fc"
 import { MdOutlineFacebook } from "react-icons/md"
 import {AiOutlineLoading3Quarters} from "react-icons/ai"
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { auth } from "../../firebaseConfig"
+import { auth, db } from "../../firebaseConfig"
 import { useRouter } from 'next/router'
 import { SignInWithGoogleFunction } from "../../utils/SignInWithGoogle/SignInWithGoogle"
 import { SignInWithFacebookFunction } from "../../utils/SignInWithFacebook/SignInWithFacebook"
 import { useDispatch } from 'react-redux'
 import { setIsBottomBarVisible } from "../../redux/slices/bottomBarSlice"
+import { doc, setDoc } from 'firebase/firestore'
 
 // import blueLinesBG from "../../public/images/bg/blueLinesBG.svg"
 // import pattern1 from "../../public/images/bg/pattern1.svg"
@@ -35,9 +36,12 @@ const Index = () => {
         updateProfile(auth?.currentUser as any, {
           displayName: userNameInputValue,
           photoURL: ""
-        }).then(() => {
+        }
+        
+        ).then(() => {
           console.log('PROFILE UPDATED !')
           setIsLoading(false)
+          createUserInDB(auth.currentUser?.uid as string)
           router.push("/")
         }).catch((error) => {
           console.log(error)
@@ -63,6 +67,19 @@ const Index = () => {
 
     setEmailInputValue("")
     setPasswordInputValue("")
+  }
+
+
+  const createUserInDB = async (userID: string) => {
+    console.log(`Creating user in DB from email and passowrd`);
+    
+    await setDoc(doc(db, "users", userID), {
+      communitiesJoinedID: [],
+      communitiesOwnedID: [],
+      createdPostsID: [],
+      likedPostsID: [],
+      dislikedPostsID: [],
+  })
   }
 
   return (

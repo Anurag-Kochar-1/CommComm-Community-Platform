@@ -40,7 +40,7 @@ const TopSection = () => {
             <div
                 className='w-full bg-black h-[25vh] lg:h-[20vh] flex justify-start items-end'
                 style={{
-                    backgroundImage: 'url(' + `https://designmodo.com/wp-content/uploads/2017/08/gradient-1.jpg` + ')',
+                    backgroundImage: 'url(' + `${communityData?.communityBanner || "https://designmodo.com/wp-content/uploads/2017/08/gradient-1.jpg"}` + ')',
                     backgroundSize: "cover",
                 }}>
 

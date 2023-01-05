@@ -11,7 +11,7 @@ import PostFeed from '../../../components/globalComponents/Posts/PostFeed/PostFe
 import { setCurrentCommunityPostsData } from '../../../redux/slices/postsDataSlice'
 import { IPost } from '../../../customTypesAndInterfaces/Posts/postInterface'
 
-const index = ({ communityData, currentCommunityPosts }: any) => {
+const Index = ({ communityData, currentCommunityPosts }: any) => {
   const router = useRouter()
   const { id } = router.query
   const dispatch = useDispatch()
@@ -396,7 +396,7 @@ Other objects are converted to the string [object Object] where Object is the na
   )
 }
 
-export default index
+export default Index
 
 
 export const getServerSideProps = async ({ params }: any) => {

@@ -68,8 +68,8 @@ const Index = () => {
 
 
         {!userJoinedCommunitiesState[0] && (
-          <div className='w-full h-fullflex flex-col justify-start items-center py-3'>
-            <p className='text-black font-InriaSans font-bold text-xl'> No communities joined </p>
+          <div className='w-full h-full flex flex-col justify-start items-center py-3'>
+            <p className='text-black font-InriaSans font-bold text-xl'> No communities joined {":("} </p>
           </div>
         )}
       </div>

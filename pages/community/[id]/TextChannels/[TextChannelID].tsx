@@ -1,5 +1,3 @@
-/* eslint react/no-unescaped-entities */
-
 import React, { useEffect, useState } from "react"
 import { useRouter } from "next/router"
 import CommunityLayout from "../../../../components/layouts/Community/CommunityLayout"

@@ -78,11 +78,11 @@ const LeftSideBar = () => {
 
         {/* ------- My Communities user && userJoinedCommunitiesState.length !== 0 ------- */}
         {true && (
-          <div className='w-[90%] flex flex-col justify-start items-center space-y-4 bg-[#FFB445] border-2 border-black py-10 rounded-sm' >
-            <h3 className='font-BebasNeue px-2 text-center  lg:text-3xl xl:text-4xl text-black'> My Communities </h3>
+          <div className='w-[90%] flex flex-col justify-start items-center space-y-4 bg-BrutalOrange1 border-2 border-black py-10 rounded-sm' >
+            <h3 className='font-BebasNeue px-2 text-center  lg:text-3xl xl:text-4xl text-black'> {user && !loading && userDetails[0]?.communitiesJoinedID.length !== 0 ? "My Communities" : "Suggested Communities"} </h3>
 
             {userJoinedCommunitiesState && (
-              userJoinedCommunitiesState.slice(0, 5).map((community: ICommunityData) => {
+              userJoinedCommunitiesState.slice(0, 10).map((community: ICommunityData) => {
                 return (
                   <Link
                     href={`/community/${community.communityID}`}
@@ -146,7 +146,7 @@ const LeftSideBar = () => {
         {/* Profile */}
         {user?.uid && (
           <div className='w-full h-full flex flex-col justify-end items-center py-2'>
-            <div className='w-[95%] border-2 border-black bg-[#FFB445] flex justify-start items-center px-2 py-4 space-x-3'>
+            <div className='w-[95%] border-2 border-black bg-BrutalOrange1 flex justify-start items-center px-2 py-4 space-x-3'>
               {user?.photoURL ? (
                 <Image src={user?.photoURL} alt="dp" width={9} height={9} className='w-9 h-9 rounded-full' />
               ) :

@@ -11,7 +11,7 @@ import { v4 as uuidv4 } from "uuid"
 import { useRouter } from 'next/router'
 import { AiOutlineLoading3Quarters } from 'react-icons/ai'
 
-const uploadPost = () => {
+const UploadPost = () => {
   const router = useRouter()
   const [user, loading] = useAuthState(auth)
   const [postType, setPostType] = useState<string>("caption")
@@ -608,4 +608,4 @@ const uploadPost = () => {
   )
 }
 
-export default uploadPost
+export default UploadPost

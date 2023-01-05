@@ -8,7 +8,7 @@ const PostFeed = () => {
 
   return (
     <div 
-    className='w-full space-y-10 flex flex-col justify-start items-center '
+    className='w-full space-y-10 flex flex-col justify-start items-center'
     >
         
         

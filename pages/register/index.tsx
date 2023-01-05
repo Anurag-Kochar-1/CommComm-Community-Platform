@@ -3,7 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { FcGoogle } from "react-icons/fc"
 import { MdOutlineFacebook } from "react-icons/md"
-import {AiOutlineLoading3Quarters} from "react-icons/ai"
+import { AiOutlineLoading3Quarters } from "react-icons/ai"
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth, db } from "../../firebaseConfig"
 import { useRouter } from 'next/router'
@@ -17,7 +17,7 @@ import { useAuthState } from 'react-firebase-hooks/auth'
 // import blueLinesBG from "../../public/images/bg/blueLinesBG.svg"
 // import pattern1 from "../../public/images/bg/pattern1.svg"
 // import jigsaw from "../../public/images/bg/jigsaw.svg"
- 
+
 const Index = () => {
   const [user, loading] = useAuthState(auth)
   const router = useRouter()
@@ -27,7 +27,7 @@ const Index = () => {
   const [passwordInputValue, setPasswordInputValue] = useState<string>("")
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
-  const allInputRef:any = useRef(null)
+  const allInputRef: any = useRef(null)
 
   const signUp = () => {
     setIsLoading(true)
@@ -39,7 +39,7 @@ const Index = () => {
           displayName: userNameInputValue,
           photoURL: ""
         }
-        
+
         ).then(() => {
           console.log('PROFILE UPDATED !')
           setIsLoading(false)
@@ -74,14 +74,14 @@ const Index = () => {
 
   const createUserInDB = async (userID: string) => {
     console.log(`Creating user in DB from email and passowrd`);
-    
+
     await setDoc(doc(db, "users", userID), {
       communitiesJoinedID: [],
       communitiesOwnedID: [],
       createdPostsID: [],
       likedPostsID: [],
       dislikedPostsID: [],
-  })
+    })
   }
 
   return (
@@ -106,24 +106,28 @@ const Index = () => {
           {/* ---- Continue with google and facebook ----- */}
           <div className='flex justify-start items-center space-x-5'>
             <button onClick={() => {
-                SignInWithGoogleFunction()
-                if(user && !loading) {
+              SignInWithGoogleFunction()
+              setTimeout(() => {
+                if (user && !loading) {
                   router.push('/')
                 }
+              }, 3000);
             }} type='button' title='google' className='bg-white w-14 h-14 rounded-full flex justify-center items-center border-2 border-gray-200'>
               <FcGoogle className='w-10 h-10' />
             </button>
 
-            <button 
-            onClick={() => {
-              SignInWithFacebookFunction()
-                if(user && !loading) {
-                  router.push('/')
-                }
-            }}
-            type='button' 
-            title='facebnook' 
-            className='w-14 h-14 rounded-full flex justify-center items-center border-2 border-gray-200'>
+            <button
+              onClick={() => {
+                SignInWithFacebookFunction()
+                setTimeout(() => {
+                  if (user && !loading) {
+                    router.push('/')
+                  }
+                }, 3000);
+              }}
+              type='button'
+              title='facebnook'
+              className='w-14 h-14 rounded-full flex justify-center items-center border-2 border-gray-200'>
               <MdOutlineFacebook className='text-blue-500 w-10 h-10' />
             </button>
           </div>
@@ -145,7 +149,7 @@ const Index = () => {
                   type="email"
                   placeholder='Email address'
                   className='w-full h-10 absolute right-1 bottom-1 outline-none focus:ring-0 px-2 placeholder:px-2 border-2 border-black'
-                  
+
                 />
               </div>
 
@@ -177,7 +181,7 @@ const Index = () => {
             <div className='w-full flex justify-end items-center py-5'>
               <button
                 onClick={() => {
-                  if( userNameInputValue && emailInputValue && passwordInputValue ) {
+                  if (userNameInputValue && emailInputValue && passwordInputValue) {
                     signUp()
                   } else {
                     alert("Fill the required fields")
@@ -198,7 +202,7 @@ const Index = () => {
 
       {isLoading && (
         <div className='z-50 fixed inset-0 w-full h-screen flex justify-center items-center bg-white scrollbar-hide'>
-            <AiOutlineLoading3Quarters className='animate-spin text-2xl text-BrutalBlack1' />
+          <AiOutlineLoading3Quarters className='animate-spin text-2xl text-BrutalBlack1' />
         </div>
       )}
     </div>

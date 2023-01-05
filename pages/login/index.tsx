@@ -108,9 +108,12 @@ const Index = () => {
 
             <button onClick={() => {
               SignInWithGoogleFunction()
-              if(user && !loading) {
+              
+              setTimeout(() => {
+                if(user && !loading) {
                   router.push('/')
-                }
+                } 
+              }, 3000);
             }}
               type='button'
               title='sign'
@@ -123,9 +126,12 @@ const Index = () => {
 
             <button onClick={() => {
               SignInWithFacebookFunction()
-              if(user && !loading) {
+              
+              setTimeout(() => {
+                if(user && !loading) {
                   router.push('/')
-                }
+              }
+              }, 3000);
             }}
             type='button' 
             title='sign' 

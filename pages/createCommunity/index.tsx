@@ -5,12 +5,15 @@ import { addDoc, arrayUnion, collection, doc, updateDoc } from 'firebase/firesto
 import { db, auth } from '../../firebaseConfig'
 import { useRouter } from 'next/router'
 import { useAuthState } from 'react-firebase-hooks/auth'
+import { useDispatch } from 'react-redux'
+import { setIsBottomBarVisible } from '../../redux/slices/bottomBarSlice'
 
 
 
 const Index = () => {
   const [user, loading] = useAuthState(auth)
   const router = useRouter()
+  const dispatch = useDispatch()
   const [communityNameInputValue, setCommunityNameInputValue] = useState<string>("")
   const [communityCategory, setCommunityCategory] = useState<string>(communityCategoriesArray[0].label)
   const [communitySubCategory, setCommunitySubCategory] = useState<string>(communitySubCategoriesArray[0].parentLabel)
@@ -93,7 +96,7 @@ const Index = () => {
           <div className='w-full flex flex-col justify-between items-start space-y-4 py-3 mt-4'>
 
             {/* ---- Name ---- */}
-            <div className='w-[90%] h-10 relative bg-black flex justify-start items-center'>
+            <div className='w-[90%] h-10 relative bg-black flex justify-start items-center'  onMouseEnter={() => dispatch(setIsBottomBarVisible(false))} onMouseLeave={() => dispatch(setIsBottomBarVisible(true))}>>
               <input
                 value={communityNameInputValue}
                 onChange={(e) => setCommunityNameInputValue(e.target.value)}
@@ -189,8 +192,8 @@ const Index = () => {
               onClick={createCommunity}
               type='button'
               title='singIn'
-              className='w-20 md:w-32 h-[4.5vh] relative flex justify-center items-center bg-black rounded-sm border-2 border-black'>
-              <span className='w-20 md:w-32 h-[4.5vh] absolute bottom-[2px] right-[2px] bg-BrutalGreen1  flex justify-center items-center rounded-sm border-2 border-black active:right-0 active:bottom-0 hover:right-0 hover:bottom-0'>
+              className='w-20 md:w-32 h-10 relative flex justify-center items-center bg-black rounded-sm border-2 border-black'>
+              <span className='w-20 md:w-32 h-10 absolute bottom-[2px] right-[2px] bg-BrutalGreen1  flex justify-center items-center rounded-sm border-2 border-black active:right-0 active:bottom-0'>
                 <p className='text-xs md:text-sm font-medium'> Create  </p>
               </span>
             </button>

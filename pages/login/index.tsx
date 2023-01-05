@@ -8,8 +8,12 @@ import { useRouter } from 'next/router'
 import { AiOutlineLoading3Quarters } from 'react-icons/ai'
 import { SignInWithGoogleFunction } from "../../utils/SignInWithGoogle/SignInWithGoogle"
 import { SignInWithFacebookFunction } from "../../utils/SignInWithFacebook/SignInWithFacebook"
+import { useDispatch } from 'react-redux'
+import { setIsBottomBarVisible } from '../../redux/slices/bottomBarSlice'
+
 
 const Index = () => {
+  const dispatch = useDispatch()
   const router = useRouter()
   const [emailInputValue, setEmailInputValue] = useState<string>("")
   const [passwordInputValue, setPasswordInputValue] = useState<string>("")
@@ -49,7 +53,7 @@ const Index = () => {
 
             <div className='w-full flex flex-col justify-between items-start space-y-4 py-3'>
 
-              <div className='w-[100%] h-10 relative bg-black flex justify-start items-center'>
+              <div className='w-[100%] h-10 relative bg-black flex justify-start items-center'  onMouseEnter={() => dispatch(setIsBottomBarVisible(false))} onMouseLeave={() => dispatch(setIsBottomBarVisible(true))}>
                 <input
                   value={emailInputValue}
                   onChange={(e) => setEmailInputValue(e.target.value)}
@@ -59,7 +63,7 @@ const Index = () => {
                 />
               </div>
 
-              <div className='w-[100%] h-10 relative bg-black flex justify-start items-center'>
+              <div className='w-[100%] h-10 relative bg-black flex justify-start items-center'  onMouseEnter={() => dispatch(setIsBottomBarVisible(false))} onMouseLeave={() => dispatch(setIsBottomBarVisible(true))}>
                 <input
                   value={passwordInputValue}
                   onChange={(e) => setPasswordInputValue(e.target.value)}
@@ -72,8 +76,8 @@ const Index = () => {
 
             {/* ---- Continue Button div ---- */}
             <div className='w-full flex justify-end items-center py-5'>
-              <button type='button' title='singIn' className='w-20 md:w-32 h-[4.5vh] relative flex justify-center items-center bg-black rounded-sm border-2 border-black'>
-                <span className='w-20 md:w-32 h-[4.5vh] absolute bottom-[2px] right-[2px] bg-BrutalBlue1  flex justify-center items-center rounded-sm border-2 border-black active:right-0 active:bottom-0 hover:right-0 hover:bottom-0'>
+              <button type='button' title='singIn' className='w-20 md:w-32 h-10 relative flex justify-center items-center bg-black rounded-sm border-2 border-black'>
+                <span className='w-20 md:w-32 h-10 absolute bottom-[2px] right-[2px] bg-BrutalBlue1  flex justify-center items-center rounded-sm border-2 border-black active:right-0 active:bottom-0 hover:right-0 hover:bottom-0'>
                   <p className='text-xs md:text-sm font-medium' onClick={() => {
                     if (emailInputValue && passwordInputValue) {
                       logIn()

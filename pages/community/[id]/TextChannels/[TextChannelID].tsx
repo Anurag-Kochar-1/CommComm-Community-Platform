@@ -1,13 +1,15 @@
-import React, { useEffect, useState } from 'react'
-import { useRouter } from 'next/router'
-import CommunityLayout from '../../../../components/layouts/Community/CommunityLayout'
+/* eslint react/no-unescaped-entities */
+
+import React, { useEffect, useState } from "react"
+import { useRouter } from "next/router"
+import CommunityLayout from "../../../../components/layouts/Community/CommunityLayout"
 import { VscTriangleRight } from "react-icons/vsc"
-import { useAuthState } from 'react-firebase-hooks/auth'
-import { auth, db } from '../../../../firebaseConfig'
-import { addDoc, collection, doc, getDocs, onSnapshot, updateDoc } from 'firebase/firestore'
+import { useAuthState } from "react-firebase-hooks/auth"
+import { auth, db } from "../../../../firebaseConfig"
+import { addDoc, collection, doc, getDocs, onSnapshot, updateDoc } from "firebase/firestore"
 
 import userDPdemo from "../../../../public/images/bg/userDPdemo.jpg"
-import Image from 'next/image'
+import Image from "next/image"
 
 const Index = ({ allCommunityMessage }: any) => {
   const [user, loading] = useAuthState(auth)

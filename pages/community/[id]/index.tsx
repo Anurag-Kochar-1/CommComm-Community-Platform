@@ -1,3 +1,5 @@
+/* eslint react/no-unescaped-entities */
+
 import React, { useEffect } from 'react'
 import { collection, doc, getDoc, getDocs } from 'firebase/firestore'
 import { useRouter } from 'next/router'

@@ -21,6 +21,10 @@ export default function Home() {
 
       <Link href={'/createCommunity'} className="my-12"> Create community </Link>
 
+      <Link href={`/community/7GWS3QIgNOOXPFu0CwAx`} className="text-black font-BebasNeue my-1 text-3xl"> SECOND COMMUNITY  </Link>
+      <Link href={`/community/jK2BpUcrmYFA6X3Mx3Xr`} className="text-black font-BebasNeue my-1 text-3xl"> READING WALI COMMUNITY  </Link>
+      <Link href={`/community/w4EndY1A3OJzMLzPTQOj`} className="text-black font-BebasNeue my-1 text-3xl"> THIRD COMMUNITY  </Link>
+
 
       
     </main>

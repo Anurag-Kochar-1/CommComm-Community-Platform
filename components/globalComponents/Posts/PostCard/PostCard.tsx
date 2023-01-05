@@ -18,6 +18,7 @@ const PostCard = ({ postData, postedAt }: IProps) => {
     const [communityDetails, setCommunityDetails] = useState<ICommunityData[]>([])
     const [isPostLiked, setIsPostLiked] = useState<Boolean>(false)
     const [isUserJoinedInCommunity, setIsUserJoinedInCommunity] = useState<boolean>(false)
+    const [postLikeCount, setPostLikeCount] = useState<number>(postData.upvotedByUserID.length)
 
 
     const fetchCommunityDetails = async () => {
@@ -34,6 +35,7 @@ const PostCard = ({ postData, postedAt }: IProps) => {
 
     const unLikePost = async () => {
         setIsPostLiked(false)
+        setPostLikeCount(postLikeCount - 1)
 
         const userRef = doc(db, "users", user?.uid as string)
         const postRef = doc(db, "posts", postData.postID)
@@ -52,6 +54,8 @@ const PostCard = ({ postData, postedAt }: IProps) => {
 
     const likePost = async () => {
         setIsPostLiked(true)
+        setPostLikeCount(postLikeCount + 1)
+
 
         const userRef = doc(db, "users", user?.uid as string)
         const postRef = doc(db, "posts", postData.postID)
@@ -159,7 +163,7 @@ const PostCard = ({ postData, postedAt }: IProps) => {
                 >
                     {!isPostLiked && <AiOutlineLike className='text-xl active:scale-125' />}
                     {isPostLiked && <AiTwotoneLike className='text-xl text-BrutalPurple2 active:scale-125' />}
-                    <span className='font-InriaSans'> {postData.upvotedByUserID.length} </span>
+                    <span className='font-InriaSans'> {postLikeCount} </span>
                 </button>
 
                 {/* Comment */}

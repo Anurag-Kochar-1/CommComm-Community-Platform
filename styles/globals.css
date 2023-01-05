@@ -1,4 +1,20 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Inria+Sans:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap');
+
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+@layer base {
+    @font-face {
+        font-family: "Overpass";
+        src: url('/th3-project/public/fonts/Overpass/Overpass-\ Regular.woff2') format("woff2");
+        font-weight: 400;
+        font-display: swap;
+        font-style: normal;
+    }
+}
 

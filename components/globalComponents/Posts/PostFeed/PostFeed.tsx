@@ -11,7 +11,6 @@ const PostFeed = () => {
     className='w-full space-y-10 flex flex-col justify-start items-center'
     >
         
-        
         {postData && (
             postData.map((postData: IPost) => {
                 return <PostCard postData={postData} key={postData?.postID} postedAt={"communityHomePage"} />

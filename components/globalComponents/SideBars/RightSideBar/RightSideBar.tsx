@@ -13,11 +13,21 @@ const RightSideBar = () => {
 
   const fetchTopCommunities = async () => {
     if (user && !loading) {
-      console.log("Fetching all community datas")
-      const queryTheUser = query(communityCollectionRef, where("communityMembersID", "array-contains", auth?.currentUser?.uid))
-      const queryData = await getDocs(queryTheUser)
+      console.log("Fetching trending community datas")
+      const filterdCommunities:ICommunityData[] = []
+      const res = await getDocs(communityCollectionRef)
 
-      setTopCommunitiesState(queryData.docs.map((doc: any) => ({ ...doc.data(), id: doc.id })));
+      res.forEach((community: any) => {
+        if(community?.communityMembersID?.includes(user?.uid)){
+          filterdCommunities.push(community)
+        } else {
+          return community
+        }
+      })  
+
+
+      // setTopCommunitiesState(res.docs.map((doc: any) => ({ ...doc.data(), id: doc.id })));
+      setTopCommunitiesState( filterdCommunities);
     }
   }
 
@@ -28,7 +38,7 @@ const RightSideBar = () => {
 
   return (
     <div className='hidden lg:inline-flex w-[20%] h-[90vh] mt-[10vh] bg-BgBrutalSkin1 flex-col justify-start items-center '>
-      <div className='w-[95%] h-full flex flex-col justify-start items-center bg-BgSecondaryBrutalSkin1 overflow-x-hidden overscroll-y-scroll pt-10  space-y-10 scrollbar-hide'>
+      <div className='w-[95%] h-full flex flex-col justify-start items-center bg-BgSecondaryBrutalSkin1 overflow-x-hidden overscroll-y-scroll pt-10  space-y-10 scrollbar-hide' onClick={() => console.log(topCommunitiesState)}>
 
 
         {/* Top Communities */}

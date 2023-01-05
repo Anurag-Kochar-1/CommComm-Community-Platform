@@ -12,10 +12,6 @@ const CommunityLayout = ({children}: IProps) => {
     <div className='bg-BgSecondaryBrutalSkin1 w-full lg:w-[60%] h-[80vh] lg:h-[90vh] mt-[10vh] mb-[10vh] lg:mb-0 flex flex-col justify-start items-center overflow-x-hidden overflow-y-scroll scrollbar-hide'>
 
         <TopSection />
-        {/* <NavTabs /> */}
-        {/* ------- NOW AB TOPSECTION KE ANDAR HAI EZ PZ-------   */}
-
-
         {children}
 
     </div>

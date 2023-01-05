@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { communityCategoriesArray, communitySubCategoriesArray } from "../../constants/createCommunityPage/communityCategories"
-import { addDoc, arrayUnion, collection, doc, updateDoc } from 'firebase/firestore'
+import { addDoc, arrayUnion, collection, doc, increment, updateDoc } from 'firebase/firestore'
 import { db, auth } from '../../firebaseConfig'
 import { useRouter } from 'next/router'
 import { useAuthState } from 'react-firebase-hooks/auth'
@@ -39,7 +39,7 @@ const Index = () => {
         communityOwnerDisplayName: auth?.currentUser?.displayName,
         communityOwnerEmail: auth.currentUser?.email,
         communityPostsID: [],
-        communityDescription: ""
+        communityDescription: `This is community if for ${communityCategory} (${communitySubCategory}), made by ${user?.displayName} with love`
       })
 
       const communityRef = doc(db, "communities", addingCommunityDoc.id)
@@ -49,12 +49,14 @@ const Index = () => {
         communityID: addingCommunityDoc?.id
       })
 
-      // updating user 
+      // updating user and Sending Coins to user
       const userRef = doc(db, "users", auth?.currentUser?.uid as string)
       const updateUser = await updateDoc(userRef, {
           communitiesJoinedID: arrayUnion(communityRef.id),
           communitiesOwnedID: arrayUnion(communityRef.id),
+          userCoins: increment(50)
       })
+
 
 
       router.push(`/community/${addingCommunityDoc.id}`)

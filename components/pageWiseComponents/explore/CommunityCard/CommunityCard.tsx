@@ -13,7 +13,7 @@ const CommunityCard = ({ communityData }: IProps) => {
 
             <Link
             href={`/community/${communityData.communityID}`}
-            className="absolute right-2 bottom-2 w-full h-72 border bg-white border-black flex flex-col justify-start items-center rounded-lg"
+            className="absolute sm:right-2 sm:bottom-2 w-full h-72 border bg-white border-black flex flex-col justify-start items-center rounded-lg"
             >
 
                 {/* Banner and Logo */}

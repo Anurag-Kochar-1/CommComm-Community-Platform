@@ -18,13 +18,17 @@ const Header = () => {
   const router = useRouter()
   const [user, loading] = useAuthState(auth)
 
- 
+
 
   return (
     <div className='fixed top-0 w-full h-[10vh] bg-white border-b border-b-black py-4 px-3 md:px-5 flex justify-between items-center'>
 
       {/*  DEMO LOGO  */}
-      <Link href={'/'} className='w-10 h-10 rounded-full bg-BrutalOrange1' onClick={() => console.log(0)} />
+      {/* <Link href={'/'} className='w-10 h-10 rounded-full bg-BrutalOrange1' onClick={() => console.log(0)} /> */}
+      <Link href={'/'} className='flex justify-center items-center space-x-3'>
+        <div className='w-10 h-10 rounded-full bg-BrutalPurple2 border-2 border-BrutalRed1 ' />
+        <span className='font-semibold text-lg'> WEcomm </span>
+      </Link>
 
       <SearchBar />
 

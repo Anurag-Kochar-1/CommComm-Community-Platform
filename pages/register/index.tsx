@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { FcGoogle } from "react-icons/fc"
@@ -86,6 +86,13 @@ const Index = () => {
     })
   }
 
+
+  useEffect(() => {
+    if(user && !loading) {
+      router.push("/")
+    }
+  },[user])
+
   return (
     <div className='fixed inset-0 w-[100%] h-[100vh] bg-white lg:bg-gradient-to-r from-slate-500 to-slate-800 flex flex-row justify-center lg:justify-end items-center lg:px-28 xl:px-52 2xl:px-60'>
 
@@ -97,10 +104,10 @@ const Index = () => {
         <div className='z-20 w-full h-[90vh] mb-[10vh] lg:mb-0 sm:w-[70%] sm:h-[70vh] md:w-[70%] lg:w-[60%] xl:w-[40%] 2xl:w-[35%] bg-white rounded-md flex flex-col justify-start items-start pt-10 pb-5 px-5 space-y-5 overflow-x-hidden overflow-y-scroll scrollbar-hide'>
 
           {/* ---- LOGO ---- */}
-          <div className='flex justify-center items-center space-x-3'>
-            <div className='w-6 h-6 rounded-full bg-BrutalBlack1' />
-            <span> TBH </span>
-          </div>
+          <Link href={'/'} className='flex justify-center items-center space-x-3'>
+            <div className='w-6 h-6 rounded-full bg-BrutalPurple2 border-2 border-BrutalRed1 ' />
+            <span className='font-semibold'> WEcomm </span>
+          </Link>
 
           {/* ---- Heading ----- */}
           <h1 className='text-3xl font-bold'> Create an account </h1>

@@ -46,13 +46,13 @@ const Index = () => {
     <div className=' fixed inset-0 w-[100%] h-[100vh] lg:bg-gradient-to-r from-gray-700 via-gray-900 to-black flex flex-row justify-center lg:justify-end items-center lg:px-32 xl:px-40 2xl:px-72'>
 
       {!isLoading && (
-        <div className='w-full h-[90vh] mb-[10vh] lg:mb-0 sm:w-[70%] sm:h-[70vh] md:w-[70%] lg:w-[60%] xl:w-[40%] 2xl:w-[35%] bg-white rounded-md flex flex-col justify-start items-start pt-10 pb-5 px-5 space-y-5 overflow-x-hidden overflow-y-scroll scrollbar-hide'>
+        <div className='z-40 w-full h-[90vh] mb-[10vh] lg:mb-0 sm:w-[70%] sm:h-[70vh] md:w-[70%] lg:w-[60%] xl:w-[40%] 2xl:w-[35%] bg-white rounded-md flex flex-col justify-start items-start pt-10 pb-5 px-5 space-y-5 overflow-x-hidden overflow-y-scroll scrollbar-hide'>
 
           {/* ---- LOGO ---- */}
-          <div className='flex justify-center items-center space-x-3'>
-            <div className='w-6 h-6 rounded-full bg-BrutalBlack1' />
-            <span> TBH </span>
-          </div>
+          <Link href={'/'} className='flex justify-center items-center space-x-3'>
+            <div className='w-6 h-6 rounded-full bg-BrutalPurple2 border-2 border-BrutalRed1 ' />
+            <span className='font-semibold'> WEcomm </span>
+          </Link>
 
           {/* ---- Heading ----- */}
           <h1 className='text-3xl font-bold'> Log in </h1>

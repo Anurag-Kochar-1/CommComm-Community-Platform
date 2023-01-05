@@ -9,6 +9,8 @@ import demo from "../../../../public/images/bg/demo.jpg"
 import userDPdemo from "../../../../public/images/bg/userDPdemo.jpg"
 
 import coinIcon from "../../../../public/images/icons/coinIcon.svg"
+import { AiOutlineLogout } from 'react-icons/ai'
+import { signOut } from 'firebase/auth'
 
 const LeftSideBar = () => {
 
@@ -97,7 +99,7 @@ const LeftSideBar = () => {
                       )}
 
                       {community.communityLogo === null && (
-                        <div className='w-8 h-8 xl:w-10 xl:h-10 rounded-full bg-BrutalAqua1 aspect-square' />
+                        <div className='w-8 h-8 xl:w-10 xl:h-10 rounded-full bg-BrutalOrange1 border-2 border-black aspect-square' />
                       )}
 
                       <div className='w-full flex flex-col items-start justify-start'>
@@ -147,7 +149,7 @@ const LeftSideBar = () => {
 
         {/* Profile */}
         {user?.uid && (
-          <Link href={`/profile/${user?.uid}`} className='w-full h-full flex flex-col justify-end items-center py-2'>
+          <div className='w-full h-full flex flex-col justify-end items-center py-2'>
             <div className='w-[95%] border-2 border-black bg-white flex justify-start items-center px-2 py-4 space-x-3'>
               {user?.photoURL ? (
                 <Image src={user?.photoURL} alt="dp" width={12} height={12} className='w-12 h-12 rounded-full' />
@@ -163,8 +165,10 @@ const LeftSideBar = () => {
                 </div>
               </div>
 
+                <AiOutlineLogout className='w-8 h-8 mx-3 text-BrutalRed1 cursor-pointer' onClick={() => signOut(auth)}/>
+
             </div>
-          </Link>
+          </div>
         )}
 
       </div>

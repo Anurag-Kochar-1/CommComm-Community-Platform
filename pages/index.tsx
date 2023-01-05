@@ -30,12 +30,12 @@ export default function Home({ allPostsArray }: any) {
 
   return (
     <main className='w-full lg:w-[60%] h-[80vh] lg:h-[90vh] mt-[10vh] mb-[10vh] lg:mb-0 bg-BgSecondaryBrutalSkin1 flex flex-col justify-start items-center overflow-x-hidden overflow-y-scroll pt-14 pb-20 scrollbar-hide'>
-      <h1 className='text-4xl text-blue-500 font-bold mt-[7vh]' onClick={() => console.log(auth?.currentUser)}> LOG USER</h1>
+      {/* <h1 className='text-4xl text-blue-500 font-bold mt-[7vh]' onClick={() => console.log(auth?.currentUser)}> LOG USER</h1>
       
 <h1 className='text-4xl text-red-500 font-bold mt-[7vh]' onClick={() => {
         signOut(auth)
         console.log("Signed Out!!!")
-      }}> Sign out </h1>
+      }}> Sign out </h1> */}
 
       {/* <Link href={'/createCommunity'} className="my-12"> Create community </Link>
 

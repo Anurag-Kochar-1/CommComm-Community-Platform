@@ -26,9 +26,9 @@ const NavTabs = () => {
           <div className='w-20 h-10 absolute right-[2px] bottom-[2px] bg-BrutalAqua1 text-black border-2 border-black py-2 text-center text-sm hover:cursor-pointer active:right-0 active:bottom-0 rounded-md font-InriaSans font-semibold'> Events </div>
         </Link> */}
 
-        <Link href={`/community/${id}/Leaderboard`} className='relative w-28 h-10 flex justify-center items-center bg-black border border-black rounded-md hover:scale-105'>
+        {/* <Link href={`/community/${id}/Leaderboard`} className='relative w-28 h-10 flex justify-center items-center bg-black border border-black rounded-md hover:scale-105'>
           <div className='w-28 h-10 absolute right-[2px] bottom-[2px] bg-BrutalAqua1 text-black border-2 border-black py-2 text-center text-sm hover:cursor-pointer active:right-0 active:bottom-0 rounded-md font-InriaSans font-semibold'> Leaderboard </div>
-        </Link>
+        </Link> */}
         
         <Link href={`/community/${id}/about`} className='relative w-20 h-10 flex justify-center items-center bg-black border border-black rounded-md hover:scale-105'>
           <div className='w-20 h-10 absolute right-[2px] bottom-[2px] bg-BrutalAqua1 text-black border-2 border-black py-2 text-center text-sm hover:cursor-pointer active:right-0 active:bottom-0 rounded-md font-InriaSans font-semibold'> About </div>

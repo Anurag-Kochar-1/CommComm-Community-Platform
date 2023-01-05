@@ -9,7 +9,7 @@ import { AiOutlineLoading3Quarters } from 'react-icons/ai'
 import { SignInWithGoogleFunction } from "../../utils/SignInWithGoogle/SignInWithGoogle"
 import { SignInWithFacebookFunction } from "../../utils/SignInWithFacebook/SignInWithFacebook"
 
-const index = () => {
+const Index = () => {
   const router = useRouter()
   const [emailInputValue, setEmailInputValue] = useState<string>("")
   const [passwordInputValue, setPasswordInputValue] = useState<string>("")
@@ -139,4 +139,4 @@ const index = () => {
   )
 }
 
-export default index
+export default Index

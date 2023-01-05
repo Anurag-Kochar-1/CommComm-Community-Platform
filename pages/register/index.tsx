@@ -14,7 +14,7 @@ import blueLinesBG from "../../public/images/bg/blueLinesBG.svg"
 import pattern1 from "../../public/images/bg/pattern1.svg"
 import jigsaw from "../../public/images/bg/jigsaw.svg"
  
-const index = () => {
+const Index = () => {
   const router = useRouter()
   const [emailInputValue, setEmailInputValue] = useState<string>("")
   const [userNameInputValue, setUserNameInputValue] = useState<string>("")
@@ -176,4 +176,4 @@ const index = () => {
   )
 }
 
-export default index
+export default Index

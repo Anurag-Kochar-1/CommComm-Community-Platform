@@ -8,7 +8,7 @@ import { useAuthState } from 'react-firebase-hooks/auth'
 
 
 
-const index = () => {
+const Index = () => {
   const [user, loading] = useAuthState(auth)
   const router = useRouter()
   const [communityNameInputValue, setCommunityNameInputValue] = useState<string>("")
@@ -203,5 +203,5 @@ const index = () => {
   )
 }
 
-export default index
+export default Index
 

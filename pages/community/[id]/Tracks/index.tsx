@@ -1,7 +1,7 @@
 import React from 'react'
 import CommunityLayout from '../../../../components/layouts/Community/CommunityLayout'
 
-const index = () => {
+const Index = () => {
   return (
     <CommunityLayout>
       <main className='w-full h-full flex flex-col justify-start items-center bg-yellow-400 pt-12 pb-36'>
@@ -12,4 +12,4 @@ const index = () => {
   )
 }
 
-export default index
+export default Index

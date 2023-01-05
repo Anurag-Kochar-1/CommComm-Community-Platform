@@ -23,6 +23,8 @@ const SignInWithGoogleFunction = async () => {
                 createdPostsID: [],
                 likedPostsID: [],
                 dislikedPostsID: [],
+
+                userCoins : 100
             })
         }
 

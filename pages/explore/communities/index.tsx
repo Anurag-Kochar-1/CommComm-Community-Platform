@@ -11,7 +11,7 @@ interface IProps {
 
 const Index = ({ allCommunitiesArray }: IProps) => {
   return (
-    <main className='w-full lg:w-[70%] h-[80vh] lg:h-[90vh] mt-[10vh] mb-[10vh] lg:mb-0 bg-BrutalPurple2 flex flex-col justify-start items-center overflow-x-hidden overflow-y-scroll scrollbar-hide'>
+    <main className='w-full lg:w-[60%] h-[80vh] lg:h-[90vh] mt-[10vh] mb-[10vh] lg:mb-0 bg-BrutalPurple2 flex flex-col justify-start items-center overflow-x-hidden overflow-y-scroll scrollbar-hide'>
       <ExploreTabs />
 
       {/* <h1 onClick={() => console.log(allCommunitiesArray)}> LOG allCommunitiesArray </h1> */}

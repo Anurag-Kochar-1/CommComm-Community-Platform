@@ -81,6 +81,8 @@ const Index = () => {
       createdPostsID: [],
       likedPostsID: [],
       dislikedPostsID: [],
+
+      userCoins : 100
     })
   }
 

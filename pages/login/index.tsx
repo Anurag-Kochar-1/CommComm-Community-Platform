@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { FcGoogle } from 'react-icons/fc'
 import { MdOutlineFacebook } from 'react-icons/md'
 import { signInWithEmailAndPassword } from "firebase/auth"
@@ -26,7 +26,8 @@ const Index = () => {
     signInWithEmailAndPassword(auth, emailInputValue, passwordInputValue)
       .then((userCredential) => {
         setIsLoading(false)
-        router.push("/")
+        console.log(userCredential)
+
       })
       .catch((error) => {
         alert(error?.errormessage);
@@ -34,8 +35,15 @@ const Index = () => {
       });
   }
 
+
+  useEffect(() => {
+    if(user  && !loading) {
+      router.push("/")
+    }
+  },[user, loading])
+
   return (
-    <div className='Z-50 fixed inset-0 w-[100%] h-[100vh] bg-white lg:bg-gradient-to-r from-gray-700 via-gray-900 to-black flex flex-row justify-center lg:justify-end items-center lg:px-32 xl:px-40 2xl:px-72'>
+    <div className=' fixed inset-0 w-[100%] h-[100vh] lg:bg-gradient-to-r from-gray-700 via-gray-900 to-black flex flex-row justify-center lg:justify-end items-center lg:px-32 xl:px-40 2xl:px-72'>
 
       {!isLoading && (
         <div className='w-full h-[90vh] mb-[10vh] lg:mb-0 sm:w-[70%] sm:h-[70vh] md:w-[70%] lg:w-[60%] xl:w-[40%] 2xl:w-[35%] bg-white rounded-md flex flex-col justify-start items-start pt-10 pb-5 px-5 space-y-5 overflow-x-hidden overflow-y-scroll scrollbar-hide'>
@@ -113,14 +121,14 @@ const Index = () => {
                 if(user && !loading) {
                   router.push('/')
                 } 
-              }, 3000);
+              }, 2000);
             }}
               type='button'
               title='sign'
               className='relative w-full h-10 flex justify-between items-center border-2 border-black bg-black'>
               <span className='absolute bottom-1 right-1 bg-white w-full h-10 flex justify-center items-center space-x-3 border-2 border-black hover:right-0 hover:bottom-0'>
-                <FcGoogle />
-                <span className=''> Continue with Google </span>
+                <FcGoogle className=' w-6 h-6'/>
+                <span className=' font-medium font-InriaSans text-base'> Continue with Google </span>
               </span>
             </button>
 
@@ -131,14 +139,14 @@ const Index = () => {
                 if(user && !loading) {
                   router.push('/')
               }
-              }, 3000);
+              }, 2000);
             }}
             type='button' 
             title='sign' 
             className='relative w-full h-10 flex justify-between items-center border-2 border-black bg-black'>
               <span className='absolute bottom-1 right-1 bg-[#1877F2] w-full h-10 flex justify-center items-center space-x-3 border-2 border-black hover:right-0 hover:bottom-0'>
-                <MdOutlineFacebook className='text-white' />
-                <span className='text-white'> Continue with Facebook </span>
+                <MdOutlineFacebook className='text-white w-6 h-6' />
+                <span className='text-white font-medium font-InriaSans text-base'> Continue with Facebook </span>
               </span>
             </button>
           </div>

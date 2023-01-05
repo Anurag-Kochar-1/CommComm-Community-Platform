@@ -8,6 +8,8 @@ import { auth, db } from '../../../../firebaseConfig'
 import demo from "../../../../public/images/bg/demo.jpg"
 import userDPdemo from "../../../../public/images/bg/userDPdemo.jpg"
 
+import coinIcon from "../../../../public/images/icons/coinIcon.svg"
+
 const LeftSideBar = () => {
 
   const [user, loading] = useAuthState(auth)
@@ -146,14 +148,20 @@ const LeftSideBar = () => {
         {/* Profile */}
         {user?.uid && (
           <div className='w-full h-full flex flex-col justify-end items-center py-2'>
-            <div className='w-[95%] border-2 border-black bg-BrutalOrange1 flex justify-start items-center px-2 py-4 space-x-3'>
+            <div className='w-[95%] border-2 border-black bg-white flex justify-start items-center px-2 py-4 space-x-3'>
               {user?.photoURL ? (
-                <Image src={user?.photoURL} alt="dp" width={9} height={9} className='w-9 h-9 rounded-full' />
+                <Image src={user?.photoURL} alt="dp" width={12} height={12} className='w-12 h-12 rounded-full' />
               ) :
-                <Image src={userDPdemo as any} alt="dp" width={9} height={9} className='w-9 h-9 rounded-full' />
+                <Image src={userDPdemo as any} alt="dp" width={12} height={12} className='w-12 h-12 rounded-full' />
               }
 
-              <p className='font-InriaSans text-sm font-semibold'> {user?.displayName} </p>
+              <div className='w-full flex flex-col justify-start items-start space-y-1'>
+                <p className='font-InriaSans text-sm font-semibold'> {user?.displayName} </p>
+                <div className='w-full flex justify-start items-center space-x-2'>
+                  <Image src={coinIcon as string} alt="icon" width={5} height={5} className="w-5 h-5" />
+                  <span> 100 </span>
+                </div>
+              </div>
 
             </div>
           </div>

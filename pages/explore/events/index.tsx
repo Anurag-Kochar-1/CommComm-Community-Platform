@@ -3,7 +3,7 @@ import ExploreTabs from '../../../components/pageWiseComponents/explore/ExploreT
 
 const Index = () => {
   return (
-    <main className='w-full lg:w-[70%] h-[80vh] lg:h-[90vh] mt-[10vh] mb-[10vh] lg:mb-0 bg-BrutalPurple2 flex flex-col justify-start items-center'>
+    <main className='w-full lg:w-[60%] h-[80vh] lg:h-[90vh] mt-[10vh] mb-[10vh] lg:mb-0 bg-BrutalPurple2 flex flex-col justify-start items-center'>
     <ExploreTabs />
     </main>
   )

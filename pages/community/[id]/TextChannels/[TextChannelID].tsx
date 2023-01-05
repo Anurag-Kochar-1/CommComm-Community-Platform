@@ -2,7 +2,7 @@ import React, {useEffect} from 'react'
 import { useRouter } from 'next/router'
 import CommunityLayout from '../../../../components/layouts/Community/CommunityLayout'
 
-const index = () => {
+const Index = () => {
   const router = useRouter()
   const { TextChannelID } = router.query
   const { id } = router.query
@@ -21,4 +21,4 @@ const index = () => {
   )
 }
 
-export default index 
+export default Index 

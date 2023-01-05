@@ -50,7 +50,7 @@ export default function CreateOptionsModal() {
 
                                         <div
                                             onClick={() => {
-                                                router.push("/uploadPost")
+                                                router.push("/UploadPost")
                                                 closeModal()
                                             }}
                                             className='w-full py-2 space-y-6 flex flex-col justify-start items-center my-4 hover:cursor-pointer'>

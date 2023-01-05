@@ -8,8 +8,8 @@ const PostFeed = () => {
 
   return (
     <div 
-    className='w-full space-y-5 flex flex-col justify-start items-center'
-    onClick={() => console.log(postData)}>
+    className='w-full space-y-10 flex flex-col justify-start items-center '
+    >
         
         
         {postData && (

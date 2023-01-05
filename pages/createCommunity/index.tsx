@@ -24,7 +24,7 @@ const Index = () => {
 
   const createCommunity = async  () => {
     if(!communityNameInputValue || communityCategory === "Choose Category" || communitySubCategory ===  "Choose Sub Category" ) {
-      console.log("-------- Error")
+      alert("Fill the fields")
     } else {
       console.log("creating community")
       const addingCommunityDoc = await addDoc(communitiesCollectionRef, {

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { FcGoogle } from "react-icons/fc"
@@ -9,17 +9,22 @@ import { auth } from "../../firebaseConfig"
 import { useRouter } from 'next/router'
 import { SignInWithGoogleFunction } from "../../utils/SignInWithGoogle/SignInWithGoogle"
 import { SignInWithFacebookFunction } from "../../utils/SignInWithFacebook/SignInWithFacebook"
+import { useDispatch } from 'react-redux'
+import { setIsBottomBarVisible } from "../../redux/slices/bottomBarSlice"
 
-import blueLinesBG from "../../public/images/bg/blueLinesBG.svg"
-import pattern1 from "../../public/images/bg/pattern1.svg"
-import jigsaw from "../../public/images/bg/jigsaw.svg"
+// import blueLinesBG from "../../public/images/bg/blueLinesBG.svg"
+// import pattern1 from "../../public/images/bg/pattern1.svg"
+// import jigsaw from "../../public/images/bg/jigsaw.svg"
  
 const Index = () => {
   const router = useRouter()
+  const dispatch = useDispatch()
   const [emailInputValue, setEmailInputValue] = useState<string>("")
   const [userNameInputValue, setUserNameInputValue] = useState<string>("")
   const [passwordInputValue, setPasswordInputValue] = useState<string>("")
   const [isLoading, setIsLoading] = useState<boolean>(false)
+
+  const allInputRef:any = useRef(null)
 
   const signUp = () => {
     setIsLoading(true)
@@ -109,7 +114,7 @@ const Index = () => {
 
             <div className='w-full flex flex-col justify-between items-start space-y-4 py-3 mt-4'>
 
-              <div className='w-[90%] h-10 relative bg-black flex justify-start items-center'>
+              <div className='w-[90%] h-10 relative bg-black flex justify-start items-center' onMouseEnter={() => dispatch(setIsBottomBarVisible(false))} onMouseLeave={() => dispatch(setIsBottomBarVisible(true))}>
                 <input
                   value={emailInputValue}
                   onChange={(e) => setEmailInputValue(e.target.value)}
@@ -117,10 +122,11 @@ const Index = () => {
                   type="email"
                   placeholder='Email address'
                   className='w-full h-10 absolute right-1 bottom-1 outline-none focus:ring-0 px-2 placeholder:px-2 border-2 border-black'
+                  
                 />
               </div>
 
-              <div className='w-[90%] h-10 relative bg-black flex justify-start items-center'>
+              <div className='w-[90%] h-10 relative bg-black flex justify-start items-center' onMouseEnter={() => dispatch(setIsBottomBarVisible(false))} onMouseLeave={() => dispatch(setIsBottomBarVisible(true))}>
                 <input
                   value={userNameInputValue}
                   onChange={(e) => setUserNameInputValue(e.target.value)}
@@ -131,7 +137,7 @@ const Index = () => {
                 />
               </div>
 
-              <div className='w-[90%] h-10 relative bg-black flex justify-start items-center'>
+              <div className='w-[90%] h-10 relative bg-black flex justify-start items-center' onMouseEnter={() => dispatch(setIsBottomBarVisible(false))} onMouseLeave={() => dispatch(setIsBottomBarVisible(true))}>
                 <input
                   value={passwordInputValue}
                   onChange={(e) => setPasswordInputValue(e.target.value)}

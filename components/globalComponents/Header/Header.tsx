@@ -27,7 +27,7 @@ const Header = () => {
       {/* <Link href={'/'} className='w-10 h-10 rounded-full bg-BrutalOrange1' onClick={() => console.log(0)} /> */}
       <Link href={'/'} className='flex justify-center items-center space-x-3'>
         <div className='w-10 h-10 rounded-full bg-BrutalPurple2 border-2 border-BrutalRed1 ' />
-        <span className='font-semibold text-lg'> WEcomm </span>
+        <span className='font-bold font-InriaSans text-xl'> CommComm </span>
       </Link>
 
       <SearchBar />

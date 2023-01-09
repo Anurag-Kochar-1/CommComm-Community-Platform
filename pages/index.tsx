@@ -11,14 +11,15 @@ import { useDispatch } from 'react-redux'
 import { setAllPostsData } from '../redux/slices/postsDataSlice'
 import PostFeed from '../components/globalComponents/Posts/PostFeed/PostFeed'
 import PostCard from '../components/globalComponents/Posts/PostCard/PostCard'
+import { useAuthState } from 'react-firebase-hooks/auth'
 // import { Bebas_Neue } from '@next/font/google'
 
 // const inter = Inter({ subsets: ['latin'] })
 
 export default function Home({ allPostsArray }: any) {
   const router = useRouter()
+  const [user, loading] = useAuthState(auth)
   const dispatch = useDispatch()
-
 
 
 
@@ -32,7 +33,7 @@ export default function Home({ allPostsArray }: any) {
     <main className='w-full lg:w-[60%] h-[80vh] lg:h-[90vh] mt-[10vh] mb-[10vh] lg:mb-0 bg-BgSecondaryBrutalSkin1 flex flex-col justify-start items-center overflow-x-hidden overflow-y-scroll pt-14 pb-20 scrollbar-hide'>
       {/* <h1 className='text-4xl text-blue-500 font-bold mt-[7vh]' onClick={() => console.log(auth?.currentUser)}> LOG USER</h1>
       
-<h1 className='text-4xl text-red-500 font-bold mt-[7vh]' onClick={() => {
+      <h1 className='text-4xl text-red-500 font-bold mt-[7vh]' onClick={() => {
         signOut(auth)
         console.log("Signed Out!!!")
       }}> Sign out </h1> */}
@@ -45,27 +46,11 @@ export default function Home({ allPostsArray }: any) {
       <Link href={`/community/QUwhcMaNju5oIsEkqnat`} className="text-black font-BebasNeue my-1 text-3xl"> 2st WALI COMMUNITY  </Link> */}
 
 
-      {/* <PostFeed /> */}
-
       {allPostsArray && (
         allPostsArray.map((postData: IPost) => {
           return <PostCard postData={postData} key={postData?.postID} postedAt={"communityHomePage"} />
         })
       )}
-
-      {allPostsArray && (
-        allPostsArray.map((postData: IPost) => {
-          return <PostCard postData={postData} key={postData?.postID} postedAt={"communityHomePage"} />
-        })
-      )}
-
-      {allPostsArray && (
-        allPostsArray.map((postData: IPost) => {
-          return <PostCard postData={postData} key={postData?.postID} postedAt={"communityHomePage"} />
-        })
-      )}
-
-
 
     </main>
   )

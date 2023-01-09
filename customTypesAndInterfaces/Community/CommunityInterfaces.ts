@@ -12,5 +12,5 @@ export interface ICommunityData {
         communityOwnerDisplayName: string
         communityOwnerEmail:string
         communityPostsID: string[]
-        communityDescription: string | null
+        communityDescription: string 
 }

@@ -4,19 +4,20 @@ import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { useSelector } from 'react-redux'
+import { ICommunityData } from '../../../../customTypesAndInterfaces/Community/CommunityInterfaces'
 import { auth } from '../../../../firebaseConfig'
 import demoLogo from "../../../../public/images/bg/demo.jpg"
 import NavTabs from '../NavTabs/NavTabs'
 import TagBox from '../TagBox/TagBox'
 
 
-const TopSection = () => {
+const TopSection = (  ) => {
     const [user, loading] = useAuthState(auth)
     const router = useRouter()
     const {id} = router.query
     const [isUserJoinedInCommunity, setIsUserJoinedInCommunity] = useState<boolean>(false)
 
-    const communityData: any = useSelector((state: any) => state.communityData.currentCommunityData[0])
+    const communityData: ICommunityData = useSelector((state: any) => state.communityData.currentCommunityData[0])
 
     useEffect(() => {
         if(communityData && user?.uid && !loading) {
@@ -45,7 +46,13 @@ const TopSection = () => {
                 }}>
 
                 <div className='relative w-16 h-16 lg:w-20 lg:h-20  border border-black mx-3 -my-5 lg:mx-5 bg-black rounded-sm'>
-                    <Image src={demoLogo} width={15} height={15} alt="logo" className='absolute right-[4px] bottom-[4px] border border-black w-16 h-16 lg:w-20 lg:h-20 aspect-square rounded-sm' onClick={() => console.log(communityData)} />
+                    {/* {communityData} */}
+                    
+                    {communityData?.communityLogo ? (
+                        <Image src={communityData?.communityLogo} width={15} height={15} alt="logo" className='absolute right-[4px] bottom-[4px] border border-black w-16 h-16 lg:w-20 lg:h-20 aspect-square rounded-sm' onClick={() => console.log(communityData)} />
+                    ): (
+                        <div className='absolute right-[4px] bottom-[4px] border bg-BrutalPurple2 border-black w-16 h-16 lg:w-20 lg:h-20 aspect-square rounded-sm' />
+                    )}
                 </div>
             </div>
 

@@ -20,7 +20,8 @@ module.exports = {
         BrutalPurple2: "#C83FD3",
         BrutalGreen2: "#11EA50",
 
-        BgSecondaryBrutalSkin1: "#FFE5C0"
+        // BgSecondaryBrutalSkin1: "#FFE5C0"
+        BgSecondaryBrutalSkin1: "#FCF5EB"
 
       },
 

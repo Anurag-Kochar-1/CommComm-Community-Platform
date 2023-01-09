@@ -95,7 +95,7 @@ const LeftSideBar = () => {
                   >
                     <div className='absolute right-1 bottom-1 w-full h-14 xl:h-20  bg-BrutalGreen2 border border-black rounded-md flex justify-start items-center space-x-2 px-3'>
                       {community.communityLogo !== null  && (
-                        <Image src={community.communityLogo as string} width={8} height={8} alt="pfp" className='w-8 h-8 xl:w-10 xl:h-10 rounded-full object-contain aspect-square' />
+                        <Image src={community.communityLogo as string} width={8} height={8} alt="pfp" className='w-8 h-8 xl:w-10 xl:h-10 rounded-full aspect-square' />
                       )}
 
                       {community.communityLogo === null && (

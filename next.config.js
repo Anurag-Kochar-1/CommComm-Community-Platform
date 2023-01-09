@@ -4,7 +4,8 @@ const nextConfig = {
   images: {
     domains: [
       'firebasestorage.googleapis.com',
-      'lh3.googleusercontent.com'
+      'lh3.googleusercontent.com',
+      'ih1.redbubble.net'
     ],
 
     

@@ -1,24 +1,79 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useDispatch } from 'react-redux'
 import CommunityLayout from '../../../../../components/layouts/Community/CommunityLayout'
 import { setIsBottomBarVisible } from "../../../../../redux/slices/bottomBarSlice"
 import { sourceOfLearningOptions } from "../../../../../constants/createTrackPage/sourceOfLearningOptions"
+import { addDoc, collection, doc, getDoc, updateDoc } from 'firebase/firestore'
+import { auth, db } from '../../../../../firebaseConfig'
+import { useRouter } from 'next/router'
+import { useAuthState } from 'react-firebase-hooks/auth'
 
-const Index = () => {
+interface IProps {
+    communityOwnerID: string
+}
+
+const Index = ({ communityOwnerID }: IProps) => {
+    const [user, loading, error] = useAuthState(auth)
+    const router = useRouter()
+    const { id } = router.query
+
+
+    // States
     const [pageNumber, setPageNumber] = useState<number>(1)
     const [trackNameInputValue, setTrackNameInputValue] = useState<string>("")
     const [trackGoalInputValue, setTrackGoalInputValue] = useState<string>("")
-    const [trackDurationInputValue, setTrackDurationInputValue] = useState<string>("")
+    const [trackDurationInputValue, setTrackDurationInputValue] = useState<number | string>("Duration in days")
     const [sourceOfLearningDropdownValue, setSourceOfLearningDropdownValue] = useState<string>("")
     const [sourceOfLearningDropdownLink, setSourceOfLearningDropdownLink] = useState<string>("")
-    const [trackPrerequisitesInputValue, setTrackPrerequisitesInputValue ] = useState<string>("")
+    const [trackPrerequisitesInputValue, setTrackPrerequisitesInputValue] = useState<string>("")
     const [trackOptionalDescription, setTrackOptionalDescription] = useState<string>("")
     const dispatch = useDispatch()
 
     const createTrack = async () => {
-        alert("Creating")
+        if (communityOwnerID === user?.uid) {
+            if (user && !loading && trackNameInputValue && trackGoalInputValue && trackDurationInputValue && sourceOfLearningDropdownValue && sourceOfLearningDropdownLink && trackPrerequisitesInputValue) {
+                try {
+                    const communityTracksSubCollectionRef = collection(db, `communities/${id}/communityTracks`)
+                    const addingTrack = await addDoc(communityTracksSubCollectionRef, {
+                        trackID: "",
+                        communityID: id,
+                        trackName: trackNameInputValue,
+                        trackGoal: trackGoalInputValue,
+                        trackDurationInDays: trackDurationInputValue,
+                        trackSourceOfLearning: sourceOfLearningDropdownValue,
+                        trackSourceOfLearningLink: sourceOfLearningDropdownLink,
+                        trackPrerequisites: trackPrerequisitesInputValue,
+                        trackDescription: trackOptionalDescription || ""
+                    })
+
+                    // ---- adding ID ----
+                    const trackRef = doc(db, "communities", id as string, "communityTracks", addingTrack?.id)
+                    await updateDoc(trackRef, {
+                        trackID: addingTrack.id
+                    })
+
+
+                    router.push(`/community/${id}/Tracks`)
+
+                } catch (error) {
+                    alert(error)
+                }
+            } else {
+                alert("Fill the required Fields")
+            }
+        } else if (communityOwnerID !== user?.uid) {
+            router.push('/')
+        }
     }
+
+    useEffect(() => {
+        if (!user && !loading) {
+            router.push("/")
+        } else if (communityOwnerID !== user?.uid) {
+            router.push("/")
+        }
+    }, [loading])
 
     return (
         <CommunityLayout>
@@ -33,14 +88,17 @@ const Index = () => {
                     </Link>
 
                     {/* ---- Heading and info ----- */}
-                    <h2 className='text-3xl font-bold'> Create a Track  </h2>
-                    <p className='font-medium text-sm text-gray-900'> 
-                     Setup a learning track for your community members to learn together and grow together at ZERO cost
+                    <h2 className='text-3xl font-bold' onClick={() => {
+                        console.log(`User UID -> ${user?.uid}`);
+                        console.log(`communityOwnerID -> ${communityOwnerID}`);
+                    }}> Create a Track  </h2>
+                    <p className='font-medium text-sm text-gray-900'>
+                        Setup a learning track for your community members to learn together and grow together at ZERO cost
                     </p>
 
                     {/* ---- Details ----- */}
                     <div className='w-full h-full flex flex-col items-center justify-start space-y-5'>
-                    
+
                         {pageNumber === 1 && (
                             <div className='w-full h-full flex flex-col justify-between items-start py-3'>
                                 <div className='w-full h-full flex flex-col justify-start items-start space-y-5'>
@@ -74,31 +132,17 @@ const Index = () => {
                                     <div className='w-[90%] h-10 relative bg-black flex justify-start items-center' onMouseEnter={() => dispatch(setIsBottomBarVisible(false))} onMouseLeave={() => dispatch(setIsBottomBarVisible(true))}>
                                         <input
                                             value={trackDurationInputValue}
-                                            onChange={(e) => setTrackDurationInputValue(e.target.value)}
+                                            onChange={(e) => setTrackDurationInputValue(parseInt(e.target.value))}
                                             required
                                             type="number"
                                             placeholder='Duration in days'
                                             className='w-full h-10 absolute right-1 bottom-1 outline-none focus:ring-0 px-2 placeholder:px-2 border-2 border-black'
-
                                         />
                                     </div>
-
-                                    {/* Timing */}
-                                    {/* <div className='w-[90%] h-10 relative bg-black flex justify-start items-center' onMouseEnter={() => dispatch(setIsBottomBarVisible(false))} onMouseLeave={() => dispatch(setIsBottomBarVisible(true))}>
-                                        <input
-                                            value={trackNameInputValue}
-                                            onChange={(e) => setTrackNameInputValue(e.target.value)}
-                                            required
-                                            type="number"
-                                            placeholder='Timing'
-                                            className='w-full h-10 absolute right-1 bottom-1 outline-none focus:ring-0 px-2 placeholder:px-2 border-2 border-black'
-
-                                        />
-                                    </div> */}
                                 </div>
 
                                 {/* Next Btn */}
-                                <div className='w-full flex justify-end items-center py-5'>
+                                <div className='w-full flex justify-end items-center p-5'>
                                     <button
                                         onClick={() => {
                                             setPageNumber(2)
@@ -198,20 +242,23 @@ const Index = () => {
 
                                     <button
                                         onClick={() => {
-                                            console.log(`trackNameInputValue => ${trackNameInputValue}`)
-                                            console.log(`trackGoalInputValue => ${trackGoalInputValue}`)
-                                            console.log(`trackDurationInputValue => ${trackDurationInputValue}`)
+                                            // console.log(`trackNameInputValue => ${trackNameInputValue}`)
+                                            // console.log(`trackGoalInputValue => ${trackGoalInputValue}`)
+                                            // console.log(`trackDurationInputValue => ${trackDurationInputValue}`)
 
-                                            console.log(`sourceOfLearningDropdownValue => ${sourceOfLearningDropdownValue}`)
-                                            console.log(`sourceOfLearningDropdownLink => ${sourceOfLearningDropdownLink}`)
-                                            console.log(`trackPrerequisitesInputValue => ${trackPrerequisitesInputValue}`);
-                                            console.log(`trackOptionalDescription => ${trackOptionalDescription}`)
+                                            // console.log(`sourceOfLearningDropdownValue => ${sourceOfLearningDropdownValue}`)
+                                            // console.log(`sourceOfLearningDropdownLink => ${sourceOfLearningDropdownLink}`)
+                                            // console.log(`trackPrerequisitesInputValue => ${trackPrerequisitesInputValue}`);
+                                            // console.log(`trackOptionalDescription => ${trackOptionalDescription}`)
+                                            // console.log(communityOwnerID);
+
+                                            createTrack()
                                         }}
                                         type='button'
                                         title='Create'
                                         className='w-20 md:w-32 h-10 relative flex justify-center items-center bg-black rounded-sm border-2 border-black'>
                                         <span className='w-20 md:w-32 h-10 absolute bottom-[2px] right-[2px] bg-BrutalBlue1  flex justify-center items-center rounded-sm border-2 border-black active:right-0 active:bottom-0 '>
-                                            <p className='text-xs md:text-sm font-medium'> LOG  </p>
+                                            <p className='text-xs md:text-sm font-medium'> Create  </p>
                                         </span>
                                     </button>
                                 </div>
@@ -231,3 +278,17 @@ const Index = () => {
 }
 
 export default Index
+
+
+
+export const getServerSideProps = async ({ params }: any) => {
+    const { id } = params
+
+    const communityRef = doc(db, "communities", id as string)
+    const data = await getDoc(communityRef)
+    const communityOwnerID: string = data.data()?.communityOwnerID
+
+    return {
+        props: { communityOwnerID }
+    }
+}

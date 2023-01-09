@@ -3,10 +3,11 @@ export interface ITrackData {
     communityID: string
     trackName: string
     trackGoal: string
-    trackDurationInDays: number
+    trackDurationInDays: number | string
     trackSourceOfLearning: string
     trackSourceOfLearningLink: string
-    trackPrerequisites : string
+    trackPrerequisites: string
     trackDescription: string
 
 }
+

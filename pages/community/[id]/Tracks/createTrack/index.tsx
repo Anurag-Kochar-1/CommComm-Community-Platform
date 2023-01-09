@@ -70,7 +70,7 @@ const Index = ({ communityOwnerID }: IProps) => {
     useEffect(() => {
         if (!user && !loading) {
             router.push("/")
-        } else if (communityOwnerID !== user?.uid) {
+        } else if (communityOwnerID !== user?.uid && user && !loading ) {
             router.push("/")
         }
     }, [loading])
@@ -214,13 +214,12 @@ const Index = ({ communityOwnerID }: IProps) => {
                                     </div>
 
                                     {/* Description */}
-                                    <div className='w-[90%] h-10 relative bg-black flex justify-start items-center' onMouseEnter={() => dispatch(setIsBottomBarVisible(false))} onMouseLeave={() => dispatch(setIsBottomBarVisible(true))}>
-                                        <input
+                                    <div className='w-[90%] h-[40%] relative bg-black flex justify-start items-center' onMouseEnter={() => dispatch(setIsBottomBarVisible(false))} onMouseLeave={() => dispatch(setIsBottomBarVisible(true))}>
+                                        <textarea
                                             value={trackOptionalDescription}
                                             onChange={(e) => setTrackOptionalDescription(e.target.value)}
-                                            type="text"
                                             placeholder='Description (optional)'
-                                            className='w-full h-10 absolute right-1 bottom-1 outline-none focus:ring-0 px-2 placeholder:px-2 border-2 border-black'
+                                            className='w-full h-full absolute right-1 bottom-1 outline-none focus:ring-0 p-2 placeholder:px-2 border-2 border-black'
 
                                         />
                                     </div>

@@ -8,6 +8,7 @@ import { addDoc, collection, doc, getDoc, updateDoc } from 'firebase/firestore'
 import { auth, db } from '../../../../../firebaseConfig'
 import { useRouter } from 'next/router'
 import { useAuthState } from 'react-firebase-hooks/auth'
+import { ITrackData } from '../../../../../customTypesAndInterfaces/Tracks/tracksInterface'
 
 interface IProps {
     communityOwnerID: string
@@ -31,46 +32,98 @@ const Index = ({ communityOwnerID }: IProps) => {
     const dispatch = useDispatch()
 
     const createTrack = async () => {
-        if (communityOwnerID === user?.uid) {
-            if (user && !loading && trackNameInputValue && trackGoalInputValue && trackDurationInputValue && sourceOfLearningDropdownValue && sourceOfLearningDropdownLink && trackPrerequisitesInputValue) {
-                try {
-                    const communityTracksSubCollectionRef = collection(db, `communities/${id}/communityTracks`)
-                    const addingTrack = await addDoc(communityTracksSubCollectionRef, {
-                        trackID: "",
-                        communityID: id,
-                        trackName: trackNameInputValue,
-                        trackGoal: trackGoalInputValue,
-                        trackDurationInDays: trackDurationInputValue,
-                        trackSourceOfLearning: sourceOfLearningDropdownValue,
-                        trackSourceOfLearningLink: sourceOfLearningDropdownLink,
-                        trackPrerequisites: trackPrerequisitesInputValue,
-                        trackDescription: trackOptionalDescription || ""
-                    })
+        if (trackDurationInputValue <= 90) {
+            if (communityOwnerID === user?.uid) {
+                if (user && !loading && trackNameInputValue && trackGoalInputValue && trackDurationInputValue && sourceOfLearningDropdownValue && sourceOfLearningDropdownLink && trackPrerequisitesInputValue) {
+                    try {
+                        const communityTracksSubCollectionRef = collection(db, `communities/${id}/communityTracks`)
+                        const addingTrack = await addDoc(communityTracksSubCollectionRef, {
+                            trackID: "",
+                            communityID: id,
+                            trackName: trackNameInputValue,
+                            trackGoal: trackGoalInputValue,
+                            trackDurationInDays: trackDurationInputValue,
+                            trackSourceOfLearning: sourceOfLearningDropdownValue,
+                            trackSourceOfLearningLink: sourceOfLearningDropdownLink,
+                            trackPrerequisites: trackPrerequisitesInputValue,
+                            trackDescription: trackOptionalDescription || ""
+                        })
 
-                    // ---- adding ID ----
-                    const trackRef = doc(db, "communities", id as string, "communityTracks", addingTrack?.id)
-                    await updateDoc(trackRef, {
-                        trackID: addingTrack.id
-                    })
+                        // ---- adding ID ----
+                        const trackRef = doc(db, "communities", id as string, "communityTracks", addingTrack?.id)
+                        await updateDoc(trackRef, {
+                            trackID: addingTrack.id
+                        })
 
 
-                    router.push(`/community/${id}/Tracks`)
+                        // -------- creating Tracks paths ---------
+                        const data = await getDoc(trackRef)
+                        const pathsNumbers: number = data.data()?.trackDurationInDays
+                        const communityPathsSubCollectionRef = collection(db, "communities", id as string, "trackPaths")
 
-                } catch (error) {
-                    alert(error)
+                        for (let i = 1; i <= pathsNumbers; i++) {
+                            // adding path
+                            if (i === 1) {
+                                const addingPath = await addDoc(communityPathsSubCollectionRef, {
+                                    pathID: "",
+                                    trackID: addingTrack.id,
+                                    pathNumber: i,
+                                    isUnlocked: true,
+                                    isCompleted: false
+
+                                })
+
+                                // adding ID manually
+                                await updateDoc(addingPath, {
+                                    pathID: addingPath.id
+                                })
+                            } else {
+                                const addingPath = await addDoc(communityPathsSubCollectionRef, {
+                                    pathID: "",
+                                    trackID: addingTrack.id,
+                                    pathNumber: i,
+                                    isUnlocked: false,
+                                    isCompleted: false
+
+                                })
+
+                                // adding ID manually
+                                await updateDoc(addingPath, {
+                                    pathID: addingPath.id
+                                })
+                            }
+
+
+                        }
+
+
+
+
+
+
+
+                        // router.push(`/community/${id}/Tracks`)
+                    } catch (error) {
+                        alert(error)
+                    }
+                } else {
+                    alert("Fill the required Fields")
                 }
-            } else {
-                alert("Fill the required Fields")
+            } else if (communityOwnerID !== user?.uid) {
+                router.push('/')
             }
-        } else if (communityOwnerID !== user?.uid) {
-            router.push('/')
+        } else if (trackDurationInputValue > 90) {
+            alert("Track durtion should be less than 90 day")
         }
     }
+
+
+
 
     useEffect(() => {
         if (!user && !loading) {
             router.push("/")
-        } else if (communityOwnerID !== user?.uid && user && !loading ) {
+        } else if (communityOwnerID !== user?.uid && user && !loading) {
             router.push("/")
         }
     }, [loading])

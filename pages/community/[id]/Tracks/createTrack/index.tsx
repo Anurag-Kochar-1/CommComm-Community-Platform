@@ -118,8 +118,8 @@ const Index = ({ communityOwnerID }: IProps) => {
             } else if (communityOwnerID !== user?.uid) {
                 router.push('/')
             }
-        } else if (trackDurationInputValue > 90) {
-            alert("Track durtion should be less than 90 day")
+        } else if (trackDurationInputValue > 90 || trackDurationInputValue === 1) {
+            alert("Track duration should be less than 90 days and more than 1 days")
         }
     }
 
@@ -140,7 +140,7 @@ const Index = ({ communityOwnerID }: IProps) => {
                 <CommunityLayout>
                     <main className='w-full h-[90vh] mb-[10vh] lg:mb-0 fixed lg:static inset-0 flex flex-col justify-start items-center bg-BgBrutalSkin1 lg:pt-12 lg:pb-36'>
 
-                        <div className='w-full h-full p-2 flex flex-col justify-start items-start pt-10 pb-5 px-5 space-y-5 overflow-x-hidden overflow-y-scroll bg-white'>
+                        <div className='w-full xl:w-[70%] 2xl:w-[50%] flex flex-col justify-start items-start pt-10 pb-5 px-5 space-y-5 overflow-x-hidden overflow-y-scroll scrollbar-hide bg-white'>
 
                             {/* ---- LOGO ---- */}
                             <Link href={'/'} className='flex justify-center items-center space-x-3'>
@@ -158,11 +158,10 @@ const Index = ({ communityOwnerID }: IProps) => {
                             </p>
 
                             {/* ---- Details ----- */}
-
-                            <div className='w-full h-full flex flex-col items-center justify-start space-y-5'>
+                            <div className='w-full h-full flex flex-col justify-start items-center py-10 space-y-5 '>
 
                                 {pageNumber === 1 && (
-                                    <div className='w-full h-full flex flex-col justify-between items-start py-3'>
+                                    <div className='w-full h-full flex flex-col justify-between items-start py-3 space-y-5'>
                                         <div className='w-full h-full flex flex-col justify-start items-start space-y-5'>
                                             {/* Name */}
                                             <div className='w-[90%] h-10 relative bg-black flex justify-start items-center' onMouseEnter={() => dispatch(setIsBottomBarVisible(false))} onMouseLeave={() => dispatch(setIsBottomBarVisible(true))}>
@@ -222,7 +221,7 @@ const Index = ({ communityOwnerID }: IProps) => {
 
 
                                 {pageNumber === 2 && (
-                                    <div className='w-full h-full flex flex-col justify-between items-start  py-3'>
+                                    <div className='w-full h-full flex flex-col justify-between items-start py-3 space-y-5'>
                                         <div className='w-full h-full flex flex-col justify-start items-start space-y-5'>
 
                                             {/* Source of Learning - Dropdwon */}
@@ -276,8 +275,9 @@ const Index = ({ communityOwnerID }: IProps) => {
                                             </div>
 
                                             {/* Description */}
-                                            <div className='w-[90%] h-[40%] relative bg-black flex justify-start items-center' onMouseEnter={() => dispatch(setIsBottomBarVisible(false))} onMouseLeave={() => dispatch(setIsBottomBarVisible(true))}>
-                                                <textarea
+                                            <div className='w-[90%] h-10 relative bg-black flex justify-start items-center' onMouseEnter={() => dispatch(setIsBottomBarVisible(false))} onMouseLeave={() => dispatch(setIsBottomBarVisible(true))}>
+                                                <input
+                                                    type="text"
                                                     value={trackOptionalDescription}
                                                     onChange={(e) => setTrackOptionalDescription(e.target.value)}
                                                     placeholder='Description (optional)'

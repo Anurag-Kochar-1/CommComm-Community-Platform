@@ -20,9 +20,11 @@ const TopSection = () => {
     const [communityData, setCommunityData] = useState<ICommunityData>(Object)
 
     const fetchCommunityDetails = async () => {
-        const communityRef = doc(db, "communities", id as string)
-        const res = await getDoc(communityRef)
-        setCommunityData( res.data() as ICommunityData )
+        if (id) {
+            const communityRef = doc(db, "communities", id as string)
+            const res = await getDoc(communityRef)
+            setCommunityData(res.data() as ICommunityData)
+        }
     }
 
     useEffect(() => {
@@ -38,10 +40,10 @@ const TopSection = () => {
 
 
         fetchCommunityDetails()
-    }, [])
+    }, [id])
 
 
-    
+
 
 
 

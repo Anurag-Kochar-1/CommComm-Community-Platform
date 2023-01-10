@@ -18,7 +18,7 @@ const Index = ({ allCommunityMessage }: any) => {
   const [messageInputValue, setMessageInputValue] = useState<string>("")
   const [realTimeMessagesState, setRealTimeMessagesState] = useState<any[]>([])
 
-  const messageInputRef:any = useRef(null)
+  const messageInputRef: any = useRef(null)
 
   const sendMessage = async () => {
     if (user && !loading) {
@@ -68,11 +68,12 @@ const Index = ({ allCommunityMessage }: any) => {
 
   return (
     <CommunityLayout>
-      <main className='w-full h-full flex flex-col justify-between items-center bg-BgBrutalSkin1 pb-5 sm:px-4'>
+      <main className='w-full flex flex-col justify-between items-center bg-BgBrutalSkin1 pb-5 sm:px-4'>
         {/* <h1 onClick={() => console.log(realTimeMessagesState)}>  lOG realTimeMessagesState </h1> */}
 
 
-        <div className='w-full  overflow-x-hidden overscroll-y-scroll space-y-3 pb-40 px-3 bg-white py-5 rounded-md scrollbar-hide'>
+        {/* Message Box */}
+        <div className='w-full space-y-3 pb-40 px-3 bg-white py-5 rounded-md scrollbar-hide'>
           {allCommunityMessage && (
             allCommunityMessage?.map((message: any) => {
               return (
@@ -80,7 +81,288 @@ const Index = ({ allCommunityMessage }: any) => {
                   <div className={`flex justify-end items-center space-x-3 bg-BrutalOrange1 py-2 px-2 rounded-md`}>
 
                     <div className='w-10 h-10 flex justify-center items-center'>
-                      <Image src={ userDPdemo } alt="dp" className='w-7 h-7 rounded-full' width={7} height={7} />
+                      <Image src={userDPdemo} alt="dp" className='w-7 h-7 rounded-full' width={7} height={7} />
+                    </div>
+
+                    <div className='flex flex-col items-start justify-start '>
+                      <p className='font-InriaSans text-black font-semibold text-lg '> {message?.messageCreatorName} </p>
+                      <p className='font-InriaSans text-black font-medium text-base'> {message?.messageText} </p>
+                    </div>
+
+                  </div>
+                </div>
+              )
+            })
+          )}
+
+          {allCommunityMessage && (
+            allCommunityMessage?.map((message: any) => {
+              return (
+                <div key={message?.messageID} className={` w-full flex  ${message.messageCreatorID === user?.uid ? "justify-end" : "justify-start"} space-x-1 py-2 px-2`} >
+                  <div className={`flex justify-end items-center space-x-3 bg-BrutalOrange1 py-2 px-2 rounded-md`}>
+
+                    <div className='w-10 h-10 flex justify-center items-center'>
+                      <Image src={userDPdemo} alt="dp" className='w-7 h-7 rounded-full' width={7} height={7} />
+                    </div>
+
+                    <div className='flex flex-col items-start justify-start '>
+                      <p className='font-InriaSans text-black font-semibold text-lg '> {message?.messageCreatorName} </p>
+                      <p className='font-InriaSans text-black font-medium text-base'> {message?.messageText} </p>
+                    </div>
+
+                  </div>
+                </div>
+              )
+            })
+          )}
+          {allCommunityMessage && (
+            allCommunityMessage?.map((message: any) => {
+              return (
+                <div key={message?.messageID} className={` w-full flex  ${message.messageCreatorID === user?.uid ? "justify-end" : "justify-start"} space-x-1 py-2 px-2`} >
+                  <div className={`flex justify-end items-center space-x-3 bg-BrutalOrange1 py-2 px-2 rounded-md`}>
+
+                    <div className='w-10 h-10 flex justify-center items-center'>
+                      <Image src={userDPdemo} alt="dp" className='w-7 h-7 rounded-full' width={7} height={7} />
+                    </div>
+
+                    <div className='flex flex-col items-start justify-start '>
+                      <p className='font-InriaSans text-black font-semibold text-lg '> {message?.messageCreatorName} </p>
+                      <p className='font-InriaSans text-black font-medium text-base'> {message?.messageText} </p>
+                    </div>
+
+                  </div>
+                </div>
+              )
+            })
+          )}
+          {allCommunityMessage && (
+            allCommunityMessage?.map((message: any) => {
+              return (
+                <div key={message?.messageID} className={` w-full flex  ${message.messageCreatorID === user?.uid ? "justify-end" : "justify-start"} space-x-1 py-2 px-2`} >
+                  <div className={`flex justify-end items-center space-x-3 bg-BrutalOrange1 py-2 px-2 rounded-md`}>
+
+                    <div className='w-10 h-10 flex justify-center items-center'>
+                      <Image src={userDPdemo} alt="dp" className='w-7 h-7 rounded-full' width={7} height={7} />
+                    </div>
+
+                    <div className='flex flex-col items-start justify-start '>
+                      <p className='font-InriaSans text-black font-semibold text-lg '> {message?.messageCreatorName} </p>
+                      <p className='font-InriaSans text-black font-medium text-base'> {message?.messageText} </p>
+                    </div>
+
+                  </div>
+                </div>
+              )
+            })
+          )}
+          {allCommunityMessage && (
+            allCommunityMessage?.map((message: any) => {
+              return (
+                <div key={message?.messageID} className={` w-full flex  ${message.messageCreatorID === user?.uid ? "justify-end" : "justify-start"} space-x-1 py-2 px-2`} >
+                  <div className={`flex justify-end items-center space-x-3 bg-BrutalOrange1 py-2 px-2 rounded-md`}>
+
+                    <div className='w-10 h-10 flex justify-center items-center'>
+                      <Image src={userDPdemo} alt="dp" className='w-7 h-7 rounded-full' width={7} height={7} />
+                    </div>
+
+                    <div className='flex flex-col items-start justify-start '>
+                      <p className='font-InriaSans text-black font-semibold text-lg '> {message?.messageCreatorName} </p>
+                      <p className='font-InriaSans text-black font-medium text-base'> {message?.messageText} </p>
+                    </div>
+
+                  </div>
+                </div>
+              )
+            })
+          )}
+          {allCommunityMessage && (
+            allCommunityMessage?.map((message: any) => {
+              return (
+                <div key={message?.messageID} className={` w-full flex  ${message.messageCreatorID === user?.uid ? "justify-end" : "justify-start"} space-x-1 py-2 px-2`} >
+                  <div className={`flex justify-end items-center space-x-3 bg-BrutalOrange1 py-2 px-2 rounded-md`}>
+
+                    <div className='w-10 h-10 flex justify-center items-center'>
+                      <Image src={userDPdemo} alt="dp" className='w-7 h-7 rounded-full' width={7} height={7} />
+                    </div>
+
+                    <div className='flex flex-col items-start justify-start '>
+                      <p className='font-InriaSans text-black font-semibold text-lg '> {message?.messageCreatorName} </p>
+                      <p className='font-InriaSans text-black font-medium text-base'> {message?.messageText} </p>
+                    </div>
+
+                  </div>
+                </div>
+              )
+            })
+          )}
+          {allCommunityMessage && (
+            allCommunityMessage?.map((message: any) => {
+              return (
+                <div key={message?.messageID} className={` w-full flex  ${message.messageCreatorID === user?.uid ? "justify-end" : "justify-start"} space-x-1 py-2 px-2`} >
+                  <div className={`flex justify-end items-center space-x-3 bg-BrutalOrange1 py-2 px-2 rounded-md`}>
+
+                    <div className='w-10 h-10 flex justify-center items-center'>
+                      <Image src={userDPdemo} alt="dp" className='w-7 h-7 rounded-full' width={7} height={7} />
+                    </div>
+
+                    <div className='flex flex-col items-start justify-start '>
+                      <p className='font-InriaSans text-black font-semibold text-lg '> {message?.messageCreatorName} </p>
+                      <p className='font-InriaSans text-black font-medium text-base'> {message?.messageText} </p>
+                    </div>
+
+                  </div>
+                </div>
+              )
+            })
+          )}
+          {allCommunityMessage && (
+            allCommunityMessage?.map((message: any) => {
+              return (
+                <div key={message?.messageID} className={` w-full flex  ${message.messageCreatorID === user?.uid ? "justify-end" : "justify-start"} space-x-1 py-2 px-2`} >
+                  <div className={`flex justify-end items-center space-x-3 bg-BrutalOrange1 py-2 px-2 rounded-md`}>
+
+                    <div className='w-10 h-10 flex justify-center items-center'>
+                      <Image src={userDPdemo} alt="dp" className='w-7 h-7 rounded-full' width={7} height={7} />
+                    </div>
+
+                    <div className='flex flex-col items-start justify-start '>
+                      <p className='font-InriaSans text-black font-semibold text-lg '> {message?.messageCreatorName} </p>
+                      <p className='font-InriaSans text-black font-medium text-base'> {message?.messageText} </p>
+                    </div>
+
+                  </div>
+                </div>
+              )
+            })
+          )}
+          {allCommunityMessage && (
+            allCommunityMessage?.map((message: any) => {
+              return (
+                <div key={message?.messageID} className={` w-full flex  ${message.messageCreatorID === user?.uid ? "justify-end" : "justify-start"} space-x-1 py-2 px-2`} >
+                  <div className={`flex justify-end items-center space-x-3 bg-BrutalOrange1 py-2 px-2 rounded-md`}>
+
+                    <div className='w-10 h-10 flex justify-center items-center'>
+                      <Image src={userDPdemo} alt="dp" className='w-7 h-7 rounded-full' width={7} height={7} />
+                    </div>
+
+                    <div className='flex flex-col items-start justify-start '>
+                      <p className='font-InriaSans text-black font-semibold text-lg '> {message?.messageCreatorName} </p>
+                      <p className='font-InriaSans text-black font-medium text-base'> {message?.messageText} </p>
+                    </div>
+
+                  </div>
+                </div>
+              )
+            })
+          )}
+          {allCommunityMessage && (
+            allCommunityMessage?.map((message: any) => {
+              return (
+                <div key={message?.messageID} className={` w-full flex  ${message.messageCreatorID === user?.uid ? "justify-end" : "justify-start"} space-x-1 py-2 px-2`} >
+                  <div className={`flex justify-end items-center space-x-3 bg-BrutalOrange1 py-2 px-2 rounded-md`}>
+
+                    <div className='w-10 h-10 flex justify-center items-center'>
+                      <Image src={userDPdemo} alt="dp" className='w-7 h-7 rounded-full' width={7} height={7} />
+                    </div>
+
+                    <div className='flex flex-col items-start justify-start '>
+                      <p className='font-InriaSans text-black font-semibold text-lg '> {message?.messageCreatorName} </p>
+                      <p className='font-InriaSans text-black font-medium text-base'> {message?.messageText} </p>
+                    </div>
+
+                  </div>
+                </div>
+              )
+            })
+          )}
+          {allCommunityMessage && (
+            allCommunityMessage?.map((message: any) => {
+              return (
+                <div key={message?.messageID} className={` w-full flex  ${message.messageCreatorID === user?.uid ? "justify-end" : "justify-start"} space-x-1 py-2 px-2`} >
+                  <div className={`flex justify-end items-center space-x-3 bg-BrutalOrange1 py-2 px-2 rounded-md`}>
+
+                    <div className='w-10 h-10 flex justify-center items-center'>
+                      <Image src={userDPdemo} alt="dp" className='w-7 h-7 rounded-full' width={7} height={7} />
+                    </div>
+
+                    <div className='flex flex-col items-start justify-start '>
+                      <p className='font-InriaSans text-black font-semibold text-lg '> {message?.messageCreatorName} </p>
+                      <p className='font-InriaSans text-black font-medium text-base'> {message?.messageText} </p>
+                    </div>
+
+                  </div>
+                </div>
+              )
+            })
+          )}
+          {allCommunityMessage && (
+            allCommunityMessage?.map((message: any) => {
+              return (
+                <div key={message?.messageID} className={` w-full flex  ${message.messageCreatorID === user?.uid ? "justify-end" : "justify-start"} space-x-1 py-2 px-2`} >
+                  <div className={`flex justify-end items-center space-x-3 bg-BrutalOrange1 py-2 px-2 rounded-md`}>
+
+                    <div className='w-10 h-10 flex justify-center items-center'>
+                      <Image src={userDPdemo} alt="dp" className='w-7 h-7 rounded-full' width={7} height={7} />
+                    </div>
+
+                    <div className='flex flex-col items-start justify-start '>
+                      <p className='font-InriaSans text-black font-semibold text-lg '> {message?.messageCreatorName} </p>
+                      <p className='font-InriaSans text-black font-medium text-base'> {message?.messageText} </p>
+                    </div>
+
+                  </div>
+                </div>
+              )
+            })
+          )}
+          {allCommunityMessage && (
+            allCommunityMessage?.map((message: any) => {
+              return (
+                <div key={message?.messageID} className={` w-full flex  ${message.messageCreatorID === user?.uid ? "justify-end" : "justify-start"} space-x-1 py-2 px-2`} >
+                  <div className={`flex justify-end items-center space-x-3 bg-BrutalOrange1 py-2 px-2 rounded-md`}>
+
+                    <div className='w-10 h-10 flex justify-center items-center'>
+                      <Image src={userDPdemo} alt="dp" className='w-7 h-7 rounded-full' width={7} height={7} />
+                    </div>
+
+                    <div className='flex flex-col items-start justify-start '>
+                      <p className='font-InriaSans text-black font-semibold text-lg '> {message?.messageCreatorName} </p>
+                      <p className='font-InriaSans text-black font-medium text-base'> {message?.messageText} </p>
+                    </div>
+
+                  </div>
+                </div>
+              )
+            })
+          )}
+          {allCommunityMessage && (
+            allCommunityMessage?.map((message: any) => {
+              return (
+                <div key={message?.messageID} className={` w-full flex  ${message.messageCreatorID === user?.uid ? "justify-end" : "justify-start"} space-x-1 py-2 px-2`} >
+                  <div className={`flex justify-end items-center space-x-3 bg-BrutalOrange1 py-2 px-2 rounded-md`}>
+
+                    <div className='w-10 h-10 flex justify-center items-center'>
+                      <Image src={userDPdemo} alt="dp" className='w-7 h-7 rounded-full' width={7} height={7} />
+                    </div>
+
+                    <div className='flex flex-col items-start justify-start '>
+                      <p className='font-InriaSans text-black font-semibold text-lg '> {message?.messageCreatorName} </p>
+                      <p className='font-InriaSans text-black font-medium text-base'> {message?.messageText} </p>
+                    </div>
+
+                  </div>
+                </div>
+              )
+            })
+          )}
+          {allCommunityMessage && (
+            allCommunityMessage?.map((message: any) => {
+              return (
+                <div key={message?.messageID} className={` w-full flex  ${message.messageCreatorID === user?.uid ? "justify-end" : "justify-start"} space-x-1 py-2 px-2`} >
+                  <div className={`flex justify-end items-center space-x-3 bg-BrutalOrange1 py-2 px-2 rounded-md`}>
+
+                    <div className='w-10 h-10 flex justify-center items-center'>
+                      <Image src={userDPdemo} alt="dp" className='w-7 h-7 rounded-full' width={7} height={7} />
                     </div>
 
                     <div className='flex flex-col items-start justify-start '>
@@ -96,11 +378,11 @@ const Index = ({ allCommunityMessage }: any) => {
         </div>
 
 
-        {/* MESSAGE BAR  */}
+        {/* Message Bar  */}
         <div className='z-50 fixed bottom-[0vh] lg:bottom-[2vh] w-full lg:w-[55%] h-24 lg:h-[8vh]  bg-purple-300 flex justify-between items-end space-x-3 p-2' onClick={() => {
           console.log(messageInputRef)
         }}>
-        
+
           <input
             ref={messageInputRef}
             value={messageInputValue}
@@ -123,7 +405,7 @@ const Index = ({ allCommunityMessage }: any) => {
               sendMessage()
             }}
           >
-            <FiSend className="text-2xl"/>
+            <FiSend className="text-2xl" />
 
           </button>
         </div>
@@ -132,7 +414,7 @@ const Index = ({ allCommunityMessage }: any) => {
   )
 }
 
-export default Index  
+export default Index
 
 
 

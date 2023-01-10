@@ -9,33 +9,15 @@ import { IPathsData } from '../../../../../customTypesAndInterfaces/Tracks/paths
 import { ITrackData } from '../../../../../customTypesAndInterfaces/Tracks/tracksInterface'
 import { db } from '../../../../../firebaseConfig'
 import { setIsBottomBarVisible } from '../../../../../redux/slices/bottomBarSlice'
+import { classStartingTimeOptions } from "../../../../../constants/createClassPage/classStartingTimeOptions"
+import {classEndingTimeOptions}  from "../../../../../constants/createClassPage/classEndingTimeOptions"
 
 interface IProps {
     pathNumberToBuildFor: any
 }
 
 
-const classStartingTimeOptions = [
-    {
-        id: 0,
-        label: "12:00 am",
-        value: "12:00 am"
-    },
-    {
-        id: 1,
-        label: "12:30 am",
-        value: "12:30 am"
-    },
-    {
-        id: 2,
-        label: "1:00 am",
-        value: "1:00 am"
-    },
-]
 
-const classEndingTimeOptions = [
-    {}
-]
 
 const Index = ({ pathNumberToBuildFor }: IProps) => {
     const dispatch = useDispatch()
@@ -140,18 +122,18 @@ const Index = ({ pathNumberToBuildFor }: IProps) => {
                                             <select
                                                 title='Starting Time'
                                                 className='w-full h-10 absolute right-1 bottom-1 outline-none focus:ring-0 px-2 placeholder:px-2 border-2 border-black'
-                                                value={classStartingTimeDropdownValue}
+                                                value={classEndingTimeDropdownValue}
                                                 onChange={(e) => {
-                                                    setClassStartingTimeDropdownValue(e.target.value)
+                                                    setClassEndingTimeDropdownValue(e.target.value)
                                                 }}
                                             >
-                                                {classStartingTimeOptions && classStartingTimeOptions?.map((timeOption) => {
+                                                {classEndingTimeOptions && classEndingTimeOptions?.map((timeOption) => {
                                                     return (
                                                         <option
-                                                            key={timeOption.id}
-                                                            value={timeOption.value}
+                                                            key={timeOption?.id}
+                                                            value={timeOption?.value}
                                                             className='bg-white px-2 py-3 text-black text-base'
-                                                        > {timeOption.label} </option>
+                                                        > {timeOption?.label} </option>
                                                     )
                                                 })}
 

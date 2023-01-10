@@ -49,7 +49,7 @@ const CommunityClassCard = ( {classDetails}:IProps ) => {
                     className='outline-none border-none px-6 py-2 rounded-sm bg-BrutalPurple2 text-white font-medium text-sm'
                     onClick={joinClass}
                     > 
-                    <a href={classDetails?.communityClassLink} target="_blank"> Join </a>
+                    <a href={classDetails?.communityClassLink}> Join </a>
                     </button>
                 </div>
 

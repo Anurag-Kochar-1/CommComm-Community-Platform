@@ -97,12 +97,11 @@ const Index = ({ allCommunityMessage }: any) => {
 
 
         {/* MESSAGE BAR  */}
-        <div className='z-50 fixed bottom-[0vh] lg:bottom-[2vh] w-full lg:w-[55%] h-[11vh] lg:h-[8vh]   bg-purple-300 flex justify-between items-end space-x-3 p-2' onClick={() => {
+        <div className='z-50 fixed bottom-[0vh] lg:bottom-[2vh] w-full lg:w-[55%] h-24 lg:h-[8vh]  bg-purple-300 flex justify-between items-end space-x-3 p-2' onClick={() => {
           console.log(messageInputRef)
         }}>
         
           <input
-         
             ref={messageInputRef}
             value={messageInputValue}
             onChange={(e) => setMessageInputValue(e.target.value)}

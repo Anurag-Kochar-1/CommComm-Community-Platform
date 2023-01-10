@@ -105,7 +105,7 @@ const Index = ({ communityOwnerID }: IProps) => {
 
                         setTimeout(() => {
                             setIsLoading(false)
-                        }, 3500);
+                        }, pathsNumbers > 30 ? 3500 : 4500);
 
                         router.push(`/community/${id}/Tracks`)
                     } catch (error) {

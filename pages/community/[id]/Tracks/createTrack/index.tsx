@@ -140,7 +140,7 @@ const Index = ({ communityOwnerID }: IProps) => {
                 <CommunityLayout>
                     <main className='w-full h-[90vh] mb-[10vh] lg:mb-0 fixed lg:static inset-0 flex flex-col justify-start items-center bg-BgBrutalSkin1 lg:pt-12 lg:pb-36'>
 
-                        <div className='w-full xl:w-[70%] 2xl:w-[50%] flex flex-col justify-start items-start pt-10 pb-5 px-5 space-y-5 overflow-x-hidden overflow-y-scroll scrollbar-hide bg-white'>
+                        <div className='w-full h-full xl:w-[70%] 2xl:w-[50%] flex flex-col justify-start items-start pt-10 pb-5 px-5 space-y-5 overflow-x-hidden overflow-y-scroll scrollbar-hide bg-white'>
 
                             {/* ---- LOGO ---- */}
                             <Link href={'/'} className='flex justify-center items-center space-x-3'>

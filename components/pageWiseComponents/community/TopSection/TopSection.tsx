@@ -4,18 +4,22 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import { useAuthState } from 'react-firebase-hooks/auth'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { ICommunityData } from '../../../../customTypesAndInterfaces/Community/CommunityInterfaces'
 import { auth, db } from '../../../../firebaseConfig'
-import demoLogo from "../../../../public/images/bg/demo.jpg"
+// import demoLogo from "../../../../public/images/bg/demo.jpg"
 import NavTabs from '../NavTabs/NavTabs'
 import TagBox from '../TagBox/TagBox'
+import { setCurrentCommunityData } from "../../../../redux/slices/communityDataSlice"
 
 
 const TopSection = () => {
     const [user, loading] = useAuthState(auth)
     const router = useRouter()
     const { id } = router.query
+    const dispatch = useDispatch()
+
+    // ---- States ----
     const [isUserJoinedInCommunity, setIsUserJoinedInCommunity] = useState<boolean>(false)
     const [communityData, setCommunityData] = useState<ICommunityData>(Object)
 
@@ -24,6 +28,9 @@ const TopSection = () => {
             const communityRef = doc(db, "communities", id as string)
             const res = await getDoc(communityRef)
             setCommunityData(res.data() as ICommunityData)
+
+            // dispatching reducer
+            dispatch(setCurrentCommunityData( [res.data()] ))
         }
     }
 
@@ -51,7 +58,9 @@ const TopSection = () => {
     return (
         <div className='w-full flex flex-col items-center justify-start bg-BgBrutalSkin1'>
             {/* ---- Banner ----  */}
+            
             <div
+                onClick={() => console.log(communityData)}
                 className='w-full bg-black h-[25vh] lg:h-[20vh] flex justify-start items-end'
                 style={{
                     backgroundImage: 'url(' + `${communityData?.communityBanner || "https://designmodo.com/wp-content/uploads/2017/08/gradient-1.jpg"}` + ')',

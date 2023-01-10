@@ -68,10 +68,10 @@ export const getServerSideProps = async ({ params }: any) => {
 
 
   // array of trackPaths
-  const trackPathsNumberArray: number[] = []
-  for (let i = 0; i < tracksData[0]?.trackDurationInDays; i++) {
-    trackPathsNumberArray.push(i)
-  }
+  // const trackPathsNumberArray: number[] = []
+  // for (let i = 0; i < tracksData[0]?.trackDurationInDays; i++) {
+  //   trackPathsNumberArray.push(i)
+  // }
 
   // fetching track Paths
   const trackPathsRef = collection(db, "communities", id as string, "trackPaths")

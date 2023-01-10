@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState, useRef } from "react"
 import { useRouter } from "next/router"
 import CommunityLayout from "../../../../components/layouts/Community/CommunityLayout"
 import { FiSend } from "react-icons/fi"
@@ -18,6 +18,7 @@ const Index = ({ allCommunityMessage }: any) => {
   const [messageInputValue, setMessageInputValue] = useState<string>("")
   const [realTimeMessagesState, setRealTimeMessagesState] = useState<any[]>([])
 
+  const messageInputRef:any = useRef(null)
 
   const sendMessage = async () => {
     if (user && !loading) {
@@ -62,7 +63,7 @@ const Index = ({ allCommunityMessage }: any) => {
   // });
 
   useEffect(() => {
-
+    messageInputRef.current.focus();
   }, [])
 
   return (
@@ -96,9 +97,13 @@ const Index = ({ allCommunityMessage }: any) => {
 
 
         {/* MESSAGE BAR  */}
-        <div className='z-50 fixed bottom-[0vh] lg:bottom-[2vh] w-full lg:w-[55%] h-[11vh] lg:h-[8vh]   bg-purple-300 flex justify-between items-end space-x-3 p-2'>
+        <div className='z-50 fixed bottom-[0vh] lg:bottom-[2vh] w-full lg:w-[55%] h-[11vh] lg:h-[8vh]   bg-purple-300 flex justify-between items-end space-x-3 p-2' onClick={() => {
+          console.log(messageInputRef)
+        }}>
         
           <input
+         
+            ref={messageInputRef}
             value={messageInputValue}
             onChange={(e) => setMessageInputValue(e.target.value)}
             type="text"
@@ -115,7 +120,9 @@ const Index = ({ allCommunityMessage }: any) => {
             type='button'
             title='send'
             className='w-[20%] md:w-[10%] bg-white h-full outline-none flex justify-center items-center border-2 border-black rounded-sm'
-            onClick={sendMessage}
+            onClick={() => {
+              sendMessage()
+            }}
           >
             <FiSend className="text-2xl"/>
 

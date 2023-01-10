@@ -56,26 +56,28 @@ const Index = ({ allCommunityMessage }: any) => {
   }
 
 
-  // const realTimeMessages = onSnapshot(collection(db, "communities", id as string, "communityMessages"), (docs) => {
-  //   docs.forEach((doc) => {
-  //     setRealTimeMessagesState([  doc.data() ])
-  //   })
-  // });
-
   useEffect(() => {
     messageInputRef.current.focus();
+
+    const unSubRealTimeMessagesOnSnapShotListener = onSnapshot(collection(db, "communities", id as string, "communityMessages") , (snapshot) => {
+      setRealTimeMessagesState(snapshot.docs.map(doc => doc.data()))
+    })
+
+    // return unSubRealTimeMessagesOnSnapShotListener()
+
+    
   }, [])
 
   return (
     <CommunityLayout>
       <main className='w-full flex flex-col justify-between items-center bg-BgBrutalSkin1 pb-5 sm:px-4'>
-        {/* <h1 onClick={() => console.log(realTimeMessagesState)}>  lOG realTimeMessagesState </h1> */}
+        <h1 onClick={() => console.log(realTimeMessagesState)}>  lOG realTimeMessagesState </h1>
 
 
         {/* Message Box */}
         <div className='w-full space-y-3 pb-40 px-3 bg-white py-5 rounded-md scrollbar-hide'>
-          {allCommunityMessage && (
-            allCommunityMessage?.map((message: any) => {
+          {realTimeMessagesState && (
+            realTimeMessagesState?.map((message: any) => {
               return (
                 <div key={message?.messageID} className={` w-full flex  ${message.messageCreatorID === user?.uid ? "justify-end" : "justify-start"} space-x-1 py-2 px-2`} >
                   <div className={`flex justify-end items-center space-x-3 bg-BrutalOrange1 py-2 px-2 rounded-md`}>
@@ -95,27 +97,7 @@ const Index = ({ allCommunityMessage }: any) => {
             })
           )}
 
-          {allCommunityMessage && (
-            allCommunityMessage?.map((message: any) => {
-              return (
-                <div key={message?.messageID} className={` w-full flex  ${message.messageCreatorID === user?.uid ? "justify-end" : "justify-start"} space-x-1 py-2 px-2`} >
-                  <div className={`flex justify-end items-center space-x-3 bg-BrutalOrange1 py-2 px-2 rounded-md`}>
-
-                    <div className='w-10 h-10 flex justify-center items-center'>
-                      <Image src={userDPdemo} alt="dp" className='w-7 h-7 rounded-full' width={7} height={7} />
-                    </div>
-
-                    <div className='flex flex-col items-start justify-start '>
-                      <p className='font-InriaSans text-black font-semibold text-lg '> {message?.messageCreatorName} </p>
-                      <p className='font-InriaSans text-black font-medium text-base'> {message?.messageText} </p>
-                    </div>
-
-                  </div>
-                </div>
-              )
-            })
-          )}
-          {allCommunityMessage && (
+          {/* {allCommunityMessage && (
             allCommunityMessage?.map((message: any) => {
               return (
                 <div key={message?.messageID} className={` w-full flex  ${message.messageCreatorID === user?.uid ? "justify-end" : "justify-start"} space-x-1 py-2 px-2`} >
@@ -375,13 +357,31 @@ const Index = ({ allCommunityMessage }: any) => {
               )
             })
           )}
+          {allCommunityMessage && (
+            allCommunityMessage?.map((message: any) => {
+              return (
+                <div key={message?.messageID} className={` w-full flex  ${message.messageCreatorID === user?.uid ? "justify-end" : "justify-start"} space-x-1 py-2 px-2`} >
+                  <div className={`flex justify-end items-center space-x-3 bg-BrutalOrange1 py-2 px-2 rounded-md`}>
+
+                    <div className='w-10 h-10 flex justify-center items-center'>
+                      <Image src={userDPdemo} alt="dp" className='w-7 h-7 rounded-full' width={7} height={7} />
+                    </div>
+
+                    <div className='flex flex-col items-start justify-start '>
+                      <p className='font-InriaSans text-black font-semibold text-lg '> {message?.messageCreatorName} </p>
+                      <p className='font-InriaSans text-black font-medium text-base'> {message?.messageText} </p>
+                    </div>
+
+                  </div>
+                </div>
+              )
+            })
+          )} */}
         </div>
 
 
         {/* Message Bar  */}
-        <div className='z-50 fixed bottom-[0vh] lg:bottom-[2vh] w-full lg:w-[55%] h-24 lg:h-[8vh]  bg-purple-300 flex justify-between items-end space-x-3 p-2' onClick={() => {
-          console.log(messageInputRef)
-        }}>
+        <div className='z-50 fixed bottom-[0vh] lg:bottom-[2vh] w-full lg:w-[55%] h-24 lg:h-[8vh]  bg-purple-300 flex justify-between items-end space-x-3 p-2'>
 
           <input
             ref={messageInputRef}

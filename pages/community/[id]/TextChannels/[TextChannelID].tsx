@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react"
 import { useRouter } from "next/router"
 import CommunityLayout from "../../../../components/layouts/Community/CommunityLayout"
-import { VscTriangleRight } from "react-icons/vsc"
+import { FiSend } from "react-icons/fi"
 import { useAuthState } from "react-firebase-hooks/auth"
 import { auth, db } from "../../../../firebaseConfig"
 import { addDoc, collection, doc, getDocs, onSnapshot, updateDoc } from "firebase/firestore"
 
 import userDPdemo from "../../../../public/images/bg/userDPdemo.jpg"
 import Image from "next/image"
+import { GrFormAdd } from "react-icons/gr"
 
 const Index = ({ allCommunityMessage }: any) => {
   const [user, loading] = useAuthState(auth)
@@ -95,13 +96,14 @@ const Index = ({ allCommunityMessage }: any) => {
 
 
         {/* MESSAGE BAR  */}
-        <div className='fixed bottom-[10vh] lg:bottom-[2vh] w-full lg:w-[55%] h-20 flex justify-between items-center space-x-3'>
+        <div className='z-50 fixed bottom-[0vh] lg:bottom-[2vh] w-full lg:w-[55%] h-[11vh] lg:h-[8vh]   bg-purple-300 flex justify-between items-end space-x-3 p-2'>
+        
           <input
             value={messageInputValue}
             onChange={(e) => setMessageInputValue(e.target.value)}
             type="text"
             placeholder='TYPE HERE...'
-            className='outline-none focus:ring-0 w-full h-20 px-4 py-1 placeholder:text-black text-black font-InriaSans text-base border-2 border-black rounded-sm'
+            className='outline-none focus:ring-0 w-full h-full px-4 py-1 placeholder:text-black text-black font-InriaSans text-base border-2 border-black rounded-sm'
             onKeyUp={(e) => {
               if (e.key === "Enter") {
                 sendMessage()
@@ -109,14 +111,13 @@ const Index = ({ allCommunityMessage }: any) => {
             }}
           />
 
-
           <button
             type='button'
             title='send'
-            className='w-[30%] md:w-[10%] h-20 outline-none flex justify-center items-center bg-white border-2 border-black rounded-sm'
+            className='w-[20%] md:w-[10%] bg-white h-full outline-none flex justify-center items-center border-2 border-black rounded-sm'
             onClick={sendMessage}
           >
-            <VscTriangleRight />
+            <FiSend className="text-2xl"/>
 
           </button>
         </div>
@@ -125,7 +126,7 @@ const Index = ({ allCommunityMessage }: any) => {
   )
 }
 
-export default Index
+export default Index  
 
 
 

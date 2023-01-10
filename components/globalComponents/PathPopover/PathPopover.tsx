@@ -3,7 +3,7 @@ import Image from 'next/image'
 import { Fragment } from 'react'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { BiLockAlt } from 'react-icons/bi'
-import {IoMdCreate} from "react-icons/io"
+import { IoMdCreate } from "react-icons/io"
 import { IPathsData } from '../../../customTypesAndInterfaces/Tracks/pathsInterface'
 import { auth } from '../../../firebaseConfig'
 // import coinIcon from "../../../public/images/icons/coinIcon.svg"
@@ -13,7 +13,7 @@ interface IProps {
   path: IPathsData
 }
 
-export  function PathPopover({ path }:IProps) {
+export function PathPopover({ path }: IProps) {
 
   const [user, loading, error] = useAuthState(auth)
   return (
@@ -21,19 +21,19 @@ export  function PathPopover({ path }:IProps) {
       <Popover className="relative">
         {({ open }) => (
           <>
-            <Popover.Button className={"border-none outline-none focus:ring-0"}>       
+            <Popover.Button className={"border-none outline-none focus:ring-0"} onClick={() => !path.isUnlocked && alert("LOCKED")}>
               <div className={`w-20 h-20 relative bg-black border-2 border-gray-400  rounded-full flex justify-center items-center ${path?.pathNumber % 2 === 0 ? "mr-16" : "ml-16"} bg-gray-400 hover:cursor-pointer active:border-0 `} key={path.pathNumber}>
-                  <div className={`absolute w-20 h-full bottom-2 rounded-full flex flex-col justify-center items-center bg-blue-200 active:bottom-0`} >
-                    {!path?.isUnlocked ? (
-                       <BiLockAlt className='text-2xl' />
-                    ): (
-                      <div>
-                          <p> {path?.pathNumber} </p>
-                      </div>
-                    )}
-                    
-                  </div>
+                <div className={`absolute w-20 h-full bottom-2 rounded-full flex flex-col justify-center items-center bg-blue-200 active:bottom-0`} >
+                  {!path?.isUnlocked ? (
+                    <BiLockAlt className='text-2xl' />
+                  ) : (
+                    <div>
+                      <p> {path?.pathNumber} </p>
+                    </div>
+                  )}
+
                 </div>
+              </div>
             </Popover.Button>
             <Transition
 
@@ -45,32 +45,48 @@ export  function PathPopover({ path }:IProps) {
               leaveFrom="opacity-100 translate-y-0"
               leaveTo="opacity-0 translate-y-1"
             >
+
               <Popover.Panel className="absolute left-1/2 z-10 mt-3 w-60 -translate-x-1/2 transform ">
 
-                <div className="w-full h-full bg-white py-5">
-                  <div className="relative w-full h-full bg-white space-y-5 p-1 flex flex-col justify-start items-center">
+                {path.isUnlocked && !path.isCompleted ? (
+                  <div className="w-full h-full bg-white py-5">
+                    <div className="relative w-full h-full bg-white space-y-5 p-1 flex flex-col justify-start items-center">
 
-                    {/* Create Class Button*/}
-                    {user?.uid === path.pathCreatorID && (
-                      <button
-                      type='button'
-                      className='w-[90%] flex justify-center items-center space-x-2  bg-gray-100 py-2 px-4'>
+                      {/* Create Class Button*/}
+                      {user?.uid === path.pathCreatorID && (
+                        <button
+                          type='button'
+                          className='w-[90%] flex justify-center items-center space-x-2  bg-gray-100 py-2 px-4'>
                           <p className='font-semibold text-base'> Create Class </p>
-                      </button>
-                    )}
+                        </button>
+                      )}
 
-                    {/* Claim Coins Button*/}
-                    <button
-                    type='button'
-                    className='w-[90%] flex justify-center items-center space-x-2 bg-gray-100 py-2 px-4'>
+                      {/* Claim Coins Button*/}
+                      <button
+                        type='button'
+                        className='w-[90%] flex justify-center items-center space-x-2 bg-gray-100 py-2 px-4'>
                         <p className='font-semibold text-base '> Claim coin </p>
-                    </button>
+                      </button>
+
+                    </div>
+
 
                   </div>
+                ) : (
+                  null
+                  // <div>
+                  //     <div className="w-full h-full bg-white py-5">
+                  //       <div className="relative w-full h-full bg-white space-y-5 p-1 flex flex-col justify-start items-center">
+
+                  //       </div>
+                  //     </div>
+                  //   </div>
+                )}
+
+                  </Popover.Panel>
 
 
-                </div>
-              </Popover.Panel>
+
             </Transition>
           </>
         )}

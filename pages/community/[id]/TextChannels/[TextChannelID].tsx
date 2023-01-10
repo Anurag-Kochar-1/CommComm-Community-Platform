@@ -61,7 +61,7 @@ const Index = ({ allCommunityMessage }: any) => {
 
   useEffect(() => {
     messageInputRef.current.focus();
-    const communityMessagesRefAndQuery = query(collection(db, "communities", id as string, "communityMessages"), orderBy("messageCreatedAtTime", "asc"))
+    const communityMessagesRefAndQuery = query(collection(db, "communities", id as string, "communityMessages"), orderBy("messageCreatedAtTime", "desc"))
     const unSubRealTimeMessagesOnSnapShotListener = onSnapshot(communityMessagesRefAndQuery, (snapshot) => {
       setRealTimeMessagesState(snapshot.docs.map(doc => doc.data()))
 

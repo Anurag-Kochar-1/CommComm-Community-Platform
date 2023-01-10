@@ -21,14 +21,14 @@ const CommunityClassCard = ( {classDetails}:IProps ) => {
     }
 
   return (
-    <div className='relative w-[95%] sm:w-[80%] md:w-[60%] lg:w-[70%] xl:w-[50%] h-80 sm:h-56 md:h-56 bg-white border-2 border-black rounded-md' onClick={() => console.log(classDetails)}>
+    <div className='relative w-[95%] sm:w-[80%] md:w-[60%] lg:w-[70%] xl:w-[50%] h-72 sm:h-56 md:h-56 bg-white border-2 border-black rounded-md' onClick={() => console.log(classDetails)}>
         <div className='absolute bottom-2 right-2 w-full h-full bg-white border-2 border-black rounded-md'>
             <div className='absolute bottom-2 right-2 w-full h-full p-3 bg-white border-2 border-black rounded-md flex flex-col justify-start items-start space-y-3 overflow-x-hidden overflow-y-scroll'>
 
                 {/* Timing Header */}
                 <div className='w-full flex justify-start items-center space-x-2'>
                     <IoMdCalendar className='text-xl text-BrutalPurple2'/>
-                    <p className='text-sm font-medium'> {classDetails?.dateCreatedAt} {classDetails.communityClassStartingTime} - {classDetails.communityClassEndingTime} </p>
+                    <p className='text-sm font-medium text-gray-800'> {classDetails?.dateCreatedAt} {classDetails.communityClassStartingTime} - {classDetails.communityClassEndingTime} </p>
                 </div>
 
                 {/* Community Class Name */}

@@ -4,7 +4,7 @@ import CommunityLayout from "../../../../components/layouts/Community/CommunityL
 import { FiSend } from "react-icons/fi"
 import { useAuthState } from "react-firebase-hooks/auth"
 import { auth, db } from "../../../../firebaseConfig"
-import { addDoc, collection, doc, getDocs, onSnapshot, updateDoc } from "firebase/firestore"
+import { addDoc, collection, doc, getDocs, limit, onSnapshot, orderBy, query, updateDoc } from "firebase/firestore"
 
 import userDPdemo from "../../../../public/images/bg/userDPdemo.jpg"
 import Image from "next/image"
@@ -24,6 +24,8 @@ const Index = ({ allCommunityMessage }: any) => {
     if (user && !loading) {
       try {
         if (messageInputValue) {
+          const date = new Date()
+
           const communityMessagesSubCollectionRef = collection(db, "communities", id as string, "communityMessages")
           const addingMessage = await addDoc(communityMessagesSubCollectionRef, {
             messageText: messageInputValue,
@@ -31,7 +33,8 @@ const Index = ({ allCommunityMessage }: any) => {
             messageCreatorName: user?.displayName,
             messageCreatorDisplayPicture: user?.photoURL,
             messageID: "",
-            messageCreatedAtCommunityID: id as string
+            messageCreatedAtCommunityID: id as string,
+            messageCreatedAtTime: date.getTime() as number
           })
 
           // adding messageID
@@ -58,9 +61,15 @@ const Index = ({ allCommunityMessage }: any) => {
 
   useEffect(() => {
     messageInputRef.current.focus();
-
-    const unSubRealTimeMessagesOnSnapShotListener = onSnapshot(collection(db, "communities", id as string, "communityMessages") , (snapshot) => {
+    const communityMessagesRefAndQuery = query(collection(db, "communities", id as string, "communityMessages"), orderBy("messageCreatedAtTime", "asc"))
+    const unSubRealTimeMessagesOnSnapShotListener = onSnapshot(communityMessagesRefAndQuery, (snapshot) => {
       setRealTimeMessagesState(snapshot.docs.map(doc => doc.data()))
+
+      // realTimeMessagesState.sort(function(a, b) {
+      //   if(a.messageCreatedAtTime < b.messageCreatedAtTime) {return 1}
+      //   if(a.messageCreatedAtTime > b.messageCreatedAtTime) {return -1}
+      //   return 0
+      // })
     })
 
     // return unSubRealTimeMessagesOnSnapShotListener()

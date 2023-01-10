@@ -5,4 +5,5 @@ export interface IPathsData {
     pathNumber: number
     isUnlocked: boolean
     isCompleted: boolean
+    pathCreatorID: string
 }

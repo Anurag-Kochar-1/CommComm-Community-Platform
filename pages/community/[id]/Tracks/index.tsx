@@ -5,8 +5,9 @@ import CommunityLayout from '../../../../components/layouts/Community/CommunityL
 import { db } from '../../../../firebaseConfig'
 import { useRouter } from 'next/router'
 import { ITrackData } from '../../../../customTypesAndInterfaces/Tracks/tracksInterface'
-import { BiLockAlt } from "react-icons/bi"
 import { IPathsData } from '../../../../customTypesAndInterfaces/Tracks/pathsInterface'
+import { PathPopover } from '../../../../components/globalComponents/PathPopover/PathPopover'
+
 
 interface IProps {
   tracksData: ITrackData[]
@@ -34,24 +35,15 @@ const Index = ({ tracksData, communityTrackPathsData }: IProps) => {
 
         <Link href={`/community/${id}/Tracks/createTrack`} className="font-bold text-xl my-20"> Create a Track </Link>
 
+
         {tracksData && (
           <div className='w-full h-auto flex flex-col items-center overflow-x-hidden overflow-y-scroll py-10 scrollbar-hide'>
-            <h3 className='font-bold text-3xl'> {tracksData[0]?.trackName} </h3>
+            <h3 className='font-bold text-3xl bg-red-500 mb-10'> {tracksData[0]?.trackName} </h3>
 
             {communityTrackPathsData &&  communityTrackPathsData?.map((path:any) => {
               return (
-                <div className={`w-20 h-20 relative bg-gray-500 border-2 border-gray-500 rounded-full flex justify-center items-center my-2 ${path?.pathNumber % 2 === 0 ? "mr-16" : "ml-16"} bg-gray-400 hover:cursor-pointer active:border-0`} key={path.pathNumber}>
-                  <div className={`absolute w-20 h-full bottom-2 rounded-full flex flex-col justify-center items-center bg-blue-200 active:bottom-0`} >
-                    {!path?.isUnlocked ? (
-                       <BiLockAlt className='text-2xl' />
-                    ): (
-                      <div>
-                          <p> {path?.pathNumber} </p>
-                      </div>
-                    )}
-                    
-                  </div>
-                </div>
+                <PathPopover path={path} key={path?.pathID} />
+                
               )
             })}
 
@@ -100,3 +92,5 @@ export const getServerSideProps = async ({ params }: any) => {
     }
   }
 }
+
+

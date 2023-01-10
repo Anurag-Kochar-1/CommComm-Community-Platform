@@ -69,7 +69,8 @@ const Index = ({ communityOwnerID }: IProps) => {
                                     trackID: addingTrack.id,
                                     pathNumber: i,
                                     isUnlocked: true,
-                                    isCompleted: false
+                                    isCompleted: false,
+                                    pathCreatorID: user?.uid
 
                                 })
 

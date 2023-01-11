@@ -23,6 +23,7 @@ const Index = () => {
 
   const logIn = () => {
     setIsLoading(true)
+    console.log(`--- login func is running ---`);
     signInWithEmailAndPassword(auth, emailInputValue, passwordInputValue)
       .then((userCredential) => {
         setIsLoading(false)

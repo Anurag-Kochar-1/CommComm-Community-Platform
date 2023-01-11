@@ -56,9 +56,9 @@ const LeftSideBar = () => {
   }, [loading])
 
   return (
-    <div className='hidden lg:inline-flex w-[20%] h-[90vh] mt-[10vh] bg-BgBrutalSkin1 flex-col justify-start items-center'>
+    <div className='hidden lg:inline-flex w-[20%] h-[90vh] mt-[10vh] bg-BgBrutalSkin1 flex-col justify-start items-center '>
 
-      <div className='w-[95%] h-full flex flex-col justify-start items-center bg-BgSecondaryBrutalSkin1 overflow-x-hidden overscroll-y-scroll pt-10  space-y-10 scrollbar-hide'>
+      <div className='w-[95%] h-full flex flex-col justify-start items-center bg-BgSecondaryBrutalSkin1 overflow-x-hidden overscroll-y-scroll pt-10 pb-40 space-y-10 scrollbar-hide'>
 
         {/* ------- Tabs ------- */}
         <div className='w-full flex flex-col justify-start items-center space-y-5'>
@@ -82,7 +82,7 @@ const LeftSideBar = () => {
 
         {/* ------- My Communities user && userJoinedCommunitiesState.length !== 0 ------- */}
         {true && (
-          <div className='w-[90%] flex flex-col justify-start items-center space-y-4 bg-BrutalOrange1 border-2 border-black py-10 rounded-sm' >
+          <div className='w-[90%]  flex flex-col justify-start items-center space-y-3 bg-BrutalOrange1 border-2 border-black py-10 rounded-sm' >
             <h3 className='font-BebasNeue px-2 text-center  lg:text-3xl xl:text-4xl text-black'> {user && !loading && userDetails[0]?.communitiesJoinedID.length !== 0 ? "My Communities" : "Suggested Communities"} </h3>
 
             {userJoinedCommunitiesState && (
@@ -147,9 +147,9 @@ const LeftSideBar = () => {
         </div> */}
 
 
-        {/* Profile */}
+        {/* ------- Profile  -------*/}
         {user?.uid && (
-          <div className='w-full h-full flex flex-col justify-end items-center py-2'>
+          <div className='w-[20%] fixed bottom-0 left-0 bg-red-400  flex flex-col justify-end items-center py-2'>
             <div className='w-[95%] border-2 border-black bg-white flex justify-start items-center px-2 py-4 space-x-3'>
               {user?.photoURL ? (
                 <Image src={user?.photoURL} alt="dp" width={12} height={12} className='w-12 h-12 rounded-full' />

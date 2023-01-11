@@ -66,8 +66,8 @@ const Index = ({ allCommunityMessage }: any) => {
       setRealTimeMessagesState(snapshot.docs.map(doc => doc.data()))
 
       // realTimeMessagesState.sort(function(a, b) {
-      //   if(a.messageCreatedAtTime < b.messageCreatedAtTime) {return 1}
-      //   if(a.messageCreatedAtTime > b.messageCreatedAtTime) {return -1}
+      //   if(a.messageCreatedAtTime < b.messageCreatedAtTime) {return -1}
+      //   if(a.messageCreatedAtTime > b.messageCreatedAtTime) {return 1}
       //   return 0
       // })
     })

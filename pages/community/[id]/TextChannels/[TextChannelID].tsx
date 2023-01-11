@@ -9,6 +9,7 @@ import { addDoc, collection, doc, getDocs, limit, onSnapshot, orderBy, query, up
 import userDPdemo from "../../../../public/images/bg/userDPdemo.jpg"
 import Image from "next/image"
 import { GrFormAdd } from "react-icons/gr"
+import { useSelector } from "react-redux"
 
 const Index = ({ allCommunityMessage }: any) => {
   const [user, loading] = useAuthState(auth)
@@ -58,6 +59,8 @@ const Index = ({ allCommunityMessage }: any) => {
     }
   }
 
+  const communityDataRedux = useSelector((state: any) => state.communityData.currentCommunityData[0])
+
 
   useEffect(() => {
     messageInputRef.current.focus();
@@ -80,7 +83,7 @@ const Index = ({ allCommunityMessage }: any) => {
   return (
     <CommunityLayout>
       <main className='w-full flex flex-col justify-between items-center bg-BgBrutalSkin1 pb-5 sm:px-4'>
-        <h1 onClick={() => console.log(realTimeMessagesState)}>  lOG realTimeMessagesState </h1>
+        <h1 className="my-10 text-3xl font-bold " onClick={() => console.log(communityDataRedux)}>  lOG communityDataRedux </h1>
 
 
         {/* Message Box */}

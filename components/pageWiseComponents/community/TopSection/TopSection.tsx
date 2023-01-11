@@ -14,6 +14,7 @@ import { setCurrentCommunityData } from "../../../../redux/slices/communityDataS
 
 
 const TopSection = () => {
+    
     const [user, loading] = useAuthState(auth)
     const router = useRouter()
     const { id } = router.query
@@ -21,16 +22,24 @@ const TopSection = () => {
 
     // ---- States ----
     const [isUserJoinedInCommunity, setIsUserJoinedInCommunity] = useState<boolean>(false)
-    const [communityData, setCommunityData] = useState<ICommunityData>(Object)
+    // const [communityData, setCommunityData] = useState<ICommunityData>(Object)
+
+    const communityData = useSelector((state: any) => state.communityData.currentCommunityData[0])
 
     const fetchCommunityDetails = async () => {
-        if (id) {
-            const communityRef = doc(db, "communities", id as string)
-            const res = await getDoc(communityRef)
-            setCommunityData(res.data() as ICommunityData)
-
-            // dispatching reducer
-            dispatch(setCurrentCommunityData( [res.data()] ))
+        if(!communityData) {
+            console.log(`  communityDataRedux NOT FOUND !!! `);
+            if (id) {
+                console.log(`============ fetchCommunityDetails ==========`)
+                const communityRef = doc(db, "communities", id as string)
+                const res = await getDoc(communityRef)
+                // setCommunityData(res.data() as ICommunityData)
+    
+                // dispatching reducer
+                dispatch(setCurrentCommunityData( [res.data()] ))
+            }
+        } else if (communityData) {
+            console.log(`communityDataRedux FOUND !!! `);
         }
     }
 
@@ -56,7 +65,7 @@ const TopSection = () => {
 
 
     return (
-        <div className='w-full flex flex-col items-center justify-start bg-BgBrutalSkin1'>
+        <div className='w-full flex flex-col items-center justify-start bg-white'>
             {/* ---- Banner ----  */}
             
             <div
@@ -103,7 +112,7 @@ const TopSection = () => {
                 </div>
 
                 {/* Community Description */}
-                <div className='w-full flex justify-start items-center space-x-2 hover:cursor-pointer '>
+                <div className='w-full flex justify-start items-center space-x-2'>
                     {communityData?.communityDescription?.length > 130 && <p className='text-black font-normal font-InriaSans text-sm'> {communityData?.communityDescription.slice(0, 130)}..... <Link href={`/community/${id}/About`} className='text-blue-700 opacity-70 font-normal text-sm hover:cursor-pointer'> read more </Link> </p>}
 
                     {communityData?.communityDescription?.length <= 130 && <p className='text-black font-normal font-InriaSans text-sm'> {communityData?.communityDescription} </p>}

@@ -30,9 +30,8 @@ export function PathPopover({ path }: IProps) {
 
   const {data, error, isLoading} = useSWR("usersDetails", fetchUserDetails)
 
-  // 
-
-  if(isLoading) return <div className="fixed inset-0 w-full h-screen bg-black"> LOADING.....  </div>
+  
+  // if(isLoading) return <div className="fixed inset-0 w-full h-screen bg-black"> LOADING.....  </div>
 
   return (
     <div className="my-2">

@@ -16,12 +16,17 @@ module.exports = {
         BrutalBlack1 : "#000000",
 
         BgBrutalSkin1: "#FFDCA8",
+        // BgBrutalSkin1: "#F5F2DA",
         BrutalAqua1: "#15FDD3",
         BrutalPurple2: "#C83FD3",
         BrutalGreen2: "#11EA50",
 
-        // BgSecondaryBrutalSkin1: "#FFE5C0"
-        BgSecondaryBrutalSkin1: "#FCF5EB"
+        BgSecondaryBrutalSkin1: "#FFE5C0",
+        // BgSecondaryBrutalSkin1: "#FCF5EB"
+        // BgSecondaryBrutalSkin1: "#FFFFFF"
+
+
+        BrutalWhite: "#FFFFFF"
 
       },
 
@@ -74,6 +79,12 @@ module.exports = {
     {
       pattern: /(bg|text|border)-BgSecondaryBrutalSkin1/,
     },
+    
+    
+    {
+      pattern: /(bg|text|border)-BrutalWhite/,
+
+    }
     
   ],
   plugins: [

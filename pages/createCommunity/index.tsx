@@ -33,7 +33,7 @@ const Index = () => {
         communityCategory: communityCategory,
         communitySubCategory : communitySubCategory,
         communityLogo : "https://firebasestorage.googleapis.com/v0/b/th3-hackathon.appspot.com/o/postImages%2F6cf18550-5ca7-491f-9725-171e5c38b6fc--220703-minions-music-hero_tfqnbm.jpg?alt=media&token=8c0fc36a-394a-413c-9b49-2e86342095a3",
-        communityBanner : null,
+        communityBanner : "https://firebasestorage.googleapis.com/v0/b/th3-hackathon.appspot.com/o/postImages%2F132cd51d-593f-4b77-86ed-1ae1c895f70f--8i1bx8y9p3t9x223bjhf.png?alt=media&token=448d7efb-5982-436f-977f-04970af12537",
         communityMembersID : [auth?.currentUser?.uid],
         communityOwnerID: auth?.currentUser?.uid,
         communityOwnerDisplayName: auth?.currentUser?.displayName,

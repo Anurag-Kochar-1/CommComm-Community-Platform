@@ -22,16 +22,21 @@ const Index = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
   const logIn = () => {
-    setIsLoading(true)
     console.log(`--- login func is running ---`);
 
     if(emailInputValue && passwordInputValue ) {
+      setIsLoading(true)
       signInWithEmailAndPassword(auth, emailInputValue, passwordInputValue)
       .then((userCredential) => {
         // console.log(userCredential)
         setTimeout(() => {
-          setIsLoading(false)
-          router.push("/")
+          if(userCredential) {
+            setIsLoading(false)
+            router.push("/")
+          } else if (!userCredential) {
+            setIsLoading(false)
+            alert("Try again")
+          }
         }, 1500);
 
       })
@@ -49,7 +54,7 @@ const Index = () => {
     if (user && !loading) {
       router.push("/")
     }
-  }, [loading])
+  }, [user])
 
   return (
     <div className=' fixed inset-0 w-[100%] h-[100vh] lg:bg-gradient-to-r from-gray-700 via-gray-900 to-black flex flex-row justify-center lg:justify-end items-center lg:px-32 xl:px-40 2xl:px-72'>
@@ -103,19 +108,10 @@ const Index = () => {
             </div>
           </div>
 
-          <span className='mx-auto' onClick={() => console.log(auth?.currentUser)}> Or </span>
+          <span className='mx-auto'> Or </span>
 
           {/* ---- Continue with google and facebook ----- */}
           <div className='w-full flex flex-col justify-start items-center space-y-3'>
-            {/* <button type='button' title='sign' className='bg-white w-full px-3 py-2 flex justify-between items-center border-2 border-black'>
-            <FcGoogle />
-            <span className='flex-1'> Continue with Google </span>
-          </button>
-
-          <button type='button' title='sign' className='w-full px-3 py-2 flex justify-between items-center bg-[#1877F2] border-2 border-black'>
-            <MdOutlineFacebook className='text-white' />
-            <span className='flex-1 text-white'> Continue with Facebook </span>
-          </button> */}
 
             <button onClick={() => {
               SignInWithGoogleFunction()

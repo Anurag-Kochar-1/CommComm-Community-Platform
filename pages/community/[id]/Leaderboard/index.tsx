@@ -4,7 +4,7 @@ import CommunityLayout from '../../../../components/layouts/Community/CommunityL
 const Index = () => {
   return (
     <CommunityLayout>
-      <main className='w-full h-full flex flex-col justify-start items-center bg-purple-400 pt-12 pb-36'>
+      <main className='w-full h-full flex flex-col justify-start items-center bg-white pt-12 pb-36'>
         Leaderboard
 
       </main>

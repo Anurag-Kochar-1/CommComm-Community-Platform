@@ -82,8 +82,8 @@ const Index = ({ allCommunityMessage }: any) => {
 
   return (
     <CommunityLayout>
-      <main className='w-full flex flex-col justify-between items-center bg-BgBrutalSkin1 pb-5 sm:px-4'>
-        <h1 className="my-10 text-3xl font-bold " onClick={() => console.log(communityDataRedux)}>  lOG communityDataRedux </h1>
+      <main className='w-full flex flex-col justify-between items-center bg-white pb-5 sm:px-4'>
+        {/* <h1 className="my-10 text-3xl font-bold " onClick={() => console.log(communityDataRedux)}>  lOG communityDataRedux </h1> */}
 
 
         {/* Message Box */}

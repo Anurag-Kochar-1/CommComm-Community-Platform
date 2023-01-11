@@ -18,32 +18,23 @@ const Index = ({ tracksData, communityTrackPathsData }: IProps) => {
   const router = useRouter()
   const { id } = router.query
 
-  // states
-
-
-
-
-  useEffect(() => {
-  }, [])
-
 
 
   return (
     <CommunityLayout>
-      <main className='w-full h-auto flex flex-col justify-start items-center bg-BgBrutalSkin1 pt-12 pb-36 '>
-        <h1 onClick={() => console.log(communityTrackPathsData)}> LOG communityTrackPathsData </h1>
+      <main className='w-full h-auto flex flex-col justify-start items-center bg-white pt-12 pb-36 '>
 
-        <Link href={`/community/${id}/Tracks/createTrack`} className="font-bold text-xl my-20"> Create a Track </Link>
+        {/* <h1 onClick={() => console.log(communityTrackPathsData)}> LOG communityTrackPathsData </h1> */}
+        {/* <Link href={`/community/${id}/Tracks/createTrack`} className="font-bold text-xl my-20"> Create a Track </Link> */}
 
 
         {tracksData && (
           <div className='w-full h-auto flex flex-col items-center overflow-x-hidden overflow-y-scroll py-10 scrollbar-hide'>
             <h3 className='font-bold text-3xl bg-red-500 mb-10'> {tracksData[0]?.trackName} </h3>
 
-            {communityTrackPathsData &&  communityTrackPathsData?.map((path:any) => {
+            {communityTrackPathsData && communityTrackPathsData?.map((path: any) => {
               return (
                 <PathPopover path={path} key={path?.pathID} />
-                
               )
             })}
 
@@ -67,26 +58,20 @@ export const getServerSideProps = async ({ params }: any) => {
   const tracksData: ITrackData[] = data?.docs?.map(doc => doc.data() as ITrackData)
 
 
-  // array of trackPaths
-  // const trackPathsNumberArray: number[] = []
-  // for (let i = 0; i < tracksData[0]?.trackDurationInDays; i++) {
-  //   trackPathsNumberArray.push(i)
-  // }
-
   // fetching track Paths
   const trackPathsRef = collection(db, "communities", id as string, "trackPaths")
   const trackPathsData = await getDocs(trackPathsRef)
-  const communityTrackPathsData:IPathsData[] = trackPathsData?.docs?.map(doc => doc.data() as IPathsData)
+  const communityTrackPathsData: IPathsData[] = trackPathsData?.docs?.map(doc => doc.data() as IPathsData)
 
   // Sorting on pathNumber
-  communityTrackPathsData.sort(function(a, b) {
-    if(a.pathNumber < b.pathNumber) {return -1}
-    if(a.pathNumber > b.pathNumber) {return 1}
+  communityTrackPathsData.sort(function (a, b) {
+    if (a.pathNumber < b.pathNumber) { return -1 }
+    if (a.pathNumber > b.pathNumber) { return 1 }
     return 0
   })
 
 
-  
+
 
   return {
     props: {

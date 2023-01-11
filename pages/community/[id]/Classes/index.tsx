@@ -20,7 +20,7 @@ const Index = ({ communityClassesData, communityTracksData }: IProps) => {
 
   return (
     <CommunityLayout>
-      <main className='w-full h-full flex flex-col justify-start items-center bg-green-400 pt-12 pb-36'>
+      <main className='w-full h-full flex flex-col justify-start items-center bg-white pt-12 pb-36'>
 
         {/* <h1 onClick={( ) => console.log(communityClassesData)} className="text-xl my-5"> LOG communityClassesData </h1> */}
         {/* <h1 onClick={( ) => console.log(communityTracksData)} className="text-xl my-5"> LOG communityTrackPathsData </h1> */}
@@ -30,7 +30,7 @@ const Index = ({ communityClassesData, communityTracksData }: IProps) => {
 
         {/* NO TRACKS */}
         {!communityTracksData[0] && (
-          <div className='w-full flex flex-col justify-start items-center space-y-1 bg-red-200'>
+          <div className='w-full flex flex-col justify-start items-center space-y-1'>
             <p> No Learning Tracks Found </p>
             <Link href={`/community/${id}/Tracks/createTrack`}> Create one </Link>
           </div>

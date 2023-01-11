@@ -26,8 +26,11 @@ const Index = () => {
     console.log(`--- login func is running ---`);
     signInWithEmailAndPassword(auth, emailInputValue, passwordInputValue)
       .then((userCredential) => {
-        setIsLoading(false)
-        console.log(userCredential)
+        // console.log(userCredential)
+        setTimeout(() => {
+          setIsLoading(false)
+          router.push("/")
+        }, 1500);
 
       })
       .catch((error) => {
@@ -41,7 +44,7 @@ const Index = () => {
     if(user  && !loading) {
       router.push("/")
     }
-  },[user, loading])
+  },[loading])
 
   return (
     <div className=' fixed inset-0 w-[100%] h-[100vh] lg:bg-gradient-to-r from-gray-700 via-gray-900 to-black flex flex-row justify-center lg:justify-end items-center lg:px-32 xl:px-40 2xl:px-72'>

@@ -50,10 +50,17 @@ const Index = ({ communityClassesData, communityTracksData }: IProps) => {
         {/* Track but No Classes */}
         {communityTracksData[0] && !communityClassesData[0] ? (
           <div className='w-full flex flex-col items-center justify-center'>
-            <p> No Classes </p>
-            <Link href={`/community/${id}/Classes/createClass`}> Create one </Link>
+            <div className='relative w-[95%] sm:w-[80%] md:w-[60%] lg:w-[70%] xl:w-[50%] h-72 sm:h-56 md:h-56 bg-white border-2 border-black rounded-md scrollbar-hide'>
+              <div className='absolute bottom-2 right-2 w-full h-full bg-white border-2 border-black rounded-md'>
+                <div className='absolute bottom-2 right-2 w-full h-full p-3 bg-white border-2 border-black rounded-md flex flex-col justify-center items-center space-y-3 overflow-x-hidden overflow-y-scroll  scrollbar-hide'>
+                  <p className='text-3xl font-bold tet-black'> No Classes </p>
+                  <Link href={`/community/${id}/Classes/createClass`} className="text-blue-500 font-medium text-lg"> Create one </Link> 
+                </div>
+
+              </div>
+            </div>
           </div>
-        ): null}
+        ) : null}
 
 
 

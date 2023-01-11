@@ -138,9 +138,9 @@ const Index = ({ communityOwnerID }: IProps) => {
         <>
             {!isLoading && (
                 <CommunityLayout>
-                    <main className='w-full h-[90vh] mb-[10vh] lg:mb-0 fixed lg:static inset-0 flex flex-col justify-start items-center bg-BgBrutalSkin1 lg:pt-12 lg:pb-36'>
+                    <main className='w-full h-[90vh] mb-[10vh] lg:mb-0 fixed lg:static inset-0 flex flex-col justify-start items-center bg-white lg:pt-12 lg:pb-36'>
 
-                        <div className='w-full h-full xl:w-[70%] 2xl:w-[50%] flex flex-col justify-start items-start pt-10 pb-5 px-5 space-y-5 overflow-x-hidden overflow-y-scroll scrollbar-hide bg-white'>
+                        <div className='w-full h-full xl:w-[70%] 2xl:w-[50%] flex flex-col justify-start items-start pt-10 pb-5 px-5 space-y-5 overflow-x-hidden overflow-y-scroll scrollbar-hide bg-white border-2 border-black'>
 
                             {/* ---- LOGO ---- */}
                             <Link href={'/'} className='flex justify-center items-center space-x-3'>
@@ -193,7 +193,12 @@ const Index = ({ communityOwnerID }: IProps) => {
                                             <div className='w-[90%] h-10 relative bg-black flex justify-start items-center' onMouseEnter={() => dispatch(setIsBottomBarVisible(false))} onMouseLeave={() => dispatch(setIsBottomBarVisible(true))}>
                                                 <input
                                                     value={trackDurationInputValue}
-                                                    onChange={(e) => setTrackDurationInputValue(parseInt(e.target.value))}
+                                                    min={1}
+                                                    onChange={(e) => { 
+                                                        if(parseInt(e?.target?.value) !== 0 || parseInt(e?.target?.value) >= 1 ) {
+                                                            setTrackDurationInputValue(parseInt(e.target.value))  
+                                                        } 
+                                                     }}
                                                     required
                                                     type="number"
                                                     placeholder='Duration in days'
@@ -336,7 +341,7 @@ const Index = ({ communityOwnerID }: IProps) => {
             )}
 
             {isLoading && (
-                <div className='z-40 w-[100%] h-[100vh] fixed inset-0 flex flex-col justify-center items-center bg-BgBrutalSkin1 space-y-5'>
+                <div className='z-40 w-[100%] h-[100vh] fixed inset-0 flex flex-col justify-center items-center bg-white space-y-5'>
                     <p className='text-4xl font-bold text-black'> Creating... </p>
                     <AiOutlineLoading3Quarters className="w-10 h-10 text-black animate-spin" />
                 </div>

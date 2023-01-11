@@ -6,6 +6,7 @@ import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { auth } from '../../../firebaseConfig'
+import Link from 'next/link'
 
 interface IProps {
     classDetails: IClassData
@@ -15,10 +16,8 @@ const CommunityClassCard = ({ classDetails }: IProps) => {
     const router = useRouter()
     const [user, loading] = useAuthState(auth)
 
-    const joinClass = async () => {
-        if (user && !loading) {
-            // router.push(``)
-        }
+    const joinClass =  () => {
+        router.push(`${classDetails?.communityClassLink}`)
     }
 
     return (
@@ -42,7 +41,7 @@ const CommunityClassCard = ({ classDetails }: IProps) => {
                     <div className='w-full flex justify-between items-center'>
                         <div className='flex justify-center items-center space-x-2'>
                             {classDetails?.communityLogo && <Image src={classDetails?.communityLogo} alt="logo" className='w-7 h-7 rounded-full' width={7} height={7} />}
-                            <p className='text-sm font-light text-black'> {classDetails?.communityName} </p>
+                            <p className='text-sm font-normal text-black'> {classDetails?.communityName} </p>
                         </div>
 
                         <button
@@ -50,7 +49,7 @@ const CommunityClassCard = ({ classDetails }: IProps) => {
                             className='outline-none border-none px-6 py-2 rounded-sm bg-BrutalPurple2 text-white font-medium text-sm'
                             onClick={joinClass}
                         >
-                            <a href={classDetails?.communityClassLink}> Join </a>
+                            <p> Join </p>
                         </button>
 
                         {/* <FiSettings /> */}

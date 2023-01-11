@@ -86,7 +86,7 @@ const Index = ({ allCommunityMessage }: any) => {
 
         {/* Message Box */}
         <div className='w-full space-y-3 pb-40 px-3 bg-white py-5 rounded-md scrollbar-hide'>
-
+    
           {realTimeMessagesState[0] && (
             realTimeMessagesState?.map((message: any) => {
               return (

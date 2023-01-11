@@ -90,7 +90,7 @@ const Index = ({ allCommunityMessage }: any) => {
           {realTimeMessagesState[0] && (
             realTimeMessagesState?.map((message: any) => {
               return (
-                <MessageCard message={message} />
+                <MessageCard message={message} key={message?.messageID} />
               )
             })
           )}

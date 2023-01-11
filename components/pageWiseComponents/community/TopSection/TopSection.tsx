@@ -67,7 +67,6 @@ const TopSection = () => {
     return (
         <div className='w-full flex flex-col items-center justify-start bg-white'>
             {/* ---- Banner ----  */}
-            
             <div
                 onClick={() => console.log(communityData)}
                 className='w-full bg-black h-[25vh] lg:h-[20vh] flex justify-start items-end'

@@ -13,7 +13,7 @@ import { AiOutlineLogout } from 'react-icons/ai'
 import { signOut } from 'firebase/auth'
 
 const LeftSideBar = () => {
-
+  // console.log(`------- Left Side Bar -------`);
   const [user, loading] = useAuthState(auth)
   const communityCollectionRef = collection(db, "communities")
   const [userJoinedCommunitiesState, setUserJoinedCommunitiesState] = useState<any[] | []>([])
@@ -52,7 +52,6 @@ const LeftSideBar = () => {
   useEffect(() => {
     fetchUserDetails()
     fetchUserJoinedAndOwnedCommunities()
-
   }, [loading])
 
   return (
@@ -95,7 +94,7 @@ const LeftSideBar = () => {
                 >
                   <div className='absolute right-1 bottom-1 w-full h-14 xl:h-20  bg-BrutalGreen2 border border-black rounded-md flex justify-start items-center space-x-2 px-3'>
                     {community.communityLogo !== null && (
-                      <Image src={community.communityLogo as string} width={8} height={8} alt="pfp" className='w-8 h-8 xl:w-10 xl:h-10 rounded-full aspect-square' />
+                      <Image src={community.communityLogo as string} width={8} height={8} alt="pfp" className='w-8 h-8 rounded-full  aspect-square' />
                     )}
 
                     {community.communityLogo === null && (

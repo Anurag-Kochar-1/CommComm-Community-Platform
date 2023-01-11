@@ -21,7 +21,7 @@ const Header = () => {
 
 
   return (
-    <div className='fixed top-0 w-full h-[10vh] bg-white border-b border-b-black py-4 px-3 md:px-5 flex justify-between items-center'>
+    <div className='fixed top-0 w-full h-[10vh] bg-blue-300 border-b border-b-black py-4 px-3 md:px-5 flex justify-between items-center'>
 
       {/*  DEMO LOGO  */}
       {/* <Link href={'/'} className='w-10 h-10 rounded-full bg-BrutalOrange1' onClick={() => console.log(0)} /> */}

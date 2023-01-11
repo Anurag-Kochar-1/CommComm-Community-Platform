@@ -9,7 +9,7 @@ import { addDoc, collection, doc, getDocs, limit, onSnapshot, orderBy, query, up
 import Image from "next/image"
 import { GrFormAdd } from "react-icons/gr"
 import { useSelector } from "react-redux"
-import MessageCard from "../../../../components/globalComponents/message/MessageCard/messageCard"
+import MessageCard from "../../../../components/globalComponents/message/MessageCard/MessageCard"
 
 const Index = ({ allCommunityMessage }: any) => {
   const [user, loading] = useAuthState(auth)
@@ -90,7 +90,7 @@ const Index = ({ allCommunityMessage }: any) => {
           {realTimeMessagesState[0] && (
             realTimeMessagesState?.map((message: any) => {
               return (
-                <MessageCard message={message} key={message?.messageID} />
+                <MessageCard message={message} key={message?.messageID} /> 
               )
             })
           )}

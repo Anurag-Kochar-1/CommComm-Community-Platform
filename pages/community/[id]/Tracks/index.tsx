@@ -48,7 +48,7 @@ const Index = ({ tracksData, communityTrackPathsData }: IProps) => {
           <div className="w-full flex flex-col justify-start items-center p-2">
             <div className="flex flex-col justify-center items-center px-8 py-4 space-y-2 bg-BrutalGreen2">
               <p className="font-bold text-lg"> Create a learning Track for your community 🚀 </p>
-              <Link href={`/community/${id}/Tracks/createTrack`} className="text-blue-500 font-medium text-lg"> Create one </Link>
+              <Link href={`/community/${id}/Tracks/createTrack`} className="text-white font-medium text-lg"> Create one </Link>
             </div>
           </div>
         )}

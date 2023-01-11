@@ -50,7 +50,8 @@ const Index = ({ communityOwnerID }: IProps) => {
                             trackSourceOfLearning: sourceOfLearningDropdownValue,
                             trackSourceOfLearningLink: sourceOfLearningDropdownLink,
                             trackPrerequisites: trackPrerequisitesInputValue,
-                            trackDescription: trackOptionalDescription || ""
+                            trackDescription: trackOptionalDescription || "",
+                            trackCreatorID: user.uid
                         })
 
                         // ---- adding ID ----

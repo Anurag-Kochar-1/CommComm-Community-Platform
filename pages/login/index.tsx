@@ -24,7 +24,9 @@ const Index = () => {
   const logIn = () => {
     setIsLoading(true)
     console.log(`--- login func is running ---`);
-    signInWithEmailAndPassword(auth, emailInputValue, passwordInputValue)
+
+    if(emailInputValue && passwordInputValue ) {
+      signInWithEmailAndPassword(auth, emailInputValue, passwordInputValue)
       .then((userCredential) => {
         // console.log(userCredential)
         setTimeout(() => {
@@ -37,14 +39,17 @@ const Index = () => {
         alert(error?.errormessage);
         setIsLoading(false)
       });
+    } else if (!emailInputValue || !passwordInputValue) {
+      alert("Fill the required fields")
+    }
   }
 
 
   useEffect(() => {
-    if(user  && !loading) {
+    if (user && !loading) {
       router.push("/")
     }
-  },[loading])
+  }, [loading])
 
   return (
     <div className=' fixed inset-0 w-[100%] h-[100vh] lg:bg-gradient-to-r from-gray-700 via-gray-900 to-black flex flex-row justify-center lg:justify-end items-center lg:px-32 xl:px-40 2xl:px-72'>
@@ -67,7 +72,7 @@ const Index = () => {
 
             <div className='w-full flex flex-col justify-between items-start space-y-4 py-3'>
 
-              <div className='w-[100%] h-10 relative bg-black flex justify-start items-center'  onMouseEnter={() => dispatch(setIsBottomBarVisible(false))} onMouseLeave={() => dispatch(setIsBottomBarVisible(true))}>
+              <div className='w-[100%] h-10 relative bg-black flex justify-start items-center' onMouseEnter={() => dispatch(setIsBottomBarVisible(false))} onMouseLeave={() => dispatch(setIsBottomBarVisible(true))}>
                 <input
                   value={emailInputValue}
                   onChange={(e) => setEmailInputValue(e.target.value)}
@@ -77,7 +82,7 @@ const Index = () => {
                 />
               </div>
 
-              <div className='w-[100%] h-10 relative bg-black flex justify-start items-center'  onMouseEnter={() => dispatch(setIsBottomBarVisible(false))} onMouseLeave={() => dispatch(setIsBottomBarVisible(true))}>
+              <div className='w-[100%] h-10 relative bg-black flex justify-start items-center' onMouseEnter={() => dispatch(setIsBottomBarVisible(false))} onMouseLeave={() => dispatch(setIsBottomBarVisible(true))}>
                 <input
                   value={passwordInputValue}
                   onChange={(e) => setPasswordInputValue(e.target.value)}
@@ -92,13 +97,7 @@ const Index = () => {
             <div className='w-full flex justify-end items-center py-5'>
               <button type='button' title='singIn' className='w-20 md:w-32 h-10 relative flex justify-center items-center bg-black rounded-sm border-2 border-black'>
                 <span className='w-20 md:w-32 h-10 absolute bottom-[2px] right-[2px] bg-BrutalBlue1  flex justify-center items-center rounded-sm border-2 border-black active:right-0 active:bottom-0'>
-                  <p className='text-xs md:text-sm font-medium' onClick={() => {
-                    if (emailInputValue && passwordInputValue) {
-                      logIn()
-                    } else {
-                      alert("Fill the required fields")
-                    }
-                  }}> Login  </p>
+                  <p className='text-xs md:text-sm font-medium' onClick={logIn}> Log in </p>
                 </span>
               </button>
             </div>
@@ -120,34 +119,34 @@ const Index = () => {
 
             <button onClick={() => {
               SignInWithGoogleFunction()
-              
+
               setTimeout(() => {
-                if(user && !loading) {
+                if (user && !loading) {
                   router.push('/')
-                } 
+                }
               }, 2000);
             }}
               type='button'
               title='sign'
               className='relative w-full h-10 flex justify-between items-center border-2 border-black bg-black'>
               <span className='absolute bottom-1 right-1 bg-white w-full h-10 flex justify-center items-center space-x-3 border-2 border-black hover:right-0 hover:bottom-0'>
-                <FcGoogle className=' w-6 h-6'/>
+                <FcGoogle className=' w-6 h-6' />
                 <span className=' font-medium font-InriaSans text-base'> Continue with Google </span>
               </span>
             </button>
 
             <button onClick={() => {
               SignInWithFacebookFunction()
-              
+
               setTimeout(() => {
-                if(user && !loading) {
+                if (user && !loading) {
                   router.push('/')
-              }
+                }
               }, 2000);
             }}
-            type='button' 
-            title='sign' 
-            className='relative w-full h-10 flex justify-between items-center border-2 border-black bg-black'>
+              type='button'
+              title='sign'
+              className='relative w-full h-10 flex justify-between items-center border-2 border-black bg-black'>
               <span className='absolute bottom-1 right-1 bg-[#1877F2] w-full h-10 flex justify-center items-center space-x-3 border-2 border-black hover:right-0 hover:bottom-0'>
                 <MdOutlineFacebook className='text-white w-6 h-6' />
                 <span className='text-white font-medium font-InriaSans text-base'> Continue with Facebook </span>
@@ -160,7 +159,7 @@ const Index = () => {
 
       {isLoading && (
         <div className='z-50 fixed inset-0 w-full h-screen flex justify-center items-center bg-white scrollbar-hide'>
-          <AiOutlineLoading3Quarters className='animate-spin text-2xl text-BrutalBlack1' />
+          <AiOutlineLoading3Quarters className='animate-spin text-4xl text-BrutalBlack1' />
         </div>
       )}
     </div>

@@ -32,8 +32,8 @@ export default function Home({ allPostsArray }: any) {
   return (
     <main className='w-full lg:w-[60%] h-[80vh] lg:h-[90vh] mt-[12vh] mb-[10vh] lg:mb-0 bg-white shadow-lg shadow-gray-300 flex flex-col justify-start items-center overflow-x-hidden overflow-y-scroll pt-14 pb-20 scrollbar-hide'>
 
-      {/* <h1 className='text-4xl text-blue-500 font-bold mt-[7vh]' onClick={() => console.log(auth?.currentUser)}> LOG USER</h1> */}
-      {/* <h1 className='text-4xl text-red-500 font-bold mt-[7vh] my-3' onClick={() => { signOut(auth) }}> Sign out </h1> */}
+      <h1 className='text-4xl text-blue-500 font-bold mt-[7vh]' onClick={() => console.log(auth?.currentUser)}> LOG USER</h1>
+      <h1 className='text-4xl text-red-500 font-bold mt-[7vh] my-3' onClick={() => { signOut(auth) }}> Sign out </h1>
       {/* <h1 className='font-bold text-4xl my-5' onClick={() => console.log(allPostsArray)}> LOG PROPS </h1> */}
 
 

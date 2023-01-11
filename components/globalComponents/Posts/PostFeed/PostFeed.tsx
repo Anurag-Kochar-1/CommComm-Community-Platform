@@ -20,9 +20,9 @@ const PostFeed = () => {
 
 
       {!postData[0] && (
-        <div className='w-full flex flex-col justify-center items-center'>
-            <p> No Posts yet </p>
-            <Link href={'/UploadPost'}> Create some </Link>
+        <div className={`"w-full h-96 sm:w-[70%] md:w-[60%] lg:w-[50%] xl:w-[40%] bg-white border-2 border-black flex flex-col justify-center items-center p-2 md:p-4 rounded-sm md:rounded-md my-2 space-y-3`} >
+            <p className='text-3xl font-bold text-black'> No Posts yet </p>
+            <Link href={'/UploadPost'} className="text-blue-500 font-medium text-lg"> Create some </Link>
         </div>
       )}
     </div>

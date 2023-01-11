@@ -169,7 +169,7 @@ const Index = () => {
 
 
             {/* Demo  communityCategory === communityCategoriesArray[0].label */}
-            {communityCategory === communityCategoriesArray[0].label && <div className='w-[90%] h-10 relative bg-BrutalPurple1 flex justify-start items-center'>
+            {communityCategory === communityCategoriesArray[0].label && <div className='w-[90%] h-10 relative bg-black flex justify-start items-center'>
               <select
                 title='Choose Sub Category'
                 className='w-full h-10 absolute right-1 bottom-1 outline-none focus:ring-0 px-2 placeholder:px-2 border-2 border-black'

@@ -157,7 +157,7 @@ const UploadPost = () => {
 
 
   return (
-    <main className='w-full lg:w-[70%] h-[80vh] lg:h-[90vh] mt-[10vh] mb-[10vh] lg:mb-0 bg-BgBrutalSkin1 flex flex-col justify-center items-center'>
+    <main className='w-full lg:w-[60%] h-[80vh] lg:h-[90vh] mt-[10vh] mb-[10vh] lg:mb-0 bg-white flex flex-col justify-center items-center'>
 
       {/*  Large Screen  */}
       <div className='hidden lg:inline-flex flex-col relative w-[80%] lg:w-[70%] xl:w-[65%] h-[45vh] bg-black justify-center items-center rounded-md' onClick={() => {
@@ -429,7 +429,7 @@ const UploadPost = () => {
 
 
       {/*  Small Screen  */}
-      <div className='lg:hidden w-full h-full bg-BgBrutalSkin1 flex flex-col justify-start items-center'>
+      <div className='lg:hidden w-full h-full bg-white flex flex-col justify-start items-center'>
 
         <div className='w-full flex space-x-2 justify-start items-center mb-4 bg-lightColor px-3 py-5'>
           <p className='text-lg font-normal' onClick={() => console.log(selectedCommunity)}>Posting to  </p>
@@ -464,7 +464,7 @@ const UploadPost = () => {
           <input
             type="text"
             placeholder="An interesting title"
-            className='w-[90%] border-none outline-none text-lg bg-[#AA9595] font-InriaSans font-semibold focus:ring-0 px-2 placeholder:text-white text-white py-1 rounded-sm'
+            className='w-[90%] border-none outline-none text-lg bg-gray-200 font-InriaSans font-semibold focus:ring-0 px-2 placeholder:text-black text-black py-1 rounded-sm'
             autoFocus
             onChange={(e) => setPostTitleInputValue(e.target.value)}
             value={postTitleInputValue}
@@ -474,7 +474,7 @@ const UploadPost = () => {
             <textarea
               typeof='text'
               placeholder='Add caption'
-              className='w-[90%] h-[60%] border-none outline-none bg-[#AA9595] font-InriaSans font-medium focus:ring-0 px-2 placeholder:text-white text-white py-1 rounded-sm'
+              className='w-[90%] h-[60%] border-none outline-none bg-gray-200 font-InriaSans font-medium focus:ring-0 px-2 placeholder:text-black text-black py-1 rounded-sm'
               onChange={(e) => setPostCaptionInputValue(e.target.value)}
               value={postCaptionInputValue}
             />

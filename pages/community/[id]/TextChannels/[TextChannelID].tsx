@@ -6,10 +6,10 @@ import { useAuthState } from "react-firebase-hooks/auth"
 import { auth, db } from "../../../../firebaseConfig"
 import { addDoc, collection, doc, getDocs, limit, onSnapshot, orderBy, query, updateDoc } from "firebase/firestore"
 
-import userDPdemo from "../../../../public/images/bg/userDPdemo.jpg"
 import Image from "next/image"
 import { GrFormAdd } from "react-icons/gr"
 import { useSelector } from "react-redux"
+import MessageCard from "../../../../components/globalComponents/message/MessageCard/messageCard"
 
 const Index = ({ allCommunityMessage }: any) => {
   const [user, loading] = useAuthState(auth)
@@ -63,22 +63,20 @@ const Index = ({ allCommunityMessage }: any) => {
 
 
   useEffect(() => {
-    messageInputRef.current.focus();
     const communityMessagesRefAndQuery = query(collection(db, "communities", id as string, "communityMessages"), orderBy("messageCreatedAtTime", "desc"))
     const unSubRealTimeMessagesOnSnapShotListener = onSnapshot(communityMessagesRefAndQuery, (snapshot) => {
       setRealTimeMessagesState(snapshot.docs.map(doc => doc.data()))
-
-      // realTimeMessagesState.sort(function(a, b) {
-      //   if(a.messageCreatedAtTime < b.messageCreatedAtTime) {return -1}
-      //   if(a.messageCreatedAtTime > b.messageCreatedAtTime) {return 1}
-      //   return 0
-      // })
     })
-
-    // return unSubRealTimeMessagesOnSnapShotListener()
-
-    
   }, [])
+
+  useEffect(() => {
+    console.log(` sorting messages `)
+    realTimeMessagesState.sort(function (a, b) {
+      if (a.messageCreatedAtTime < b.messageCreatedAtTime) { return -1 }
+      if (a.messageCreatedAtTime > b.messageCreatedAtTime) { return 1 }
+      return 0
+    })
+  },[realTimeMessagesState])
 
   return (
     <CommunityLayout>
@@ -88,25 +86,23 @@ const Index = ({ allCommunityMessage }: any) => {
 
         {/* Message Box */}
         <div className='w-full space-y-3 pb-40 px-3 bg-white py-5 rounded-md scrollbar-hide'>
-          {realTimeMessagesState && (
+
+          {realTimeMessagesState[0] && (
             realTimeMessagesState?.map((message: any) => {
               return (
-                <div key={message?.messageID} className={` w-full flex  ${message.messageCreatorID === user?.uid ? "justify-end" : "justify-start"} space-x-1 py-2 px-2`} >
-                  <div className={`flex justify-end items-center space-x-3 bg-BrutalOrange1 py-2 px-2 rounded-md`}>
-
-                    <div className='w-10 h-10 flex justify-center items-center'>
-                      <Image src={userDPdemo} alt="dp" className='w-7 h-7 rounded-full' width={7} height={7} />
-                    </div>
-
-                    <div className='flex flex-col items-start justify-start '>
-                      <p className='font-InriaSans text-black font-semibold text-lg '> {message?.messageCreatorName} </p>
-                      <p className='font-InriaSans text-black font-medium text-base'> {message?.messageText} </p>
-                    </div>
-
-                  </div>
-                </div>
+                <MessageCard message={message} />
               )
             })
+          )}
+
+
+
+          {!realTimeMessagesState[0] && (
+            <div className="w-full flex justify-center items-center p-2">
+              <div className="px-8 py-4 bg-BrutalBlue1">
+                <p className="font-bold text-lg"> Be the first one to message 😉 </p>
+              </div>
+            </div>
           )}
 
           {/* {allCommunityMessage && (

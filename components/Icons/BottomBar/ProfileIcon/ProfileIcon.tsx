@@ -9,11 +9,10 @@ import { auth } from '../../../../firebaseConfig'
 const ProfileIcon = () => {
   const [user] = useAuthState(auth)
   const router = useRouter()
-  const isUser = false
 
 
   return (
-    <Link href={isUser ? "/profile" : "/register"}>
+    <Link href={user ? `/profile/${user?.uid}` : "/register"}>
       <button type='button' title='profile' className={router?.pathname === "/login" || router?.pathname === "/register"  ? (
         'w-10 h-10 bg-black outline-none flex justify-center items-center rounded-md relative '
       ) : (

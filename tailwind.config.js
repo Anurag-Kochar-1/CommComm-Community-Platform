@@ -1,3 +1,6 @@
+const { fontFamily } = require('tailwindcss/defaultTheme')
+
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
@@ -33,7 +36,9 @@ module.exports = {
       fontFamily: {
         Overpass: "Overpass, arial",
         BebasNeue : "Bebas Neue, arial",
-        InriaSans: 'Inria Sans, cursive'  
+        InriaSans: 'Inria Sans, cursive',
+        
+        Roboto: 'Roboto, cursive'
       },
 
     },

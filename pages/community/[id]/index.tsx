@@ -30,12 +30,12 @@ const Index = ({ communityData, currentCommunityPosts }: any) => {
 
   return (
     <CommunityLayout>
-      <main className='w-full bg-white flex flex-col justify-start items-center pt-0 pb-36'>
+      <main className='w-full bg-gray-100 flex flex-col justify-start items-center pt-0 pb-36'>
 
         {/* Community Posts Header */}
         <div className='w-full h-16 bg-black flex justify-start items-center space-x-2 px-4'>
           <span className='text-2xl'> 🔥 </span>
-          <p className='text-2xl text-white font-InriaSans font-bold'> {communityData?.communityName}'s  Posts </p>
+          <p className='text-2xl text-white font-Roboto font-bold'> {communityData?.communityName}'s  Posts </p>
         </div>
 
         <PostFeed />

@@ -39,8 +39,8 @@ const RightSideBar = () => {
 
 
   return (
-    <div className='hidden lg:inline-flex w-[20%] h-[90vh] mt-[10vh] bg-white flex-col justify-start items-center'>
-      <div className='w-[95%] h-full flex flex-col justify-start items-center bg-white shadow-lg shadow-gray-300 overflow-x-hidden overscroll-y-scroll pt-10 pb-32  space-y-10 scrollbar-hide' onClick={() => console.log(topCommunitiesState)}>
+    <div className='hidden lg:inline-flex w-[20%] h-[90vh] mt-[12vh] bg-white flex-col justify-start items-center'>
+      <div className='w-[95%] h-full flex flex-col justify-start items-center bg-gray-100  overflow-x-hidden overscroll-y-scroll pt-10 pb-32  space-y-10 scrollbar-hide' onClick={() => console.log(topCommunitiesState)}>
 
 
         {/* Top Communities */}

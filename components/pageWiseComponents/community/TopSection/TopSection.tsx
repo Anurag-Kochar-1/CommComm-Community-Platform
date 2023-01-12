@@ -11,10 +11,12 @@ import { auth, db } from '../../../../firebaseConfig'
 import NavTabs from '../NavTabs/NavTabs'
 import TagBox from '../TagBox/TagBox'
 import { setCurrentCommunityData } from "../../../../redux/slices/communityDataSlice"
+import SettingsIcon from '../../../Icons/SettingsIcon/SettingsIcon'
+import JoinCommunityButton from '../../../Icons/JoinCommunityButton/JoinCommunityButton'
 
 
 const TopSection = () => {
-    
+
     const [user, loading] = useAuthState(auth)
     const router = useRouter()
     const { id } = router.query
@@ -27,16 +29,16 @@ const TopSection = () => {
     const communityData = useSelector((state: any) => state.communityData.currentCommunityData[0])
 
     const fetchCommunityDetails = async () => {
-        if(!communityData) {
+        if (!communityData) {
             console.log(`  communityDataRedux NOT FOUND !!! `);
             if (id) {
                 console.log(`============ fetchCommunityDetails ==========`)
                 const communityRef = doc(db, "communities", id as string)
                 const res = await getDoc(communityRef)
                 // setCommunityData(res.data() as ICommunityData)
-    
+
                 // dispatching reducer
-                dispatch(setCurrentCommunityData( [res.data()] ))
+                dispatch(setCurrentCommunityData([res.data()]))
             }
         } else if (communityData) {
             console.log(`communityDataRedux FOUND !!! `);
@@ -65,7 +67,7 @@ const TopSection = () => {
 
 
     return (
-        <div className='w-full flex flex-col items-center justify-start bg-white'>
+        <div className='w-full flex flex-col items-center justify-start bg-gray-100'>
             {/* ---- Banner ----  */}
             <div
                 onClick={() => console.log(communityData)}
@@ -75,13 +77,13 @@ const TopSection = () => {
                     backgroundSize: "cover",
                 }}
                 draggable="false"
-                >
+            >
 
                 <div className='relative w-16 h-16 lg:w-20 lg:h-20  border border-black mx-3 -my-5 lg:mx-5 bg-black rounded-sm'>
                     {/* {communityData} */}
 
                     {communityData?.communityLogo ? (
-                        <Image src={communityData?.communityLogo} width={15} height={15} alt="logo" className='absolute right-[4px] bottom-[4px] border border-black w-16 h-16 lg:w-20 lg:h-20 aspect-square rounded-sm' onClick={() => console.log(communityData)} draggable="false"/>
+                        <Image src={communityData?.communityLogo} width={15} height={15} alt="logo" className='absolute right-[4px] bottom-[4px] border border-black w-16 h-16 lg:w-20 lg:h-20 aspect-square rounded-sm' onClick={() => console.log(communityData)} draggable="false" />
                     ) : (
                         <div className='absolute right-[4px] bottom-[4px] border bg-BrutalPurple2 border-black w-16 h-16 lg:w-20 lg:h-20 aspect-square rounded-sm' />
                     )}
@@ -92,16 +94,14 @@ const TopSection = () => {
             {/* ---- Details ----  */}
             <section className='w-full pt-3 flex flex-col justify-between items-center space-y-1 py-4 px-3 lg:px-5'>
 
-                {/* Name and join buton */}
+                {/* Name, join button and Settings button */}
                 <div className='w-full flex justify-between items-center pt-5'>
                     <h2 className='text-3xl lg:text-3xl font-bold font-BebasNeue  text-black'> {communityData?.communityName} </h2>
 
-                    <div className='relative w-16 h-9  lg:w-20 lg:h-10 bg-black border border-black flex justify-center items-center rounded-full'>
-                        <button
-                            type='button'
-                            className='w-16 h-9 lg:w-20 lg:h-10 absolute right-1 bottom-1 bg-BrutalGreen2 text-xl font-medium text-black border border-black active:right-0 active:bottom-0 rounded-full font-BebasNeue'>
-                            {isUserJoinedInCommunity ? "JOINED" : "JOIN"}
-                        </button>
+                    {/* Buttons */}
+                    <div className='flex  justify-center items-center space-x-3 '>
+                        <JoinCommunityButton />
+                        {/* <SettingsIcon /> */}
                     </div>
 
                 </div>
@@ -123,13 +123,8 @@ const TopSection = () => {
 
                 {/* Tags */}
                 <div className='w-full flex justify-start items-center space-x-5 flex-wrap '>
-                    <div className='relative w-32 h-7 bg-black border border-black flex justify-center items-center my-2 rounded-full'>
-                        <div className={`absolute w-32 h-7 flex justify-center items-center right-[2px] bottom-[2px] border border-black bg-BrutalYellow1 hover:cursor-pointer rounded-full`} > <p className='font-BebasNeue text-base text-black'> {communityData?.communityCategory?.toUpperCase()} </p> </div>
-                    </div>
-
-                    <div className='relative w-32 h-7 bg-black border border-black flex justify-center items-center my-2 rounded-full'>
-                        <div className={`absolute w-32 h-7 flex justify-center items-center right-[2px] bottom-[2px] border border-black bg-BrutalOrange1 hover:cursor-pointer rounded-full `} > <p className='font-BebasNeue text-base text-black'> {communityData?.communitySubCategory?.toUpperCase()} </p> </div>
-                    </div>
+                    <TagBox tagName={communityData?.communityCategory?.toUpperCase()} tagColor="bg-BrutalBlue1" />
+                    <TagBox tagName={communityData?.communitySubCategory?.toUpperCase()} tagColor="bg-BrutalPurple1" />
                 </div>
 
 

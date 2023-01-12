@@ -39,7 +39,7 @@ const Index = () => {
         communityOwnerDisplayName: auth?.currentUser?.displayName,
         communityOwnerEmail: auth.currentUser?.email,
         communityPostsID: [],
-        communityDescription: `This is community if for  ${communityCategory} (${communitySubCategory}), made by ${user?.displayName}`
+        communityDescription: `This is community is for ${communityCategory} (${communitySubCategory}), made by ${user?.displayName}`
       })
 
       const communityRef = doc(db, "communities", addingCommunityDoc.id)

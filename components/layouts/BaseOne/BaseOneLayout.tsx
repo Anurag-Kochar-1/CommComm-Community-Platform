@@ -7,6 +7,7 @@ import BottomBar from '../../mobileGlobalComponents/BottomBar/BottomBar'
 
 interface IHomeLayoutProps {
   children: React.ReactNode
+  className?: any
 }
 
 const BaseOneLayout = ( {children}:IHomeLayoutProps ) => {

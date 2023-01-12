@@ -4,20 +4,16 @@ import BaseOneLayout from '../components/layouts/BaseOne/BaseOneLayout'
 import { Provider } from 'react-redux'
 import store from "../redux/store"
 
-import { Bebas_Neue } from "@next/font/google"
-const BebasNeue = Bebas_Neue({ 
-  subsets: ['latin'],
-  weight: ["400"],
-})
+// import { Bebas_Neue } from "@next/font/google"
+// import { Roboto } from "@next/font/google"
+
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <Provider store={store}>
-      {/* <div className={BebasNeue.className}> */}
-        <BaseOneLayout>
+        <BaseOneLayout >
           <Component {...pageProps} />
         </BaseOneLayout>
-      {/* </div> */}
     </Provider>
   )
 }

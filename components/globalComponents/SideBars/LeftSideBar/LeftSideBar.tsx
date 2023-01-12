@@ -55,9 +55,9 @@ const LeftSideBar = () => {
   }, [loading])
 
   return (
-    <div className='hidden lg:inline-flex w-[20%] h-[90vh] mt-[10vh] bg-white flex-col justify-start items-center '>
+    <div className='hidden lg:inline-flex w-[20%] h-[90vh] mt-[12vh] bg-white flex-col justify-start items-center '>
 
-      <div className='w-[95%] h-full flex flex-col justify-start items-center bg-white shadow-lg shadow-gray-300 overflow-x-hidden overscroll-y-scroll pt-10 pb-40 space-y-10 scrollbar-hide'>
+      <div className='w-[95%] h-full flex flex-col justify-start items-center bg-gray-100 overflow-x-hidden overscroll-y-scroll pt-10 pb-40 space-y-10 scrollbar-hide'>
 
         {/* ------- Tabs ------- */}
         <div className='w-full flex flex-col justify-start items-center space-y-5'>
@@ -129,8 +129,8 @@ const LeftSideBar = () => {
 
         {/* ------- Profile  -------*/}
         {user?.uid && (
-          <div className='w-[20%] fixed bottom-0 left-0 shadow-lg shadow-gray-300 flex flex-col justify-end items-center '>
-            <div className='w-[95%] border-2 border-black bg-white flex justify-start items-center px-2 py-4 space-x-3'>
+          <div className='w-[20%] fixed bottom-0 left-0  flex flex-col justify-end items-center '>
+            <div className='w-[95%] bg-gray-200 flex justify-start items-center px-2 py-4 space-x-3'>
               {user?.photoURL ? (
                 <Image src={user?.photoURL} alt="dp" width={12} height={12} className='w-12 h-12 rounded-full' />
               ) :
@@ -145,7 +145,7 @@ const LeftSideBar = () => {
                 </div>
               </div>
 
-              <AiOutlineLogout className='w-8 h-8 mx-3 text-BrutalRed1 cursor-pointer' onClick={() => signOut(auth)} />
+              <AiOutlineLogout className='w-8 h-8 mx-3 text-black hover:cursor-pointer' onClick={() => signOut(auth)} />
 
             </div>
           </div>

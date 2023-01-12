@@ -1,14 +1,19 @@
-import { arrayRemove, arrayUnion, doc, updateDoc } from 'firebase/firestore'
+import { arrayRemove, arrayUnion, doc, getDoc, updateDoc } from 'firebase/firestore'
 import { useRouter } from 'next/router'
 import React, { useEffect, useRef, useState } from 'react'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { GoSignIn, GoSignOut } from "react-icons/go"
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { ICommunityData } from '../../../customTypesAndInterfaces/Community/CommunityInterfaces'
 import { IUserData } from '../../../customTypesAndInterfaces/User/userInterfaces'
 import { auth, db } from '../../../firebaseConfig'
+import { setCurrentCommunityData } from '../../../redux/slices/communityDataSlice'
+import { setCurrentUserData } from '../../../redux/slices/userSlice'
+import { fetchCommunityData } from '../../../utils/Community/fetchCommunityData'
+import { fetchCurrentUserData } from '../../../utils/User/fetchCurrentUserData'
 
 const JoinCommunityButton = () => {
+    const dispatch = useDispatch()
     const router = useRouter()
     const [user, loading] = useAuthState(auth)
     const [isUserJoined, setIsUserJoined] = useState<boolean>(false)
@@ -35,6 +40,25 @@ const JoinCommunityButton = () => {
                 // Setting state
                 setIsUserJoined(true)
 
+
+                // re-fetching fetchCurrentUserData
+                console.log(`re fetching and dispatch user data`)
+                const newUserData = fetchCurrentUserData()
+                const newRes = await newUserData
+                dispatch(setCurrentUserData(newRes))
+
+
+                // re-fetching community Data
+
+                console.log(`re fetching and dispatch community data`)
+                // const newCommunityData = fetchCommunityData( communityData?.communityID )
+                // const newCommunityDataRes = await newCommunityData
+                // dispatch(setCurrentCommunityData([newCommunityDataRes]))
+
+                const data = await getDoc(communityRef)
+                dispatch(setCurrentCommunityData([data.data()]))
+
+
             } catch (error) {
                 alert(error)
             }
@@ -53,16 +77,34 @@ const JoinCommunityButton = () => {
 
                     // updating community 
                     await updateDoc(communityRef, {
-                        communityMembersID: arrayRemove(user.uid)
+                        communityMembersID: arrayRemove(user?.uid)
                     })
 
                     // updating user
                     await updateDoc(userRef, {
-                        communitiesJoinedID: arrayRemove(communityData.communityID)
+                        communitiesJoinedID: arrayRemove(communityData?.communityID)
                     })
+
 
                     // Setting state
                     setIsUserJoined(false)
+
+                    // fetching fetchCurrentUserData
+                    console.log(`re fetching and dispatch user data`)
+                    const newUserData = fetchCurrentUserData()
+                    const newRes = await newUserData
+                    dispatch(setCurrentUserData(newRes))
+
+
+                    // re-fetching community Data
+
+                    console.log(`re fetching and dispatch community data`)
+                    // const newCommunityData = fetchCommunityData( communityData?.communityID)
+                    // const newCommunityDataRes = await newCommunityData
+                    // dispatch(setCurrentCommunityData([newCommunityDataRes]))
+
+                    const data = await getDoc(communityRef)
+                    dispatch(setCurrentCommunityData([data.data()]))
 
                 } catch (error) {
                     alert(error)
@@ -91,7 +133,7 @@ const JoinCommunityButton = () => {
                             onClick={() => {
                                 // console.log(currentUserData.communitiesJoinedID.includes(communityData.communityID))
                                 // console.log(currentUserData);
-                                
+
                                 isUserJoined ? leaveCommunity() : joinCommunity()
                             }}
                             title='button'

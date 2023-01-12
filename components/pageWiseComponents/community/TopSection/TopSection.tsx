@@ -56,7 +56,7 @@ const TopSection = () => {
 
                 {/* Name, join button and Settings button */}
                 <div className='w-full flex justify-between items-center pt-5'>
-                    <h2 className='text-3xl lg:text-3xl font-bold font-BebasNeue  text-black'> {communityData?.communityName} </h2>
+                    <h2 className='text-3xl lg:text-3xl font-bold font-BebasNeue  text-black' onClick={() => console.log(currentUserData)}> {communityData?.communityName} </h2>
 
                     {/* Buttons */}
                     <div className='flex  justify-center items-center space-x-3 '>

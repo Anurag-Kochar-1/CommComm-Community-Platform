@@ -12,7 +12,7 @@ interface IProps {
 }
 
 const CommunityLayout = ({children}: IProps) => {
-    console.log(`---------------- CommunityLayout is running`)
+    // console.log(`---------------- CommunityLayout is running`)
 
     const router = useRouter()
     const { id } = router.query

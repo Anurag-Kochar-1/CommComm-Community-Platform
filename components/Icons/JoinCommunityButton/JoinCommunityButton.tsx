@@ -20,6 +20,8 @@ const JoinCommunityButton = () => {
     }, [currentUserData])
 
 
+    if(user?.uid === communityData?.communityOwnerID) return null
+    
     return (
         <>
             {user?.uid !== communityData?.communityOwnerID && (

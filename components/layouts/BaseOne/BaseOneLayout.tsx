@@ -18,7 +18,7 @@ interface IHomeLayoutProps {
 }
 
 const BaseOneLayout = ( {children}:IHomeLayoutProps ) => {
-  console.log(`-------------- BaseOneLayout is running`)
+  // console.log(`-------------- BaseOneLayout is running`)
   const [user, loading] = useAuthState(auth)
   const dispatch = useDispatch()
   const currentUserData:IUserData = useSelector((state: any) => state.user.currentUserData )

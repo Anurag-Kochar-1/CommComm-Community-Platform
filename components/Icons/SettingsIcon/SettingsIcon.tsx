@@ -11,7 +11,7 @@ const SettingsIcon = () => {
     const [user] = useAuthState(auth)
     const communityData:ICommunityData = useSelector((state: any) => state.communityData.currentCommunityData[0])
 
-    if (user?.uid !== communityData?.communityOwnerID) return
+    if (user?.uid !== communityData?.communityOwnerID) return null
     return (
         <>
             {user?.uid === communityData?.communityOwnerID && (

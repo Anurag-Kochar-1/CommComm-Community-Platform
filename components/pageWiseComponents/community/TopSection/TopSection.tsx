@@ -13,6 +13,7 @@ import TagBox from '../TagBox/TagBox'
 import { setCurrentCommunityData } from "../../../../redux/slices/communityDataSlice"
 import SettingsIcon from '../../../Icons/SettingsIcon/SettingsIcon'
 import JoinCommunityButton from '../../../Icons/JoinCommunityButton/JoinCommunityButton'
+import { IUserData } from '../../../../customTypesAndInterfaces/User/userInterfaces'
 
 
 const TopSection = () => {
@@ -20,14 +21,10 @@ const TopSection = () => {
     const [user, loading] = useAuthState(auth)
     const router = useRouter()
     const { id } = router.query
-    const dispatch = useDispatch()
-
-    // ---- States ----
-    const [isUserJoinedInCommunity, setIsUserJoinedInCommunity] = useState<boolean>(false)
 
 
-    const communityData = useSelector((state: any) => state.communityData.currentCommunityData[0])
-
+    const communityData: ICommunityData = useSelector((state: any) => state.communityData.currentCommunityData[0])
+    const currentUserData: IUserData = useSelector((state: any) => state.user.currentUserData)
 
     return (
         <div className='w-full flex flex-col items-center justify-start bg-gray-100'>

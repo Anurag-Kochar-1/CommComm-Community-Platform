@@ -64,7 +64,7 @@ const TopSection = () => {
                     {/* Buttons */}
                     <div className='flex  justify-center items-center space-x-3 '>
                         <JoinCommunityButton />
-                        {/* <SettingsIcon /> */}
+                        <SettingsIcon />
                     </div>
 
                 </div>

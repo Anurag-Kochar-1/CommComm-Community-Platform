@@ -1,9 +1,16 @@
+import { doc, getDoc } from 'firebase/firestore'
 import Head from 'next/head'
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useAuthState } from 'react-firebase-hooks/auth'
+import { useDispatch, useSelector } from 'react-redux'
+import { IUserData } from '../../../customTypesAndInterfaces/User/userInterfaces'
+import { auth, db } from '../../../firebaseConfig'
+import { setCurrentUserData } from '../../../redux/slices/userSlice'
 import Header from '../../globalComponents/Header/Header'
 import LeftSideBar from '../../globalComponents/SideBars/LeftSideBar/LeftSideBar'
 import RightSideBar from '../../globalComponents/SideBars/RightSideBar/RightSideBar'
 import BottomBar from '../../mobileGlobalComponents/BottomBar/BottomBar'
+
 
 interface IHomeLayoutProps {
   children: React.ReactNode
@@ -11,7 +18,31 @@ interface IHomeLayoutProps {
 }
 
 const BaseOneLayout = ( {children}:IHomeLayoutProps ) => {
-  // console.log(`-------------- BaseOneLayout is running`)
+  console.log(`-------------- BaseOneLayout is running`)
+  const [user, loading] = useAuthState(auth)
+  const dispatch = useDispatch()
+  const currentUserData:IUserData = useSelector((state: any) => state.user.currentUserData )
+
+  const fetchCurrentUser = async () => {
+    if(user && !loading) {
+      if (!currentUserData.communitiesJoinedID) {
+        console.log(`Setting user data into redux`);
+        const userRef = doc(db, "users", user?.uid as string)
+        const data = await getDoc(userRef)
+        dispatch(setCurrentUserData(data.data()))
+      } else if (currentUserData) {
+        console.log('user data found from redux')
+      }
+    }
+  }
+
+
+  useEffect(() => {
+    fetchCurrentUser()
+    
+  }, [user])
+
+
   return (
     <div className='w-full flex justify-between items-center max-h-screen overflow-hidden bg-white'>
         <Head>

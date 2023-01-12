@@ -24,46 +24,9 @@ const TopSection = () => {
 
     // ---- States ----
     const [isUserJoinedInCommunity, setIsUserJoinedInCommunity] = useState<boolean>(false)
-    // const [communityData, setCommunityData] = useState<ICommunityData>(Object)
+
 
     const communityData = useSelector((state: any) => state.communityData.currentCommunityData[0])
-
-    const fetchCommunityDetails = async () => {
-        if (!communityData) {
-            console.log(`  communityDataRedux NOT FOUND !!! `);
-            if (id) {
-                console.log(`============ fetchCommunityDetails ==========`)
-                const communityRef = doc(db, "communities", id as string)
-                const res = await getDoc(communityRef)
-                // setCommunityData(res.data() as ICommunityData)
-
-                // dispatching reducer
-                dispatch(setCurrentCommunityData([res.data()]))
-            }
-        } else if (communityData) {
-            console.log(`communityDataRedux FOUND !!! `);
-        }
-    }
-
-    useEffect(() => {
-        // if (communityData && user?.uid && !loading) {
-        //     if (communityData?.communityMembersID.includes(user.uid)) {
-        //         setIsUserJoinedInCommunity(true)
-        //         console.log(`ANS -> ${communityData?.communityMembersID.includes(user.uid)}`)
-        //     } else if (!communityData?.communityMembersID.includes(user.uid)) {
-        //         setIsUserJoinedInCommunity(false)
-        //         console.log(`ANS -> ${communityData?.communityMembersID.includes(user.uid)}`)
-        //     }
-        // }
-
-
-        fetchCommunityDetails()
-    }, [id])
-
-
-
-
-
 
 
     return (

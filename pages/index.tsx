@@ -47,10 +47,10 @@ export default function Home({ allPostsArray }: any) {
 
   }, [allPostsArray])
 
-  useEffect(() => {
-    fetchCurrentUser()
+  // useEffect(() => {
+  //   fetchCurrentUser()
     
-  }, [user])
+  // }, [user])
 
 
   return (

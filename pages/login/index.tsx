@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { FcGoogle } from 'react-icons/fc'
 import { MdOutlineFacebook } from 'react-icons/md'
 import { signInWithEmailAndPassword } from "firebase/auth"
@@ -49,6 +49,8 @@ const Index = () => {
     }
   }
 
+  const emailInputRef:any = useRef(null)
+
 
   useEffect(() => {
     if (user && !loading) {
@@ -79,8 +81,12 @@ const Index = () => {
 
               <div className='w-[100%] h-10 relative bg-black flex justify-start items-center' onMouseEnter={() => dispatch(setIsBottomBarVisible(false))} onMouseLeave={() => dispatch(setIsBottomBarVisible(true))}>
                 <input
+                ref={emailInputRef}
                   value={emailInputValue}
-                  onChange={(e) => setEmailInputValue(e.target.value)}
+                  onChange={(e) =>{ 
+                    setEmailInputValue(e.target.value)
+                  }}
+                  
                   type="email"
                   placeholder='Email address'
                   className='w-full h-10 absolute right-1 bottom-1 outline-none focus:ring-0 px-2 placeholder:px-2 border-2 border-black'

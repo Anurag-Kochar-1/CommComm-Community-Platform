@@ -15,6 +15,7 @@ const SignInWithGoogleFunction = async () => {
 
         if(userDoc.exists()) {
             console.log(`User already Exist => ${userDoc.id}`);
+            
         } else {
             console.log(`Creating User !!!!!! `);
             await setDoc(doc(db, "users", result?.user?.uid), {

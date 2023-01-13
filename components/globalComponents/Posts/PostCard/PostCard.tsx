@@ -171,7 +171,7 @@ const PostCard = ({ postData, postedAt }: IProps) => {
 
     return (
         // <div className={`${postedAt === "communityHomePage" && "w-full sm:w-[70%] md:w-[60%] lg:w-[70%] xl:w-[50%]"} ${postedAt === "explorePostsPage" && "w-full sm:w-[40%] md:w-[35%] xl:w-[25%]"}  bg-white border md:border-2 border-black flex flex-col justify-start items-center p-2 md:p-4 rounded-sm md:rounded-md my-2`} onClick={() => console.log(isUserJoinedInCommunity)}>
-        <div className={`"w-full sm:w-[70%] md:w-[60%] lg:w-[70%] xl:w-[50%]  bg-white border md:border-2 border-black flex flex-col justify-start items-center p-2 md:p-4 rounded-sm md:rounded-md my-2 `} onClick={() => console.log(isUserJoinedInCommunity)}>
+        <div className={`"w-full sm:w-[70%] md:w-[60%] lg:w-[80%] xl:w-[60%] 2xl:w-[50%] bg-white border md:border-2 border-black flex flex-col justify-start items-center p-2 md:p-4 rounded-sm md:rounded-md my-2 `} onClick={() => console.log(isUserJoinedInCommunity)}>
 
             {/* Create details --- At Community Page */}
             <div className='w-full flex justify-between items-center space-x-2 py-2'>

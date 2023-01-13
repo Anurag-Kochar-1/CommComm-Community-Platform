@@ -23,7 +23,7 @@ const ProfileIcon = () => {
         ) : (
           'w-10 h-10 bg-white flex justify-center items-center rounded-md'
         )}>
-          {!user?.photoURL && <BiErrorCircle className='text-2xl text-red-600' />}
+          {!user?.photoURL && <BiErrorCircle className='text-2xl text-black' />}
 
           {user?.photoURL && (
             <Image src={user.photoURL as string} alt="dp" width={7} height={7} className="w-7 h-7 rounded-full" />

@@ -30,45 +30,48 @@ const Index = () => {
   const allInputRef: any = useRef(null)
 
   const signUp = () => {
-    setIsLoading(true)
-    createUserWithEmailAndPassword(auth, emailInputValue, passwordInputValue)
-      .then((response) => {
-        console.log(response)
-        // updating user's profile
-        updateProfile(auth?.currentUser as any, {
-          displayName: userNameInputValue,
-          photoURL: ""
+    if (userNameInputValue && emailInputValue && passwordInputValue) {
+      if (userNameInputValue.length > 5 && userNameInputValue.length < 20) {
+        if (passwordInputValue.length >= 6) {
+          setIsLoading(true)
+          createUserWithEmailAndPassword(auth, emailInputValue, passwordInputValue)
+            .then((response) => {
+              console.log(response)
+              // updating user's profile
+              updateProfile(auth?.currentUser as any, {
+                displayName: userNameInputValue,
+                photoURL: ""
+              }
+
+              ).then(() => {
+                console.log('PROFILE UPDATED !')
+                setIsLoading(false)
+                createUserInDB(auth.currentUser?.uid as string)
+                router.push("/")
+              }).catch((error) => {
+                console.log(error)
+                setIsLoading(false)
+              });
+
+            }).catch((error) => {
+              console.log(error?.message)
+              setIsLoading(false)
+            })
+
+
+          // Resetting States
+          setUserNameInputValue("")
+          setEmailInputValue("")
+          setPasswordInputValue("")
+        } else {
+          alert("Password should be more than 6 characters")
         }
-
-        ).then(() => {
-          console.log('PROFILE UPDATED !')
-          setIsLoading(false)
-          createUserInDB(auth.currentUser?.uid as string)
-          router.push("/")
-        }).catch((error) => {
-          console.log(error)
-          setIsLoading(false)
-        });
-
-      }).catch((error) => {
-        console.log(error?.message)
-        setIsLoading(false)
-      })
-
-    // updating user's profule
-    // updateProfile(auth?.currentUser as any, {
-    //   displayName: userNameInputValue,
-    //   photoURL: ""
-    // }).then(() => {
-    //   console.log('PROFILE UPDATED !')
-    // }).catch((error) => {
-    //   console.log(error)
-    // });
-
-
-
-    setEmailInputValue("")
-    setPasswordInputValue("")
+      } else {
+        alert("Username should not be more than 20 characters and less than 5 characters ")
+      }
+    } else {
+      alert("Fill all fields")
+    }
   }
 
 
@@ -82,16 +85,16 @@ const Index = () => {
       likedPostsID: [],
       dislikedPostsID: [],
 
-      userCoins : 100
+      userCoins: 100
     })
   }
 
 
   useEffect(() => {
-    if(user && !loading) {
+    if (user && !loading) {
       router.push("/")
     }
-  },[user])
+  }, [user])
 
   return (
     <div className='fixed inset-0 w-[100%] h-[100vh] bg-white lg:bg-gradient-to-r from-slate-500 to-slate-800 flex flex-row justify-center lg:justify-end items-center lg:px-28 xl:px-52 2xl:px-60'>
@@ -146,7 +149,7 @@ const Index = () => {
           {/* ---- Sign up with email */}
           <div className='w-full h-full flex flex-col items-start justify-start'>
             <h3 className='font-bold text-base'> Sign up with email </h3>
-            <span className='text-base font-normal'> Already have an account? <Link className='text-blue-500 hover:cursor-pointer' href='/login'> Sign in </Link> </span>
+            <span className='text-base font-normal'> Already have an account? <Link className='text-blue-500 hover:cursor-pointer' href='/login'> Log in </Link> </span>
 
             <div className='w-full flex flex-col justify-between items-start space-y-4 py-3 mt-4'>
 
@@ -189,13 +192,7 @@ const Index = () => {
             {/* ---- Continue Button div ---- */}
             <div className='w-full flex justify-end items-center py-5'>
               <button
-                onClick={() => {
-                  if (userNameInputValue && emailInputValue && passwordInputValue) {
-                    signUp()
-                  } else {
-                    alert("Fill the required fields")
-                  }
-                }}
+                onClick={signUp}
                 type='button'
                 title='singIn'
                 className='w-20 md:w-32 h-10 relative flex justify-center items-center bg-black rounded-sm border-2 border-black'>

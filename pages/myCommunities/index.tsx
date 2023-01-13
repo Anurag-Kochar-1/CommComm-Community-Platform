@@ -38,7 +38,7 @@ const Index = () => {
         {userJoinedCommunitiesState && (
           userJoinedCommunitiesState.slice(0, 10).map((community: ICommunityData) => {
             return (
-              <SmallCommunityCard community={community} />
+              <SmallCommunityCard community={community} key={community?.communityID}/>
             )
           })
         )}

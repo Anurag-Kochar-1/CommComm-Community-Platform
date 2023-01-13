@@ -13,4 +13,6 @@ export interface ICommunityData {
         communityOwnerEmail:string
         communityPostsID: string[]
         communityDescription: string 
+        isCommunitySuggested: boolean
+        isCommunityTrending: boolean
 }

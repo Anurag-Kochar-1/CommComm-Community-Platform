@@ -49,7 +49,6 @@ const JoinCommunityButton = () => {
 
 
                 // re-fetching community Data
-
                 console.log(`re fetching and dispatch community data`)
                 // const newCommunityData = fetchCommunityData( communityData?.communityID )
                 // const newCommunityDataRes = await newCommunityData
@@ -89,15 +88,15 @@ const JoinCommunityButton = () => {
                     // Setting state
                     setIsUserJoined(false)
 
-                    // fetching fetchCurrentUserData
+                    // re-fetching fetchCurrentUserData
                     console.log(`re fetching and dispatch user data`)
                     const newUserData = fetchCurrentUserData()
                     const newRes = await newUserData
                     dispatch(setCurrentUserData(newRes))
 
 
-                    // re-fetching community Data
 
+                    // re-fetching community Data
                     console.log(`re fetching and dispatch community data`)
                     // const newCommunityData = fetchCommunityData( communityData?.communityID)
                     // const newCommunityDataRes = await newCommunityData
@@ -114,6 +113,7 @@ const JoinCommunityButton = () => {
         } else {
             router.push("/register")
         }
+
     }
 
 
@@ -123,7 +123,6 @@ const JoinCommunityButton = () => {
     }, [currentUserData])
 
 
-    if (user?.uid === communityData?.communityOwnerID) return null
     return (
         <>
             {user?.uid !== communityData?.communityOwnerID && (
@@ -150,5 +149,4 @@ const JoinCommunityButton = () => {
         </>
     )
 }
-
 export default JoinCommunityButton

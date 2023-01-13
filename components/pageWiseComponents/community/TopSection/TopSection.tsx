@@ -12,8 +12,8 @@ import NavTabs from '../NavTabs/NavTabs'
 import TagBox from '../TagBox/TagBox'
 import { setCurrentCommunityData } from "../../../../redux/slices/communityDataSlice"
 import SettingsIcon from '../../../Icons/SettingsIcon/SettingsIcon'
-import JoinCommunityButton from '../../../Icons/JoinCommunityButton/JoinCommunityButton'
 import { IUserData } from '../../../../customTypesAndInterfaces/User/userInterfaces'
+import JoinCommunityButton from '../../../Icons/JoinCommunityButton/JoinCommunityButton'
 
 
 const TopSection = () => {

@@ -14,13 +14,8 @@ const Index = () => {
 
   const fetchUserJoinedAndOwnedCommunities = async () => {
     if (user && !loading) {
-      const userJoinedCommunitiesArray: any[] = []
       const queryTheUser = query(communityCollectionRef, where("communityMembersID", "array-contains", auth?.currentUser?.uid))
       const queryData = await getDocs(queryTheUser)
-      // queryData.forEach((doc) => {
-      //   userJoinedCommunitiesArray.push(doc.data())
-
-      // })
       setUserJoinedCommunitiesState(queryData.docs.map((doc: any) => ({ ...doc.data(), id: doc.id })));
     } else if (!user && !loading) {
       router.push("/register")

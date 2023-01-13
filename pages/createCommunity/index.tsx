@@ -22,62 +22,70 @@ const Index = () => {
   const communitiesCollectionRef = collection(db, "communities")
 
 
-  const createCommunity = async  () => {
-    if(!communityNameInputValue || communityCategory === "Choose Category" || communitySubCategory ===  "Choose Sub Category" ) {
-      alert("Fill the fields")
+  const createCommunity = async () => {
+    if (!communityNameInputValue || communityCategory === "Choose Category" || communitySubCategory === "Choose Sub Category") {
+      alert("Fill all fields")
     } else {
-      console.log("creating community")
-      const addingCommunityDoc = await addDoc(communitiesCollectionRef, {
-        communityID : "",
-        communityName: communityNameInputValue,
-        communityCategory: communityCategory,
-        communitySubCategory : communitySubCategory,
-        communityLogo : "https://firebasestorage.googleapis.com/v0/b/th3-hackathon.appspot.com/o/postImages%2F6cf18550-5ca7-491f-9725-171e5c38b6fc--220703-minions-music-hero_tfqnbm.jpg?alt=media&token=8c0fc36a-394a-413c-9b49-2e86342095a3",
-        communityBanner : "https://firebasestorage.googleapis.com/v0/b/th3-hackathon.appspot.com/o/postImages%2F132cd51d-593f-4b77-86ed-1ae1c895f70f--8i1bx8y9p3t9x223bjhf.png?alt=media&token=448d7efb-5982-436f-977f-04970af12537",
-        communityMembersID : [auth?.currentUser?.uid],
-        communityOwnerID: auth?.currentUser?.uid,
-        communityOwnerDisplayName: auth?.currentUser?.displayName,
-        communityOwnerEmail: auth.currentUser?.email,
-        communityPostsID: [],
-        communityDescription: `This is community is for ${communityCategory} (${communitySubCategory}), made by ${user?.displayName}`,
+      if (communityNameInputValue.length < 5 || communityNameInputValue.length > 21) {
+        alert("Community Name should be more than 5 characters and less than 21 characters")
+      } else if (communityNameInputValue.length > 5 || communityNameInputValue.length < 21) {
+        try {
+          console.log("creating community")
+          const addingCommunityDoc = await addDoc(communitiesCollectionRef, {
+            communityID: "",
+            communityName: communityNameInputValue,
+            communityCategory: communityCategory,
+            communitySubCategory: communitySubCategory,
+            communityLogo: "https://firebasestorage.googleapis.com/v0/b/th3-hackathon.appspot.com/o/postImages%2F6cf18550-5ca7-491f-9725-171e5c38b6fc--220703-minions-music-hero_tfqnbm.jpg?alt=media&token=8c0fc36a-394a-413c-9b49-2e86342095a3",
+            communityBanner: "https://firebasestorage.googleapis.com/v0/b/th3-hackathon.appspot.com/o/postImages%2F132cd51d-593f-4b77-86ed-1ae1c895f70f--8i1bx8y9p3t9x223bjhf.png?alt=media&token=448d7efb-5982-436f-977f-04970af12537",
+            communityMembersID: [auth?.currentUser?.uid],
+            communityOwnerID: auth?.currentUser?.uid,
+            communityOwnerDisplayName: auth?.currentUser?.displayName,
+            communityOwnerEmail: auth.currentUser?.email,
+            communityPostsID: [],
+            communityDescription: `This is community is for ${communityCategory} (${communitySubCategory}), made by ${user?.displayName}`,
 
-        isCommunitySuggested: false,
-        isCommunityTrending: false
-      })
+            isCommunitySuggested: false,
+            isCommunityTrending: false
+          })
 
-      const communityRef = doc(db, "communities", addingCommunityDoc.id)
+          const communityRef = doc(db, "communities", addingCommunityDoc.id)
 
-      // adding communityID manually hehe
-      await updateDoc(communityRef, {
-        communityID: addingCommunityDoc?.id
-      })
+          // adding communityID manually hehe
+          await updateDoc(communityRef, {
+            communityID: addingCommunityDoc?.id
+          })
 
-      // updating user and Sending Coins to user
-      const userRef = doc(db, "users", auth?.currentUser?.uid as string)
-      const updateUser = await updateDoc(userRef, {
-          communitiesJoinedID: arrayUnion(communityRef.id),
-          communitiesOwnedID: arrayUnion(communityRef.id),
-          userCoins: increment(50)
-      })
+          // updating user and Sending Coins to user
+          const userRef = doc(db, "users", auth?.currentUser?.uid as string)
+          const updateUser = await updateDoc(userRef, {
+            communitiesJoinedID: arrayUnion(communityRef.id),
+            communitiesOwnedID: arrayUnion(communityRef.id),
+            userCoins: increment(50)
+          })
 
 
 
-      router.push(`/community/${addingCommunityDoc.id}`)
+          router.push(`/community/${addingCommunityDoc.id}`)
 
-      // resetting states
-      setCommunityNameInputValue("")
+          // resetting states
+          setCommunityNameInputValue("")
+        } catch (error) {
+          alert(error)
+        }
 
-      
+
+      }
 
     }
   }
 
 
   useEffect(() => {
-    if(!user && loading === false) {
+    if (!user && loading === false) {
       router.push("/register")
     }
-    },[loading])
+  }, [loading])
 
   return (
     <div className='fixed inset-0 w-[100%] h-[100vh] bg-BrutalOrange1 flex flex-row justify-center lg:justify-end items-center lg:px-32 xl:px-40 2xl:px-72 '>
@@ -101,7 +109,7 @@ const Index = () => {
           <div className='w-full flex flex-col justify-between items-start space-y-4 py-3 mt-4'>
 
             {/* ---- Name ---- */}
-            <div className='w-[90%] h-10 relative bg-black flex justify-start items-center'  onMouseEnter={() => dispatch(setIsBottomBarVisible(false))} onMouseLeave={() => dispatch(setIsBottomBarVisible(true))}>
+            <div className='w-[90%] h-10 relative bg-black flex justify-start items-center' onMouseEnter={() => dispatch(setIsBottomBarVisible(false))} onMouseLeave={() => dispatch(setIsBottomBarVisible(true))}>
               <input
                 value={communityNameInputValue}
                 onChange={(e) => setCommunityNameInputValue(e.target.value)}
@@ -199,7 +207,7 @@ const Index = () => {
               title='singIn'
               className='w-20 md:w-32 h-10 relative flex justify-center items-center bg-black rounded-sm border-2 border-black'>
               <span className='w-20 md:w-32 h-10 absolute bottom-[2px] right-[2px] bg-BrutalGreen1  flex justify-center items-center rounded-sm border-2 border-black active:right-0 active:bottom-0'>
-                <p className='text-xs md:text-sm font-medium'> Create  </p>
+                <p className='text-xs md:text-sm font-bold '> Create  </p>
               </span>
             </button>
           </div>

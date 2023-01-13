@@ -18,18 +18,24 @@ const SmallCommunityCard = ({ community }: IProps) => {
         <Link
             href={`/community/${community.communityID}`}
             key={community.communityID}
-            className="w-[90%] h-14 xl:h-20 flex justify-start items-center bg-back border bg-black border-black space-x-2 rounded-lg hover:cursor-pointer"
+            className="w-[90%] h-14 xl:h-20 flex justify-start items-center bg-back border bg-black border-black space-x-2 rounded-lg hover:cursor-pointer hover:scale-105"
         >
-            <div className={`w-full h-full -mt-1 -ml-1 ${randomBG} border border-black rounded-sm flex justify-start items-center space-x-2 px-3`}>
+            <div className={`w-full h-full -mt-1 -ml-1 ${randomBG}  border border-black rounded-sm flex justify-start items-center space-x-2 px-3`}>
                 {community.communityLogo !== null && (
-                    <Image src={community.communityLogo as string} width={8} height={8} alt="pfp" className='w-auto h-[70%] rounded-sm aspect-square' draggable="false"/>
+                    <Image
+                        src={community.communityLogo as string}
+                        width={8}
+                        height={8}
+                        alt="pfp"
+                        className='w-auto h-[70%] rounded-sm aspect-square' draggable="false"
+                    />
                 )}
 
                 {community.communityLogo === null && (
                     <div className='w-auto h-[70%] rounded-sm bg-BrutalOrange1 border-2 border-black aspect-square' />
                 )}
 
-                <div className='border-r border-r-black h-full'/>
+                <div className='border-r border-r-black h-full' />
 
                 <div className='w-full flex flex-col items-start justify-center'>
                     <p className='font-BebasNeue lg:text-base xl:text-xl  text-black font-medium'> {community.communityName.slice(0, 20)} </p>

@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { ICommunityData } from '../../../customTypesAndInterfaces/Community/CommunityInterfaces'
 import { IUserData } from '../../../customTypesAndInterfaces/User/userInterfaces'
 import { auth, db } from '../../../firebaseConfig'
-import { setSuggestedCommunities } from '../../../redux/slices/communityDataSlice'
+import { setSuggestedCommunities, setTrendingCommunities } from '../../../redux/slices/communityDataSlice'
 import { setCurrentUserData, setUserJoinedCommunities } from '../../../redux/slices/userSlice'
 import Header from '../../globalComponents/Header/Header'
 import LeftSideBar from '../../globalComponents/SideBars/LeftSideBar/LeftSideBar'
@@ -28,6 +28,7 @@ const BaseOneLayout = ({ children }: IHomeLayoutProps) => {
   const currentUserData: IUserData = useSelector((state: any) => state.user.currentUserData)
   const userJoinedCommunitiesData: ICommunityData[] = useSelector((state: any) => state.user.userJoinedCommunities)
   const suggestedCommunitiesData: ICommunityData[] = useSelector((state: any) => state.communityData.suggestedCommunities)
+  const trendingCommunitiesData: ICommunityData[] = useSelector((state: any) => state.communityData.trendingCommunities)
 
   const communityCollectionRef = collection(db, "communities")
 
@@ -64,8 +65,8 @@ const BaseOneLayout = ({ children }: IHomeLayoutProps) => {
     }
   }
 
-  // Fetch Suggested Communities
-  const fetchSuggestedommunities = async () => {
+  // ---- Fetch Suggested Communities ---- 
+  const fetchSuggestedCommunities = async () => {
     if (!suggestedCommunitiesData[0]) {
       console.log(`SETTING SUGGESTED COMMUNITIES DATA`);
       const queryCommunities = query(communityCollectionRef, where("isCommunitySuggested", "==", true))
@@ -81,11 +82,29 @@ const BaseOneLayout = ({ children }: IHomeLayoutProps) => {
 
   }
 
+  // ---- Fetch Trending Communities ---- 
+  const fetchTrendingCommunities = async () => {
+    if (!trendingCommunitiesData[0]) {
+      console.log(`SETTING Trending COMMUNITIES DATA`);
+      const queryCommunities = query(communityCollectionRef, where("isCommunityTrending", "==", true))
+      const queryRes = await getDocs(queryCommunities)
+      const data = queryRes?.docs?.map(doc => doc.data())
+      dispatch(setTrendingCommunities(data))
+
+    } else if (trendingCommunitiesData[0]) {
+      console.log(`Trending COMMUNITIES DATA FOUND FROM REDUX `);
+    }
+
+
+
+  }
+
 
   useEffect(() => {
     fetchCurrentUser()
     fetchUserJoinedCommunities()
-    fetchSuggestedommunities()
+    fetchSuggestedCommunities()
+    fetchTrendingCommunities()
   }, [user])
 
 

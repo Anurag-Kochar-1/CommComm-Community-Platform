@@ -59,28 +59,31 @@ const LeftSideBar = () => {
 
         {/* ---- Suggested Communityies || My communities ---- */}
 
-        <div className='w-[90%] flex flex-col justify-start items-center space-y-3 bg-BrutalPurple1 border-2 border-black py-10 rounded-sm' >
+        <div className='w-[90%] flex flex-col justify-start items-center space-y-3 bg-BrutalPurple1 border-2 border-black py-10 rounded-sm' onClick={() => console.log(suggestedCommunitiesData)}>
 
           <h3 className='font-BebasNeue px-2 text-center lg:text-3xl xl:text-4xl text-black'>
             {user && !loading && currentUserData?.communitiesJoinedID?.length !== 0 ? "My Communities" : "Suggested Communities"}
           </h3>
 
 
+          {/* My communities */}
           {currentUserData?.communitiesJoinedID?.length !== 0 && (
             userJoinedCommunitiesData.slice(0, 10).map((community: ICommunityData) => {
               return (
                 <SmallCommunityCard community={community} key={community.communityID}/>
-              )
-            })
-          )}
+                )
+              })
+              )}
 
-          {currentUserData?.communitiesJoinedID?.length == 0  && (
+            
+          {/* Suggested communities */}
+          {currentUserData?.communitiesJoinedID?.length == 0 || !user ?   (
             suggestedCommunitiesData.slice(0, 10).map((community: ICommunityData) => {
               return (
                 <SmallCommunityCard community={community} key={community.communityID}/>
               )
             })
-          )}
+          ): null }
 
         </div>
 

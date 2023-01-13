@@ -10,6 +10,8 @@ import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage"
 import { v4 as uuidv4 } from "uuid"
 import { useRouter } from 'next/router'
 import { AiOutlineLoading3Quarters } from 'react-icons/ai'
+import { useSelector } from 'react-redux'
+import { ICommunityData } from '../../customTypesAndInterfaces/Community/CommunityInterfaces'
 
 const UploadPost = () => {
   const router = useRouter()
@@ -21,26 +23,31 @@ const UploadPost = () => {
   const [image, setImage] = useState<any[]>([])
   const [video, setVideo] = useState<any[]>([])
 
-  const [userJoinedCommunitiesState, setUserJoinedCommunitiesState] = useState<any[] | []>([])
+  // States
+  // const [userJoinedCommunitiesState, setUserJoinedCommunitiesState] = useState<any[] | []>([])
   const [selectedCommunity, setSelectedCommunity] = useState<any | null>(null)
+
+
+  // Redux states
+  const userJoinedCommunitiesData: ICommunityData[] = useSelector((state: any) => state?.user?.userJoinedCommunities)
 
 
 
   const communityCollectionRef = collection(db, "communities")
   const postsCollectionRef = collection(db, "posts")
 
-  const fetchUserJoinedAndOwnedCommunities = async () => {
-    console.log(` ---- fetchUserJoinedAndOwnedCommunities is running ----`)
-    const userJoinedCommunitiesArray: any[] = []
-    const queryTheUser = query(communityCollectionRef, where("communityMembersID", "array-contains", auth?.currentUser?.uid))
-    const queryData = await getDocs(queryTheUser)
-    queryData.forEach((doc) => {
-      userJoinedCommunitiesArray.push(doc.data())
-    })
+  // const fetchUserJoinedAndOwnedCommunities = async () => {
+  //   console.log(` ---- fetchUserJoinedAndOwnedCommunities is running ----`)
+  //   const userJoinedCommunitiesArray: any[] = []
+  //   const queryTheUser = query(communityCollectionRef, where("communityMembersID", "array-contains", auth?.currentUser?.uid))
+  //   const queryData = await getDocs(queryTheUser)
+  //   queryData.forEach((doc) => {
+  //     userJoinedCommunitiesArray.push(doc.data())
+  //   })
 
-    setUserJoinedCommunitiesState(queryData.docs.map((doc: any) => ({ ...doc.data(), id: doc.id })));
+  //   setUserJoinedCommunitiesState(queryData.docs.map((doc: any) => ({ ...doc.data(), id: doc.id })));
 
-  }
+  // }
 
   const uploadImage = async () => {
     if (image[0][0]) {
@@ -135,18 +142,22 @@ const UploadPost = () => {
   }
 
 
-  useEffect(() => {
-    if (user && !loading) {
-      fetchUserJoinedAndOwnedCommunities()
-    }
-  }, [loading])
+  // useEffect(() => {
+  //   if (user && !loading) {
+  //     fetchUserJoinedAndOwnedCommunities()
+  //   }
+  // }, [loading])
 
   useEffect(() => {
-    if (userJoinedCommunitiesState) {
+    if (userJoinedCommunitiesData[0]) {
       console.log("second useEffect is running")
-      setSelectedCommunity(userJoinedCommunitiesState[0]?.communityID)
+      setSelectedCommunity(userJoinedCommunitiesData[0]?.communityID)
+    } else if (!userJoinedCommunitiesData[0]) {
+      router.push("/")
     }
-  }, [userJoinedCommunitiesState])
+  }, [userJoinedCommunitiesData])
+
+  
 
   useEffect(() => {
     if (!user && loading === false) {
@@ -235,8 +246,8 @@ const UploadPost = () => {
                     value={selectedCommunity}
                     onChange={(e) => setSelectedCommunity(e.target.value)}>
 
-                    {userJoinedCommunitiesState && (
-                      userJoinedCommunitiesState.map((community) => {
+                    {userJoinedCommunitiesData && (
+                      userJoinedCommunitiesData.map((community) => {
                         return (
                           <option
                             key={community?.communityID}
@@ -313,8 +324,8 @@ const UploadPost = () => {
                     value={selectedCommunity}
                     onChange={(e) => setSelectedCommunity(e.target.value)}>
 
-                    {userJoinedCommunitiesState && (
-                      userJoinedCommunitiesState.map((community) => {
+                    {userJoinedCommunitiesData && (
+                      userJoinedCommunitiesData.map((community) => {
                         return (
                           <option
                             key={community?.communityID}
@@ -389,8 +400,8 @@ const UploadPost = () => {
                     value={selectedCommunity}
                     onChange={(e) => setSelectedCommunity(e.target.value)}>
 
-                    {userJoinedCommunitiesState && (
-                      userJoinedCommunitiesState.map((community) => {
+                    {userJoinedCommunitiesData && (
+                      userJoinedCommunitiesData.map((community) => {
                         return (
                           <option
                             key={community?.communityID}
@@ -442,8 +453,8 @@ const UploadPost = () => {
               value={selectedCommunity}
               onChange={(e) => setSelectedCommunity(e.target.value)}>
 
-              {userJoinedCommunitiesState && (
-                userJoinedCommunitiesState.map((community) => {
+              {userJoinedCommunitiesData && (
+                userJoinedCommunitiesData.map((community) => {
                   return (
                     <option
                       key={community?.communityID}
@@ -518,7 +529,8 @@ const UploadPost = () => {
 
         </form>
 
-        <div className='w-full  px-5 w-full h-[15vh] border-t border-t-black flex justify-between items-center py-2'>
+        {/* ---- Choose media type bottom bar ---- */}
+        <div className='w-full px-5 h-[15vh] border-t border-t-black flex justify-between items-center py-2'>
           <div className='w-full flex justify-start items-center space-x-3'>
 
             <button
@@ -587,10 +599,10 @@ const UploadPost = () => {
             }}
             type='button'
             title='post'
-            className='w-[40%] h-9 relative flex justify-center items-center bg-black rounded-sm border-2 border-black '>
-            <span className='w-full h-10 absolute bottom-[2px] right-[2px] bg-BrutalPurple2 flex justify-center items-center rounded-sm border-2 border-black active:right-0 active:bottom-0 hover:right-0 hover:bottom-0'>
-              <p className='text-sm font-semibold'> POST  </p>
-            </span>
+            className='w-[40%] h-10 flex justify-center items-center bg-black rounded-sm border border-black '>
+            <div className='w-full h-full -mt-2 -ml-2 bg-BrutalPurple2 flex justify-center items-center rounded-sm border-2 border-black active:-mt-0 active:-ml-0'>
+              <p className='text-sm font-semibol'> POST  </p>
+            </div>
           </button>
         </div>
 

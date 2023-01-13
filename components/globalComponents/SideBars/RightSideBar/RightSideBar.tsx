@@ -7,41 +7,20 @@ import { ICommunityData } from '../../../../customTypesAndInterfaces/Community/C
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { useRouter } from 'next/router'
 import SmallCommunityCard from '../../CommunityCards/SmallCommunityCard/SmallCommunityCard'
+import { useSelector } from 'react-redux'
 
 const RightSideBar = () => {
   const [user, loading] = useAuthState(auth)
   const router = useRouter()
-  const [topCommunitiesState, setTopCommunitiesState] = useState<any[]>([])
   const communityCollectionRef = collection(db, "communities")
 
-  const fetchTopCommunities = async () => {
-    if (true) {
-      // console.log("Fetching trending community datas")
-      // const filterdCommunities:ICommunityData[] = []
-      const res = await getDocs(communityCollectionRef)
+  const trendingCommunitiesData:ICommunityData[] = useSelector((state:any) => state?.communityData?.trendingCommunities)
 
-      // res.forEach((community: any) => {
-      //   if(community?.communityMembersID?.includes(user?.uid)){
-      //     filterdCommunities.push(community)
-      //   } else {
-      //     return community
-      //   }
-      // })  
-
-
-      setTopCommunitiesState(res.docs.map((doc: any) => ({ ...doc.data(), id: doc.id })));
-      // setTopCommunitiesState( filterdCommunities);
-    }
-  }
-
-  useEffect(() => {
-    fetchTopCommunities()
-  }, [])
-
+ 
 
   return (
     <div className='hidden lg:inline-flex w-[20%] h-[90vh] mt-[12vh] bg-white flex-col justify-start items-center'>
-      <div className='w-[95%] h-full flex flex-col justify-start items-center bg-gray-100  overflow-x-hidden overscroll-y-scroll pt-10 pb-32  space-y-10 scrollbar-hide' onClick={() => console.log(topCommunitiesState)}>
+      <div className='w-[95%] h-full flex flex-col justify-start items-center bg-gray-100  overflow-x-hidden overscroll-y-scroll pt-10 pb-32  space-y-10 scrollbar-hide' onClick={() => console.log(trendingCommunitiesData)}>
 
 
         {/* Top Communities */}
@@ -49,8 +28,8 @@ const RightSideBar = () => {
           <div className='w-[90%] flex flex-col justify-start items-center space-y-4 bg-[#FF5E5E] border-2 border-black py-10 rounded-sm' >
             <h3 className='font-BebasNeue px-2 text-center  lg:text-3xl xl:text-4xl text-black'> Trending Communities </h3>
 
-            {topCommunitiesState && (
-              topCommunitiesState.slice(0, 10).map((community: ICommunityData) => {
+            {trendingCommunitiesData[0] && (
+              trendingCommunitiesData.slice(0, 10).map((community: ICommunityData) => {
                 return (
                   <SmallCommunityCard community={community}  key={community?.communityID}/>
                 )

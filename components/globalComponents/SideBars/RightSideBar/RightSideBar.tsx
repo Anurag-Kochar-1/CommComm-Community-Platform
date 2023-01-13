@@ -6,6 +6,7 @@ import Image from 'next/image'
 import { ICommunityData } from '../../../../customTypesAndInterfaces/Community/CommunityInterfaces'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { useRouter } from 'next/router'
+import SmallCommunityCard from '../../CommunityCards/SmallCommunityCard/SmallCommunityCard'
 
 const RightSideBar = () => {
   const [user, loading] = useAuthState(auth)
@@ -51,26 +52,7 @@ const RightSideBar = () => {
             {topCommunitiesState && (
               topCommunitiesState.slice(0, 10).map((community: ICommunityData) => {
                 return (
-                  <Link
-                    href={`/community/${community.communityID}`}
-                    key={community.communityID}
-                    className="relative w-[90%] h-14 xl:h-20 flex justify-start items-center bg-back border-2 bg-black border-black space-x-2 rounded-md hover:cursor-pointer"
-                  >
-                    <div className='absolute right-1 bottom-1 w-full h-14 xl:h-20  bg-BrutalBlue1 border border-black rounded-md flex justify-start items-center space-x-2 px-3'>
-                      {community.communityLogo !== null && (
-                        <Image src={community.communityLogo as string} width={8} height={8} alt="pfp" className='w-8 h-8 xl:w-10 xl:h-10 rounded-full object-contain aspect-square' />
-                      )}
-
-                      {community.communityLogo === null && (
-                        <div className='w-8 h-8 xl:w-10 xl:h-10 rounded-full bg-BrutalRed1 aspect-square border-2 border-black' />
-                      )}
-
-                      <div className='w-full flex flex-col items-start justify-start'>
-                        <p className='font-BebasNeue lg:text-base xl:text-xl   text-black font-medium'> {community.communityName.slice(0, 20)} </p>
-                        <p className='hidden xl:inline-block font-InriaSans text-xs text-black font-bold'> {community.communityMembersID.length} {community.communityMembersID.length > 1 ? "members" : "member"} </p>
-                      </div>
-                    </div>
-                  </Link>
+                  <SmallCommunityCard community={community} />
                 )
               })
             )}

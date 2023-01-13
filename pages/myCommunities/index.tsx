@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import { useAuthState } from 'react-firebase-hooks/auth'
+import SmallCommunityCard from '../../components/globalComponents/CommunityCards/SmallCommunityCard/SmallCommunityCard'
 import { ICommunityData } from '../../customTypesAndInterfaces/Community/CommunityInterfaces'
 import { auth, db } from '../../firebaseConfig'
 
@@ -37,26 +38,7 @@ const Index = () => {
         {userJoinedCommunitiesState && (
           userJoinedCommunitiesState.slice(0, 10).map((community: ICommunityData) => {
             return (
-              <Link
-                href={`/community/${community.communityID}`}
-                key={community.communityID}
-                className="relative w-[90%] h-20 flex justify-start items-center bg-back border-2 bg-black border-black space-x-2 rounded-md hover:cursor-pointer"
-              >
-                <div className='absolute right-1 bottom-1 w-full h-20  bg-BrutalAqua1 border border-black rounded-md flex justify-start items-center space-x-2 px-3'>
-                  {community.communityLogo !== null && (
-                    <img src={community.communityLogo as string} width={8} height={8} alt="pfp" className='w-8 h-8 xl:w-10 xl:h-10 rounded-full object-contain aspect-square' />
-                  )}
-
-                  {community.communityLogo === null && (
-                    <div className='w-8 h-8 xl:w-10 xl:h-10 rounded-full bg-BrutalRed1 aspect-square' />
-                  )}
-
-                  <div className='w-full flex flex-col items-start justify-start'>
-                    <p className='font-BebasNeue text-xl text-black font-medium'> {community.communityName.slice(0, 20)} </p>
-                    <p className='font-InriaSans text-sm text-black font-bold'> {community.communityMembersID.length} {community.communityMembersID.length > 1 ? "members" : "member"} </p>
-                  </div>
-                </div>
-              </Link>
+              <SmallCommunityCard community={community} />
             )
           })
         )}

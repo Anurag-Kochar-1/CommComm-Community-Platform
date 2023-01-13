@@ -13,6 +13,7 @@ import { AiOutlineLogout } from 'react-icons/ai'
 import { signOut } from 'firebase/auth'
 import { IUserData } from '../../../../customTypesAndInterfaces/User/userInterfaces'
 import { useSelector } from 'react-redux'
+import SmallCommunityCard from '../../CommunityCards/SmallCommunityCard/SmallCommunityCard'
 
 const LeftSideBar = () => {
   // console.log(`------- Left Side Bar -------`);
@@ -52,13 +53,13 @@ const LeftSideBar = () => {
           </Link>
         </div>
 
-        <h1 className='text-xl my-10' onClick={() => console.log(userJoinedCommunitiesData)}> LOG REDEX - userJoinedCommunitiesData </h1>
-        <h1 className='text-xl my-10' onClick={() => console.log(suggestedCommunitiesData)}> LOG REDEX - suggestedCommunitiesData </h1>
+        {/* <h1 className='text-xl my-10' onClick={() => console.log(userJoinedCommunitiesData)}> LOG REDEX - userJoinedCommunitiesData </h1>
+        <h1 className='text-xl my-10' onClick={() => console.log(suggestedCommunitiesData)}> LOG REDEX - suggestedCommunitiesData </h1> */}
 
 
-        {/* Suggested Communityies || My communities */}
+        {/* ---- Suggested Communityies || My communities ---- */}
 
-        <div className='w-[90%] flex flex-col justify-start items-center space-y-3 bg-BrutalOrange1 border-2 border-black py-10 rounded-sm' >
+        <div className='w-[90%] flex flex-col justify-start items-center space-y-3 bg-BrutalPurple1 border-2 border-black py-10 rounded-sm' >
 
           <h3 className='font-BebasNeue px-2 text-center lg:text-3xl xl:text-4xl text-black'>
             {user && !loading && currentUserData?.communitiesJoinedID?.length !== 0 ? "My Communities" : "Suggested Communities"}
@@ -68,71 +69,28 @@ const LeftSideBar = () => {
           {currentUserData?.communitiesJoinedID?.length !== 0 && (
             userJoinedCommunitiesData.slice(0, 10).map((community: ICommunityData) => {
               return (
-                <Link
-                  href={`/community/${community.communityID}`}
-                  key={community.communityID}
-                  className="relative w-[90%] h-14 xl:h-20 flex justify-start items-center bg-back border-2 bg-black border-black space-x-2 rounded-md hover:cursor-pointer"
-                >
-                  <div className='absolute right-1 bottom-1 w-full h-14 xl:h-20  bg-BrutalGreen2 border border-black rounded-md flex justify-start items-center space-x-2 px-3'>
-                    {community.communityLogo !== null && (
-                      <Image src={community.communityLogo as string} width={8} height={8} alt="pfp" className='w-8 h-8 rounded-full  aspect-square' />
-                    )}
-
-                    {community.communityLogo === null && (
-                      <div className='w-8 h-8 xl:w-10 xl:h-10 rounded-full bg-BrutalOrange1 border-2 border-black aspect-square' />
-                    )}
-
-                    <div className='w-full flex flex-col items-start justify-start'>
-                      <p className='font-BebasNeue lg:text-base xl:text-xl   text-black font-medium'> {community.communityName.slice(0, 20)} </p>
-                      <p className='hidden xl:inline-block font-InriaSans text-xs text-black font-bold'> {community?.communityMembersID?.length} {community?.communityMembersID?.length > 1 ? "members" : "member"} </p>
-                    </div>
-                  </div>
-                </Link>
+                <SmallCommunityCard community={community} key={community.communityID}/>
               )
             })
           )}
-
 
           {currentUserData?.communitiesJoinedID?.length == 0  && (
             suggestedCommunitiesData.slice(0, 10).map((community: ICommunityData) => {
               return (
-                <Link
-                  href={`/community/${community.communityID}`}
-                  key={community.communityID}
-                  className="relative w-[90%] h-14 xl:h-20 flex justify-start items-center bg-back border-2 bg-black border-black space-x-2 rounded-md hover:cursor-pointer"
-                >
-                  <div className='absolute right-1 bottom-1 w-full h-14 xl:h-20  bg-BrutalGreen2 border border-black rounded-md flex justify-start items-center space-x-2 px-3'>
-                    {community.communityLogo !== null && (
-                      <Image src={community.communityLogo as string} width={8} height={8} alt="pfp" className='w-8 h-8 rounded-full  aspect-square' />
-                    )}
-
-                    {community.communityLogo === null && (
-                      <div className='w-8 h-8 xl:w-10 xl:h-10 rounded-full bg-BrutalOrange1 border-2 border-black aspect-square' />
-                    )}
-
-                    <div className='w-full flex flex-col items-start justify-start'>
-                      <p className='font-BebasNeue lg:text-base xl:text-xl   text-black font-medium'> {community.communityName.slice(0, 20)} </p>
-                      <p className='hidden xl:inline-block font-InriaSans text-xs text-black font-bold'> {community?.communityMembersID?.length} {community?.communityMembersID?.length > 1 ? "members" : "member"} </p>
-                    </div>
-                  </div>
-                </Link>
+                <SmallCommunityCard community={community} key={community.communityID}/>
               )
             })
           )}
-
-          
-
 
         </div>
 
 
 
         {/* ---- Skeleton ---- */}
-        {/* {!userJoinedCommunitiesState[0] && (
-          <div className='w-[90%] h-full bg-purple-300 animate-pulse'>
-
+        {/* {!userJoinedCommunitiesData[0] || !suggestedCommunitiesData[0] ? (
+          <div className='w-full h-full bg-BrutalOrange1 animate-pulse'>
           </div>
-        )} */}
+        ): null} */}
 
 
 

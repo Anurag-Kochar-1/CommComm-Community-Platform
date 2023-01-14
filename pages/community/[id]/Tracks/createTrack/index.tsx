@@ -38,93 +38,97 @@ const Index = () => {
     const communityOwnerID = communityData?.communityOwnerID
 
     const createTrack = async () => {
-        if (trackDurationInputValue < 90 ) {
-            if (communityOwnerID === user?.uid) {
-                if (user && !loading && trackNameInputValue && trackGoalInputValue && trackDurationInputValue && sourceOfLearningDropdownValue && sourceOfLearningDropdownLink && trackPrerequisitesInputValue) {
-                    try {
-                        setIsLoading(true)
-
-                        const communityTracksSubCollectionRef = collection(db, `communities/${id}/communityTracks`)
-                        const addingTrack = await addDoc(communityTracksSubCollectionRef, {
-                            trackID: "",
-                            communityID: id,
-                            trackName: trackNameInputValue,
-                            trackGoal: trackGoalInputValue,
-                            trackDurationInDays: trackDurationInputValue,
-                            trackSourceOfLearning: sourceOfLearningDropdownValue,
-                            trackSourceOfLearningLink: sourceOfLearningDropdownLink,
-                            trackPrerequisites: trackPrerequisitesInputValue,
-                            trackDescription: trackOptionalDescription || "",
-                            trackCreatorID: user.uid
-                        })
-
-                        // ---- adding ID ----
-                        const trackRef = doc(db, "communities", id as string, "communityTracks", addingTrack?.id)
-                        await updateDoc(trackRef, {
-                            trackID: addingTrack.id
-                        })
-
-
-                        // -------- creating Tracks paths ---------
-                        const data = await getDoc(trackRef)
-                        const pathsNumbers: number = data.data()?.trackDurationInDays
-                        const communityPathsSubCollectionRef = collection(db, "communities", id as string, "trackPaths")
-
-                        for (let i = 1; i <= pathsNumbers; i++) {
-                            // adding path
-                            if (i === 1) {
-                                const addingPath = await addDoc(communityPathsSubCollectionRef, {
-                                    pathID: "",
-                                    trackID: addingTrack.id,
-                                    pathCreatorID: user?.uid,
-                                    communityID: id,
-                                    pathNumber: i,
-                                    isUnlocked: true,
-                                    isCompleted: false,
-
-                                })
-
-                                // adding ID manually
-                                await updateDoc(addingPath, {
-                                    pathID: addingPath.id
-                                })
-                            } else {
-                                const addingPath = await addDoc(communityPathsSubCollectionRef, {
-                                    pathID: "",
-                                    trackID: addingTrack.id,
-                                    pathNumber: i,
-                                    isUnlocked: false,
-                                    isCompleted: false
-
-                                })
-
-                                // adding ID manually
-                                await updateDoc(addingPath, {
-                                    pathID: addingPath.id
-                                })
+        if( trackNameInputValue.length >= 10 && trackNameInputValue.length <= 50 ) {
+            if (trackDurationInputValue < 90 ) {
+                if (communityOwnerID === user?.uid) {
+                    if (user && !loading && trackNameInputValue && trackGoalInputValue && trackDurationInputValue && sourceOfLearningDropdownValue && sourceOfLearningDropdownLink && trackPrerequisitesInputValue) {
+                        try {
+                            setIsLoading(true)
+    
+                            const communityTracksSubCollectionRef = collection(db, `communities/${id}/communityTracks`)
+                            const addingTrack = await addDoc(communityTracksSubCollectionRef, {
+                                trackID: "",
+                                communityID: id,
+                                trackName: trackNameInputValue,
+                                trackGoal: trackGoalInputValue,
+                                trackDurationInDays: trackDurationInputValue,
+                                trackSourceOfLearning: sourceOfLearningDropdownValue,
+                                trackSourceOfLearningLink: sourceOfLearningDropdownLink,
+                                trackPrerequisites: trackPrerequisitesInputValue,
+                                trackDescription: trackOptionalDescription || "",
+                                trackCreatorID: user.uid
+                            })
+    
+                            // ---- adding ID ----
+                            const trackRef = doc(db, "communities", id as string, "communityTracks", addingTrack?.id)
+                            await updateDoc(trackRef, {
+                                trackID: addingTrack.id
+                            })
+    
+    
+                            // -------- creating Tracks paths ---------
+                            const data = await getDoc(trackRef)
+                            const pathsNumbers: number = data.data()?.trackDurationInDays
+                            const communityPathsSubCollectionRef = collection(db, "communities", id as string, "trackPaths")
+    
+                            for (let i = 1; i <= pathsNumbers; i++) {
+                                // adding path
+                                if (i === 1) {
+                                    const addingPath = await addDoc(communityPathsSubCollectionRef, {
+                                        pathID: "",
+                                        trackID: addingTrack.id,
+                                        pathCreatorID: user?.uid,
+                                        communityID: id,
+                                        pathNumber: i,
+                                        isUnlocked: true,
+                                        isCompleted: false,
+    
+                                    })
+    
+                                    // adding ID manually
+                                    await updateDoc(addingPath, {
+                                        pathID: addingPath.id
+                                    })
+                                } else {
+                                    const addingPath = await addDoc(communityPathsSubCollectionRef, {
+                                        pathID: "",
+                                        trackID: addingTrack.id,
+                                        pathNumber: i,
+                                        isUnlocked: false,
+                                        isCompleted: false
+    
+                                    })
+    
+                                    // adding ID manually
+                                    await updateDoc(addingPath, {
+                                        pathID: addingPath.id
+                                    })
+                                }
+    
+    
                             }
-
-
-                        }
-
-
-                        setTimeout(() => {
+    
+    
+                            setTimeout(() => {
+                                setIsLoading(false)
+                            }, pathsNumbers > 30 ? 3500 : 4500);
+    
+                            router.push(`/community/${id}/Tracks`)
+                        } catch (error) {
+                            alert(error)
                             setIsLoading(false)
-                        }, pathsNumbers > 30 ? 3500 : 4500);
-
-                        router.push(`/community/${id}/Tracks`)
-                    } catch (error) {
-                        alert(error)
-                        setIsLoading(false)
+                        }
+                    } else {
+                        alert("Fill the required Fields")
                     }
-                } else {
-                    alert("Fill the required Fields")
+                } else if (communityOwnerID !== user?.uid) {
+                    router.push('/')
                 }
-            } else if (communityOwnerID !== user?.uid) {
-                router.push('/')
+            } else if (trackDurationInputValue > 90 || trackDurationInputValue === 1) {
+                alert("Track duration should be less than 90 days and more than 1 days")
             }
-        } else if (trackDurationInputValue > 90 || trackDurationInputValue === 1) {
-            alert("Track duration should be less than 90 days and more than 1 days")
+        } else {
+            alert("Track Name should not be more than 50 characters and less than 10 characters")
         }
     }
 
@@ -169,7 +173,7 @@ const Index = () => {
                                     <div className='w-full h-full flex flex-col justify-between items-start py-3 space-y-5'>
                                         <div className='w-full h-full flex flex-col justify-start items-start space-y-5'>
                                             {/* Name */}
-                                            <div className='w-[90%] h-10 relative bg-black flex justify-start items-center' onMouseEnter={() => dispatch(setIsBottomBarVisible(false))} onMouseLeave={() => dispatch(setIsBottomBarVisible(true))}>
+                                            <div className={`w-[90%] h-10 relative ${trackNameInputValue.length > 50 ? "bg-red-600" : "bg-black"} flex justify-start items-center`} onMouseEnter={() => dispatch(setIsBottomBarVisible(false))} onMouseLeave={() => dispatch(setIsBottomBarVisible(true))}>
                                                 <input
                                                     value={trackNameInputValue}
                                                     onChange={(e) => setTrackNameInputValue(e.target.value)}

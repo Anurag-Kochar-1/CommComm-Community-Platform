@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { Popover, Transition } from '@headlessui/react'
-import { doc, getDoc, updateDoc } from 'firebase/firestore'
+import { collection, doc, getDoc, getDocs, query, updateDoc, where } from 'firebase/firestore'
 import { Fragment } from 'react'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { FaLock, FaLockOpen } from 'react-icons/fa'
@@ -24,6 +24,7 @@ export function PathPopover({ path }: IProps) {
   const userDetails:IUserData = useSelector((state: any) => state?.user?.currentUserData)
 
   
+  
   const markComplete = async () => {
     if(path?.pathCreatorID === user?.uid) {
       try {
@@ -36,13 +37,34 @@ export function PathPopover({ path }: IProps) {
           })
 
           // unlocking next path
+          unlockingNextPath()
 
 
-          setIsMarkCompleted(true)
       } catch (error) {
         alert(error)
       }
     }
+  }
+
+
+  const unlockingNextPath = async () => {
+
+    // findin the next path to unlock
+    const trackPathCollectionRef = collection(db, `communities/${path?.communityID}/trackPaths`)
+    const nextPathQuery = query(trackPathCollectionRef, where("pathNumber", "==", path?.pathNumber+1))
+    const queryData = await getDocs(nextPathQuery)
+    const nextPath:IPathsData[] = queryData?.docs?.map((doc)=> doc.data() as IPathsData)
+    const nextPathDocRef = doc(db, `communities/${path?.communityID}/trackPaths/${nextPath[0]?.pathID}`)
+
+
+    // Updating the next path
+    await updateDoc(nextPathDocRef, {
+        isUnlocked: true
+    })
+
+    // console.log(nextPath)
+
+
   }
 
 
@@ -56,8 +78,6 @@ export function PathPopover({ path }: IProps) {
               console.log(path)
               if (!path.isUnlocked) {
                 alert("Path is LOCKED")
-              } else if ( !userDetails?.communitiesJoinedID?.includes(path?.communityID)) {
-                alert("You are not a member of this community")
               }
             }}>
               <div className={`w-20 h-20 ${path.isUnlocked ? "bg-[#CC7800]" : "bg-[#B7B7B7]"} ${path.isUnlocked && "border-0 border-[#CC7800]"} rounded-full flex justify-center items-center ${path?.pathNumber % 2 === 0 ? "mr-16" : "ml-16"} ]`} >
@@ -65,7 +85,7 @@ export function PathPopover({ path }: IProps) {
 
                   {!path?.isUnlocked && ( <FaLock className='text-2xl text-[#AFAFAF]' /> )}
                   {path?.isUnlocked && !path.isCompleted ? ( <AiFillStar className='text-3xl text-white' /> ) : null}
-                  {isMarkCompleted ? ( <BsCheckLg className='text-2xl text-white' /> ) : null}
+                  {path.isCompleted ? ( <BsCheckLg className='text-2xl text-white' /> ) : null}
                   
 
                  
@@ -88,7 +108,7 @@ export function PathPopover({ path }: IProps) {
 
               <Popover.Panel className="absolute left-1/2 z-10 mt-3 w-60 -translate-x-1/2 transform">
 
-                {path.isUnlocked && !path.isCompleted && userDetails?.communitiesJoinedID?.includes(path?.communityID) ? (
+                {path.isUnlocked && !path.isCompleted  ? (
                   <div className="w-full h-full bg-[#FF9600] border-2 border-black py-7 px-3 rounded-sm">
                     <div className="w-full h-full space-y-5 p-1 flex flex-col justify-start items-center">
 
@@ -104,7 +124,7 @@ export function PathPopover({ path }: IProps) {
                       {/* Mark Complete Button*/}
                       {user?.uid === path.pathCreatorID && (
                         <button
-                          onClick={markComplete}
+                          onClick={() => markComplete()}
                           type='button'
                           className='w-[95%] flex justify-center items-center space-x-2  bg-white rounded-md py-3 px-4'>
                           <p className='font-semibold text-base'> Mark Complete </p>
@@ -144,4 +164,3 @@ export function PathPopover({ path }: IProps) {
     </div>
   )
 }
-

@@ -92,6 +92,8 @@ const Index = () => {
                                 } else {
                                     const addingPath = await addDoc(communityPathsSubCollectionRef, {
                                         pathID: "",
+                                        pathCreatorID: user?.uid,
+                                        communityID: id,
                                         trackID: addingTrack.id,
                                         pathNumber: i,
                                         isUnlocked: false,
@@ -113,6 +115,11 @@ const Index = () => {
                                 setIsLoading(false)
                             }, pathsNumbers > 30 ? 3500 : 4500);
     
+
+                            // resetting states
+                            setTrackNameInputValue("")
+                            setTrackDurationInputValue("Duration in days")
+
                             router.push(`/community/${id}/Tracks`)
                         } catch (error) {
                             alert(error)

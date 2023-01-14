@@ -19,7 +19,7 @@ interface IProps {
 }
 
 const Index = ({ tracksData, communityTrackPathsData }: IProps) => {
-  const [user] = useAuthState(auth)
+  const [user, loading] = useAuthState(auth)
   const router = useRouter()
   const { id } = router.query
   const dispatch = useDispatch()
@@ -57,7 +57,7 @@ const Index = ({ tracksData, communityTrackPathsData }: IProps) => {
 
 
 
-  
+  if(loading && !user) return <div className='w-screen h-screen bg-red-400'> <p> LOADING... </p></div>
 
 
   return (

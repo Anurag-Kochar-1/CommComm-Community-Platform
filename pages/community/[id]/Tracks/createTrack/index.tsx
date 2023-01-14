@@ -82,9 +82,11 @@ const Index = () => {
                                         pathNumber: i,
                                         isUnlocked: true,
                                         isCompleted: false,
-    
+
+                                        coinsClaimedByUsers: []
+                                        
                                     })
-    
+                                    
                                     // adding ID manually
                                     await updateDoc(addingPath, {
                                         pathID: addingPath.id
@@ -97,8 +99,10 @@ const Index = () => {
                                         trackID: addingTrack.id,
                                         pathNumber: i,
                                         isUnlocked: false,
-                                        isCompleted: false
-    
+                                        isCompleted: false,
+                                        
+                                        coinsClaimedByUsers: []
+                                        
                                     })
     
                                     // adding ID manually

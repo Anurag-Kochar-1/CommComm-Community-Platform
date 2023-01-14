@@ -7,4 +7,6 @@ export interface IPathsData {
     isUnlocked: boolean
     isCompleted: boolean
     pathCreatorID: string
+
+    coinsClaimedByUsers: string[]
 }

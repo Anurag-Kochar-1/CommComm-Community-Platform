@@ -2,11 +2,14 @@ import React, { useState, useEffect } from 'react'
 import { collection, getDoc, getDocs } from 'firebase/firestore'
 import Link from 'next/link'
 import CommunityLayout from '../../../../components/layouts/Community/CommunityLayout'
-import { db } from '../../../../firebaseConfig'
+import { auth, db } from '../../../../firebaseConfig'
 import { useRouter } from 'next/router'
 import { ITrackData } from '../../../../customTypesAndInterfaces/Tracks/tracksInterface'
 import { IPathsData } from '../../../../customTypesAndInterfaces/Tracks/pathsInterface'
 import { PathPopover } from '../../../../components/globalComponents/PathPopover/PathPopover'
+import { ICommunityData } from '../../../../customTypesAndInterfaces/Community/CommunityInterfaces'
+import { useSelector } from 'react-redux'
+import { useAuthState } from 'react-firebase-hooks/auth'
 
 
 interface IProps {
@@ -15,8 +18,10 @@ interface IProps {
 }
 
 const Index = ({ tracksData, communityTrackPathsData }: IProps) => {
+  const [user] = useAuthState(auth)
   const router = useRouter()
   const { id } = router.query
+  const communityData: ICommunityData = useSelector((state: any) => state?.communityData?.currentCommunityData[0])
 
 
 
@@ -27,9 +32,10 @@ const Index = ({ tracksData, communityTrackPathsData }: IProps) => {
         {/* <h1 onClick={() => console.log(tracksData)}> LOG tracksData </h1> */}
 
 
+        {/* ---- Tracks Found !!! ---- */}
         {tracksData[0] && (
           <div className='w-full h-auto flex flex-col items-center overflow-x-hidden overflow-y-scroll py-10 scrollbar-hide'>
-          
+
             <div className='w-full flex flex-col justify-center items-center py-10 bg-BrutalBlue1 mb-20'>
               <h3 className='font-bold text-2xl'> {tracksData[0]?.trackName} </h3>
             </div>
@@ -43,15 +49,28 @@ const Index = ({ tracksData, communityTrackPathsData }: IProps) => {
         )}
 
 
-        {/* ---- No Tracks found ---- */}
-        {!communityTrackPathsData[0] && (
-          <div className="w-full flex flex-col justify-start items-center p-2">
-            <div className="flex flex-col justify-center items-center px-8 py-4 space-y-2 bg-BrutalGreen2">
-              <p className="font-bold text-lg"> Create a learning Track for your community 🚀 </p>
-              <Link href={`/community/${id}/Tracks/createTrack`} className="text-white font-medium text-lg"> Create one </Link>
+        {/* ---- No Tracks found (Admin) ---- */}
+        {!communityTrackPathsData[0] && communityData?.communityOwnerID === user?.uid ? (
+          <div className="w-[90%] sm:w-[80%] md:w-[70%] lg:w-[60%] xl:w-[50%] h-72 border-2 border-black flex flex-col justify-start items-center rounded-md bg-white">
+            <div className="w-full h-full -mt-2 -ml-3 flex flex-col justify-center items-center border-2 border-black rounded-md bg-white">
+            <div className="w-full h-full -mt-3  -ml-4 flex flex-col justify-center items-center border-2 border-black bg-BrutalPurple1 rounded-md text-center p-2"> 
+                <Link href={`/community/${id}/Tracks/createTrack`} className="text-black text-lg md:text-3xl font-Roboto font-bold"> Create a Learning Track  </Link>
+            </div> 
             </div>
           </div>
-        )}
+        ) : null}
+
+
+        {/* ---- No Tracks found (Member) ---- */}
+        {!communityTrackPathsData[0] && communityData?.communityOwnerID !== user?.uid ? (
+          <div className="w-full flex flex-col justify-start items-center p-2">
+            <div className="flex flex-col justify-center items-center px-8 py-4 space-y-2 bg-BrutalGreen2">
+              <p className="font-bold text-lg" onClick={() => console.log(communityData)}> No Learning tracks available {":("} </p>
+            </div>
+          </div>
+        ) : null}
+
+
 
 
       </main>

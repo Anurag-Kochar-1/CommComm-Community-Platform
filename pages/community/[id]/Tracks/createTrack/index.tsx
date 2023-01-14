@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import CommunityLayout from '../../../../../components/layouts/Community/CommunityLayout'
 import { setIsBottomBarVisible } from "../../../../../redux/slices/bottomBarSlice"
 import { sourceOfLearningOptions } from "../../../../../constants/createTrackPage/sourceOfLearningOptions"
@@ -10,15 +10,15 @@ import { useRouter } from 'next/router'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { ITrackData } from '../../../../../customTypesAndInterfaces/Tracks/tracksInterface'
 import { AiOutlineLoading3Quarters } from 'react-icons/ai'
+import { ICommunityData } from '../../../../../customTypesAndInterfaces/Community/CommunityInterfaces'
 
-interface IProps {
-    communityOwnerID: string
-}
 
-const Index = ({ communityOwnerID }: IProps) => {
+
+const Index = () => {
     const [user, loading, error] = useAuthState(auth)
     const router = useRouter()
     const { id } = router.query
+    const dispatch = useDispatch()
 
 
     // States
@@ -31,10 +31,14 @@ const Index = ({ communityOwnerID }: IProps) => {
     const [sourceOfLearningDropdownLink, setSourceOfLearningDropdownLink] = useState<string>("")
     const [trackPrerequisitesInputValue, setTrackPrerequisitesInputValue] = useState<string>("")
     const [trackOptionalDescription, setTrackOptionalDescription] = useState<string>("")
-    const dispatch = useDispatch()
+
+
+    // Redux states
+    const communityData: ICommunityData = useSelector((state: any) => state?.communityData?.currentCommunityData[0])
+    const communityOwnerID = communityData?.communityOwnerID
 
     const createTrack = async () => {
-        if (trackDurationInputValue <= 90) {
+        if (trackDurationInputValue < 90 ) {
             if (communityOwnerID === user?.uid) {
                 if (user && !loading && trackNameInputValue && trackGoalInputValue && trackDurationInputValue && sourceOfLearningDropdownValue && sourceOfLearningDropdownLink && trackPrerequisitesInputValue) {
                     try {
@@ -354,15 +358,3 @@ const Index = ({ communityOwnerID }: IProps) => {
 export default Index
 
 
-
-export const getServerSideProps = async ({ params }: any) => {
-    const { id } = params
-
-    const communityRef = doc(db, "communities", id as string)
-    const data = await getDoc(communityRef)
-    const communityOwnerID: string = data.data()?.communityOwnerID
-
-    return {
-        props: { communityOwnerID }
-    }
-}

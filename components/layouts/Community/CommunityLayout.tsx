@@ -18,6 +18,7 @@ const CommunityLayout = ({children}: IProps) => {
     const { id } = router.query
     const dispatch = useDispatch()
 
+    // Redux States
     const communityData = useSelector((state: any) => state.communityData.currentCommunityData[0])
 
     const fetchCommunityDetails = async () => {

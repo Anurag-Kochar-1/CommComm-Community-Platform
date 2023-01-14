@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { collection, getDoc, getDocs } from 'firebase/firestore'
+import { collection, getDoc, getDocs, onSnapshot, orderBy, query } from 'firebase/firestore'
 import Link from 'next/link'
 import CommunityLayout from '../../../../components/layouts/Community/CommunityLayout'
 import { auth, db } from '../../../../firebaseConfig'
@@ -8,8 +8,9 @@ import { ITrackData } from '../../../../customTypesAndInterfaces/Tracks/tracksIn
 import { IPathsData } from '../../../../customTypesAndInterfaces/Tracks/pathsInterface'
 import { PathPopover } from '../../../../components/globalComponents/PathPopover/PathPopover'
 import { ICommunityData } from '../../../../customTypesAndInterfaces/Community/CommunityInterfaces'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useAuthState } from 'react-firebase-hooks/auth'
+import { setCommunityTrackPathsData, setCommunityTracksData } from '../../../../redux/slices/communityDataSlice'
 
 
 interface IProps {
@@ -21,27 +22,61 @@ const Index = ({ tracksData, communityTrackPathsData }: IProps) => {
   const [user] = useAuthState(auth)
   const router = useRouter()
   const { id } = router.query
-  const communityData: ICommunityData = useSelector((state: any) => state?.communityData?.currentCommunityData[0])
+  const dispatch = useDispatch()
 
+  // Redux States
+  const communityData: ICommunityData = useSelector((state: any) => state?.communityData?.currentCommunityData[0])
+  const communityTracksData: ITrackData[] = useSelector((state: any) => state?.communityData?.communityTracksData)
+  const communityTrackPathsDataReduxState: IPathsData[] = useSelector((state: any) => state?.communityData?.communityTrackPathsData)
+
+  // const trackPathsRef = collection(db, "communities", id as string, "trackPaths")
+
+  useEffect(() => {
+    if(!communityTracksData[0]) {
+      dispatch(setCommunityTracksData(tracksData))
+      console.log(`Setting Community Tracks Data redux`)
+    } else if (communityTracksData[0]) {
+      console.log(`Community Tracks Data Found in redux`)
+
+    }
+  },[id])
+
+
+  // Listening to real time trackPaths data
+  useEffect(() => {
+    const trackPathsQuery = query(collection(db, "communities", id as string, "trackPaths"), orderBy("pathNumber", "asc"))
+    const trackPathsRealTimeListener = onSnapshot(trackPathsQuery, (snapshot) => {
+      const data = snapshot?.docs?.map(doc => doc.data())
+      dispatch(setCommunityTrackPathsData(data))
+    })
+  },[])
+
+
+
+
+
+
+
+  
 
 
   return (
     <CommunityLayout>
       <main className='w-full h-auto flex flex-col justify-start items-center bg-white pt-12 pb-36 '>
 
-        {/* <h1 onClick={() => console.log(tracksData)}> LOG tracksData </h1> */}
+        <h1 onClick={() => console.log(communityTrackPathsDataReduxState)}> LOG communityTrackPathsDataReduxState REDUX </h1>
 
 
         {/* ---- Tracks Found !!! ---- */}
-        {tracksData[0] && (
+        {communityTracksData[0] && (
           <div className='w-full h-auto bg-white flex flex-col justify-start items-center overflow-x-hidden overflow-y-scroll pb-20 scrollbar-hide'>
 
             <div className='w-full flex flex-col justify-center items-center py-10 bg-BrutalBlue1 mb-20 space-y-2 text-center'>
-              <h3 className='font-bold text-lg sm:text-2xl md:text-3xl font-Roboto'> {tracksData[0]?.trackName} </h3>
+              <h3 className='font-bold text-lg sm:text-2xl md:text-3xl font-Roboto'> {communityTracksData[0]?.trackName} </h3>
               {/* <span className='font-medium text-base'> Duration : {tracksData[0]?.trackDurationInDays} Days </span> */}
             </div>
 
-            {communityTrackPathsData && communityTrackPathsData?.map((path: any) => {
+            {communityTrackPathsDataReduxState[0] && communityTrackPathsDataReduxState?.map((path: any) => {
               return (
                 <PathPopover path={path} key={path?.pathID} />
               )
@@ -51,7 +86,7 @@ const Index = ({ tracksData, communityTrackPathsData }: IProps) => {
 
 
         {/* ---- No Tracks found (Admin) ---- */}
-        {!communityTrackPathsData[0] && communityData?.communityOwnerID === user?.uid ? (
+        {!communityTrackPathsDataReduxState[0] && communityData?.communityOwnerID === user?.uid ? (
           <div className="w-[90%] sm:w-[80%] md:w-[70%] lg:w-[60%] xl:w-[50%] h-72 border-2 border-black flex flex-col justify-start items-center rounded-md bg-white">
             <div className="w-full h-full -mt-2 -ml-3 flex flex-col justify-center items-center border-2 border-black rounded-md bg-white">
               <div className="w-full h-full -mt-3  -ml-4 flex flex-col justify-center items-center border-2 border-black bg-BrutalPurple1 rounded-md text-center p-2">
@@ -63,7 +98,7 @@ const Index = ({ tracksData, communityTrackPathsData }: IProps) => {
 
 
         {/* ---- No Tracks found (Member) ---- */}
-        {!communityTrackPathsData[0] && communityData?.communityOwnerID !== user?.uid ? (
+        {!communityTrackPathsDataReduxState[0] && communityData?.communityOwnerID !== user?.uid ? (
           <div className="w-full flex flex-col justify-start items-center p-2">
             <div className="flex flex-col justify-center items-center px-8 py-4 space-y-2 bg-BrutalGreen2">
               <p className="font-bold text-lg" onClick={() => console.log(communityData)}> No Learning tracks available {":("} </p>
@@ -85,6 +120,8 @@ export default Index
 
 export const getServerSideProps = async ({ params }: any) => {
   const { id }: string | any = params
+
+  // fetch community tracks sub collection
   const communityTracksSubCollectionRef = collection(db, "communities", id as string, "communityTracks")
   const data = await getDocs(communityTracksSubCollectionRef)
   const tracksData: ITrackData[] = data?.docs?.map(doc => doc.data() as ITrackData)

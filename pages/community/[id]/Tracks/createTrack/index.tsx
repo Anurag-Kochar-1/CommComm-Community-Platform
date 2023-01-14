@@ -83,7 +83,8 @@ const Index = () => {
                                         isUnlocked: true,
                                         isCompleted: false,
 
-                                        coinsClaimedByUsers: []
+                                        coinsClaimedByUsers: [],
+                                        isPathClassCreated: false
                                         
                                     })
                                     
@@ -101,7 +102,8 @@ const Index = () => {
                                         isUnlocked: false,
                                         isCompleted: false,
                                         
-                                        coinsClaimedByUsers: []
+                                        coinsClaimedByUsers: [],
+                                        isPathClassCreated: false
                                         
                                     })
     

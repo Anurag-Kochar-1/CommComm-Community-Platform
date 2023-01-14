@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { addDoc, collection, doc, getDocs, updateDoc } from 'firebase/firestore'
+import { addDoc, collection, doc, getDocs, query, updateDoc, where } from 'firebase/firestore'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { AiOutlineLoading3Quarters } from 'react-icons/ai'
@@ -46,8 +46,6 @@ const Index = ({ pathNumberToBuildFor, tracksData }: IProps) => {
                 try {
                     setIsCreating(true)
 
-                    
-
                     const communityClassesSubCollectionRef = collection(db, `communities/${id}/communityClasses`)
                     const addingClass = await addDoc(communityClassesSubCollectionRef, {
                         communityClassID: "",
@@ -74,15 +72,37 @@ const Index = ({ pathNumberToBuildFor, tracksData }: IProps) => {
                         communityClassID: addingClass?.id
                     })
 
-                    router.push(`/community/${id}/Classes`)
-                    setIsCreating(false)
 
+                    // updaing path doc -> isPathClassCreated to true 
+                    const pathCollectionRef = collection(db, `communities/${communityData?.communityID}/trackPaths`)  
+                    const pathQuery = query(pathCollectionRef, where("pathNumber", "==", pathNumberToBuildFor[0].pathNumber))
+                    const pathQueryData = await getDocs(pathQuery)
+
+                    const pathQueryRes:IPathsData[] = pathQueryData?.docs?.map(doc => doc?.data() as IPathsData)
+                    console.log(`pathQueryRespathQueryRespathQueryRespathQueryRespathQueryRes`);
+                    console.log(pathQueryRes)
+                    
+                    const pathRef = doc(db, `communities/${communityData?.communityID}/trackPaths/${pathQueryRes[0]?.pathID}`)  
+                    await updateDoc(pathRef, {
+                        isPathClassCreated: true
+                    })
+
+
+
+
+                    
                     // resetting states
                     setClassNameInputValue("")
                     setClassStartingTimeDropdownValue("")
                     setClassEndingTimeDropdownValue("")
                     setClassLinkInputValue("")
+                    setIsCreating(false)
+                    
 
+                    
+                    // Redirecting
+                    router.push(`/community/${id}/Classes`)
+                    
                 } catch (error) {
                     alert(error)
                     setIsCreating(false)

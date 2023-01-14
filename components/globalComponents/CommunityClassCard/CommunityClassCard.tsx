@@ -21,9 +21,9 @@ const CommunityClassCard = ({ classDetails }: IProps) => {
     }
 
     return (
-        <div className='relative w-[95%] sm:w-[80%] md:w-[60%] lg:w-[70%] xl:w-[50%] h-72 sm:h-56 md:h-56 bg-white border-2 border-black rounded-md' onClick={() => console.log(classDetails)}>
-            <div className='absolute bottom-2 right-2 w-full h-full bg-white border-2 border-black rounded-md'>
-                <div className='absolute bottom-2 right-2 w-full h-full p-3 bg-white border-2 border-black rounded-md flex flex-col justify-start items-start space-y-3 overflow-x-hidden overflow-y-scroll'>
+        <div className='relative w-[95%] sm:w-[80%] md:w-[60%] lg:w-[70%] xl:w-[50%] h-72 sm:h-56 md:h-56 bg-white border-2 border-black rounded-md scrollbar-hide' onClick={() => console.log(classDetails)}>
+            <div className='absolute bottom-2 right-2 w-full h-full bg-white border-2 border-black rounded-md scrollbar-hide'>
+                <div className='absolute bottom-2 right-2 w-full h-full p-3 bg-white border-2 border-black rounded-md flex flex-col justify-start items-start space-y-3 overflow-x-hidden overflow-y-scroll scrollbar-hide'>
 
                     {/* Timing Header */}
                     <div className='w-full flex justify-start items-center space-x-2'>

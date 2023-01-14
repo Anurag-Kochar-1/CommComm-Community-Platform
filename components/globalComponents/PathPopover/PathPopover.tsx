@@ -21,8 +21,8 @@ interface IProps {
 export function PathPopover({ path }: IProps) {
 
     const [user, loading] = useAuthState(auth)
-    const router = useRouter()    
-    
+    const router = useRouter()
+
 
     // Redux States
     const userDetails: IUserData = useSelector((state: any) => state?.user?.currentUserData)
@@ -74,8 +74,8 @@ export function PathPopover({ path }: IProps) {
     }
 
     const claimCoin = async () => {
-        if(user) {
-            if(!path?.coinsClaimedByUsers?.includes(user?.uid) && userDetails?.communitiesJoinedID?.includes(path?.communityID)) {
+        if (user) {
+            if (!path?.coinsClaimedByUsers?.includes(user?.uid) && userDetails?.communitiesJoinedID?.includes(path?.communityID)) {
                 const pathRef = doc(db, `communities/${path?.communityID}/trackPaths/${path?.pathID}`)
                 const userRef = doc(db, `users/${user?.uid}`)
 
@@ -91,7 +91,7 @@ export function PathPopover({ path }: IProps) {
 
 
             }
-        } 
+        }
     }
 
 
@@ -109,7 +109,7 @@ export function PathPopover({ path }: IProps) {
                                 alert("You are not a member of this community")
                             }
                         }}>
-                            <div className={`w-20 h-20 ${path?.isUnlocked && !path.isCompleted ? "bg-[#CC7800]" : "bg-[#B7B7B7]"}  rounded-full flex justify-center items-center ${path?.pathNumber % 2 === 0 ? "mr-16" : "ml-16"} ]`} >
+                            <div className={`w-20 h-20 ${path?.isUnlocked && !path.isCompleted ? "bg-[#CC7800]" : "bg-[#B7B7B7]"}   rounded-full flex justify-center items-center ${path?.pathNumber % 2 === 0 ? "mr-16" : "ml-16"} ]`} >
                                 <div className={`w-full h-full -mt-3 rounded-full flex flex-col justify-center items-center ${!path.isUnlocked ? "bg-[#E5E5E5]" : "bg-[#FF9600]"} active:-mt-0`}>
 
                                     {!path?.isUnlocked && (<FaLock className='text-2xl text-[#AFAFAF]' />)}
@@ -142,14 +142,14 @@ export function PathPopover({ path }: IProps) {
                                         <div className="w-full h-full space-y-5 p-1 flex flex-col justify-start items-center">
 
                                             {/* Create Class Button*/}
-                                            {user?.uid === path.pathCreatorID && (
+                                            {user?.uid === path.pathCreatorID &&  !path?.isPathClassCreated ? (
                                                 <button
                                                     onClick={() => router.push(`/community/${path?.communityID}/Classes/createClass`)}
                                                     type='button'
                                                     className='w-[95%] flex justify-center items-center space-x-2  bg-white rounded-md py-3 px-4'>
                                                     <p className='font-semibold text-base'> Create Class </p>
                                                 </button>
-                                            )}
+                                            ): null}
 
                                             {/* Mark Complete Button*/}
                                             {user?.uid === path.pathCreatorID && (
@@ -161,14 +161,28 @@ export function PathPopover({ path }: IProps) {
                                                 </button>
                                             )}
 
+
+                                            {/* Attend Class Button */}
+                                            {userDetails?.communitiesJoinedID?.includes(path?.communityID) && path?.isPathClassCreated ?(
+                                                <button
+                                                    onClick={() => (router.push(`/community/${path?.communityID}/Classes`))}
+                                                    type='button'
+                                                    className='w-[95%] flex justify-center items-center space-x-2  bg-white rounded-md py-3 px-4'>
+                                                    <p className='font-semibold text-base'> Attend Class </p>
+                                                </button>
+                                            ): null}
+
+
+
+
                                             {/* Claim Coins Button*/}
                                             {userDetails?.communitiesJoinedID?.includes(path?.communityID) && (
                                                 <button
                                                     onClick={() => claimCoin()}
                                                     type='button'
-                                                    className={`w-[95%] flex justify-center items-center space-x-2 bg-white ${path?.coinsClaimedByUsers?.includes(user?.uid as string) && "opacity-80" } rounded-md py-3 px-4`}>
-                                                    {!path?.coinsClaimedByUsers?.includes(user?.uid as string) && <p className='font-semibold text-base '> Claim 50 coins </p> }
-                                                    {path?.coinsClaimedByUsers?.includes(user?.uid as string) && <p className='font-semibold text-base '> CLAIMED !!! </p> }
+                                                    className={`w-[95%] flex justify-center items-center space-x-2 bg-white ${path?.coinsClaimedByUsers?.includes(user?.uid as string) && "opacity-80"} rounded-md py-3 px-4`}>
+                                                    {!path?.coinsClaimedByUsers?.includes(user?.uid as string) && <p className='font-semibold text-base '> Claim 50 coins </p>}
+                                                    {path?.coinsClaimedByUsers?.includes(user?.uid as string) && <p className='font-semibold text-base '> CLAIMED !!! </p>}
                                                 </button>
                                             )}
 

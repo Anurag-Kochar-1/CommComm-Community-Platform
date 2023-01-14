@@ -166,7 +166,7 @@ export function PathPopover({ path }: IProps) {
                                                 <button
                                                     onClick={() => claimCoin()}
                                                     type='button'
-                                                    className='w-[95%] flex justify-center items-center space-x-2 bg-white rounded-md py-3 px-4'>
+                                                    className={`w-[95%] flex justify-center items-center space-x-2 bg-white ${path?.coinsClaimedByUsers?.includes(user?.uid as string) && "opacity-80" } rounded-md py-3 px-4`}>
                                                     {!path?.coinsClaimedByUsers?.includes(user?.uid as string) && <p className='font-semibold text-base '> Claim 50 coins </p> }
                                                     {path?.coinsClaimedByUsers?.includes(user?.uid as string) && <p className='font-semibold text-base '> CLAIMED !!! </p> }
                                                 </button>

@@ -10,7 +10,7 @@ Current Ed-tech companies offers courses, but the real value is in the community
 
 
 ## Solution: 
-On our CommComm Platform, you can build or find learning communities, where you can learn with others at free, and with the help of free resources such as YouTube Playlist or videos.
+On our CommComm Platform, you can build or find learning communities, where you can learn with others at ZERO cost, and with the help of free resources such as YouTube Playlist or videos.
 
 ## Core Features:
 

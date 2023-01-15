@@ -36,9 +36,6 @@ const Index = ({ communityData, currentCommunityPosts }: IProps) => {
     <CommunityLayout>
       <main className='w-full bg-gray-100 flex flex-col justify-start items-center pt-0 pb-36'>
 
-        <h1 onClick={() => {
-          console.log(currentCommunityPosts)
-        }}> LOG   currentCommunityPosts</h1>
 
         {/* Community Posts Header */}
         <div className='w-full h-16 bg-black flex justify-start items-center space-x-2 px-4'>

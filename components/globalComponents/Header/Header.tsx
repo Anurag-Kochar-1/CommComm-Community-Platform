@@ -12,6 +12,8 @@ import { auth } from '../../../firebaseConfig'
 import Link from 'next/link'
 import { useAuthState } from 'react-firebase-hooks/auth'
 
+import logo2 from "../../../public/images/icons/logo2.svg"
+
 
 
 const Header = () => {
@@ -26,8 +28,8 @@ const Header = () => {
       {/*  DEMO LOGO  */}
       {/* <Link href={'/'} className='w-10 h-10 rounded-full bg-BrutalOrange1' onClick={() => console.log(0)} /> */}
       <Link href={'/'} className='flex justify-center items-center space-x-3'>
-        <div className='w-10 h-10 rounded-full bg-BrutalPurple2 flex justify-center items-center text-white' > CC  </div>
-        <span className='font-bold font-InriaSans text-xl'> CommComm </span>
+        <div className='w-10 h-10 rounded-full bg-BrutalPurple2 flex justify-center items-center text-white' />
+        <span className='hidden lg:inline-block font-bold font-Roboto text-xl'> CommComm </span>
       </Link>
 
       <SearchBar />

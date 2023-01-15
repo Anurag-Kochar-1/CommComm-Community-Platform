@@ -97,7 +97,7 @@ const Index = () => {
   }, [user])
 
   return (
-    <div className='fixed inset-0 w-[100%] h-[100vh] bg-white lg:bg-gradient-to-r from-slate-500 to-slate-800 flex flex-row justify-center lg:justify-end items-center lg:px-28 xl:px-52 2xl:px-60'>
+    <div className='fixed inset-0 w-[100%] h-[100vh] bg-white lg:bg-BrutalRed1 flex flex-row justify-center lg:justify-end items-center lg:px-28 xl:px-52 2xl:px-60'>
 
       {/* <img src={blueLinesBG} alt='bg' className='fixed inset-0 z-10 w-full h-full' draggable="false" /> */}
 
@@ -108,7 +108,7 @@ const Index = () => {
 
           {/* ---- LOGO ---- */}
           <Link href={'/'} className='flex justify-center items-center space-x-3'>
-            <div className='w-6 h-6 rounded-full bg-BrutalPurple2 border-2 border-BrutalRed1 ' />
+            <div className='w-6 h-6 rounded-full bg-BrutalPurple2 flex justify-center items-center text-white' />
             <span className='font-semibold'> CommComm </span>
           </Link>
 

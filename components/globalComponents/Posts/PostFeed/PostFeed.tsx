@@ -14,7 +14,7 @@ const PostFeed = ( {posts, page}:IProps ) => {
 
   return (
     <div
-      className='w-full space-y-10 flex flex-col justify-start items-center my-5 bg-purple-200'
+      className='w-full space-y-10 flex flex-col justify-start items-center my-5'
     >
 
       {posts[0] && (

@@ -194,9 +194,9 @@ const PostCard = ({ postData, page }: IProps) => {
 
                 {/* For Community Post Page */}
                 {page === "communityPostsPage" && (
-                    <div className='w-full h-full flex flex-col sm:flex-row items-start justify-start '>
+                    <div className='w-full h-full flex flex-col sm:flex-row items-center justify-start space-x-1'>
                         <p className='text-xs sm:text-sm font-Roboto font-light text-black'> posted by {postData?.postCreatorName} </p>
-                        {/* <p className='text-xs sm:text-sm font-Roboto font-light text-black'> {postCreadedAt} </p> */}
+                        <span> • </span>
                         <TimeAgo date={postCreadedAt} className="text-xs sm:text-sm font-Roboto font-light text-black" />
                     </div>
                 )}
@@ -205,13 +205,14 @@ const PostCard = ({ postData, page }: IProps) => {
                 {page === "homePage" && (
                     <div className='w-full h-full flex flex-col sm:flex-row items-start justify-start sm:items-center space-x-1'>
 
-                        <div className='h-12 flex justify-start items-center space-x-2 hover:cursor-pointer bg-gray-200' onClick={() => router.push(`/community/${postData?.postCreateAtCommunityID}`)}>
-                            <Image src={communityDetails[0]?.communityLogo as string} alt="logo" width={12} height={12} className="w-12 h-12 aspect-square rounded-sm" onClick={() => console.log(communityDetails)} />
+                        <div className='h-12 flex justify-start items-center space-x-2 hover:cursor-pointer' onClick={() => router.push(`/community/${postData?.postCreateAtCommunityID}`)}>
+                            <Image src={communityDetails[0]?.communityLogo as string} alt="logo" width={12} height={12} className="w-12 h-12 aspect-square rounded-sm" onClick={() => console.log(communityDetails)} draggable="false"/>
 
-                            <div className='w-full flex flex-col justify-start items-start space-y-1 ' >
-                                <span className='text-xs sm:text-base font-Roboto font-medium text-black'> {communityDetails[0]?.communityName} </span>
+                            <div className='w-full flex flex-col justify-start items-start space-y-1'>
+                                <span className='text-sm sm:text-base font-Roboto font-medium text-black'> {communityDetails[0]?.communityName} </span>
                                 <div className="flex justify-start items-center space-x-1">
                                     <p className='text-xs sm:text-sm font-Roboto font-light text-black'> posted by {postData?.postCreatorName}  </p>
+                                    <span> • </span>
                                     <TimeAgo date={postCreadedAt} className="text-xs sm:text-sm font-Roboto font-light text-black" />
                                 </div>
                             </div>
@@ -226,21 +227,21 @@ const PostCard = ({ postData, page }: IProps) => {
 
 
                 {/* Join Button */}
-                {!isUserJoinedInCommunity ? (
-                    <button type='button' className='relative w-14 h-6 bg-black border border-black flex justify-center items-center rounded-full'>
+                {router.pathname === `/community/[id]` ? (
+                    <button type='button' className='w-14 h-6 bg-black border border-black flex justify-center items-center rounded-full'>
                         <span
                             onClick={() => {
-                                if(isUserJoinedInCommunity == false) {
+                                if (isUserJoinedInCommunity == false) {
                                     JoinCommunity(user?.uid as string, postData.postCreateAtCommunityID as string)
                                     setIsUserJoinedInCommunity(true)
                                 }
 
-                                if(isJoinedBtnClicked == true) {
+                                if (isJoinedBtnClicked == true) {
                                     LeaveCommunity(user?.uid as string, postData.postCreateAtCommunityID as string)
                                     setIsUserJoinedInCommunity(false)
                                 }
                             }}
-                            className='w-14 h-6 absolute right-1 bottom-1 bg-BrutalGreen2 text-lg font-medium text-black border border-black active:right-0 active:bottom-0 rounded-full font-BebasNeue'>
+                            className='w-14 h-6 -mt-1 -ml-1 bg-BrutalGreen2 text-lg font-medium text-black border border-black rounded-full font-BebasNeue'>
                             {isUserJoinedInCommunity ? "JOINED" : "JOIN"}
                         </span>
                     </button>

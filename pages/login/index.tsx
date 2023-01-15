@@ -59,14 +59,14 @@ const Index = () => {
   }, [user])
 
   return (
-    <div className=' fixed inset-0 w-[100%] h-[100vh] lg:bg-gradient-to-r from-gray-700 via-gray-900 to-black flex flex-row justify-center lg:justify-end items-center lg:px-32 xl:px-40 2xl:px-72'>
+    <div className=' fixed inset-0 w-[100%] h-[100vh] lg:bg-BrutalOrange1 flex flex-row justify-center lg:justify-end items-center lg:px-32 xl:px-40 2xl:px-72'>
 
       {!isLoading && (
         <div className='z-40 w-full h-[90vh] mb-[10vh] lg:mb-0 sm:w-[70%] sm:h-[70vh] md:w-[70%] lg:w-[60%] xl:w-[40%] 2xl:w-[35%] bg-white rounded-md flex flex-col justify-start items-start pt-10 pb-5 px-5 space-y-5 overflow-x-hidden overflow-y-scroll scrollbar-hide'>
 
           {/* ---- LOGO ---- */}
           <Link href={'/'} className='flex justify-center items-center space-x-3'>
-            <div className='w-6 h-6 rounded-full bg-BrutalPurple2' />
+            <div className='w-6 h-6 rounded-full bg-BrutalPurple2 flex justify-center items-center text-white' />
             <span className='font-semibold'> CommComm </span>
           </Link>
 

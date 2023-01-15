@@ -194,7 +194,7 @@ const PostCard = ({ postData, page }: IProps) => {
 
                 {/* For Community Post Page */}
                 {page === "communityPostsPage" && (
-                    <div className='w-full h-full flex flex-col sm:flex-row items-center justify-start space-x-1'>
+                    <div className='w-full h-full flex flex-row items-center justify-start space-x-1 '>
                         <p className='text-xs sm:text-sm font-Roboto font-light text-black'> posted by {postData?.postCreatorName} </p>
                         <span> • </span>
                         <TimeAgo date={postCreadedAt} className="text-xs sm:text-sm font-Roboto font-light text-black" />

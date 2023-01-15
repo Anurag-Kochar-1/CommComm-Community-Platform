@@ -32,6 +32,8 @@ const BaseOneLayout = ({ children }: IHomeLayoutProps) => {
 
   const communityCollectionRef = collection(db, "communities")
 
+
+  // ----  Fetch Current User ---
   const fetchCurrentUser = async () => {
     if (user && !loading) {
       if (!currentUserData.communitiesJoinedID) {
@@ -44,7 +46,6 @@ const BaseOneLayout = ({ children }: IHomeLayoutProps) => {
       }
     }
   }
-
 
   // ----  Fetch User Joined Commmunities ---
   const fetchUserJoinedCommunities = async () => {

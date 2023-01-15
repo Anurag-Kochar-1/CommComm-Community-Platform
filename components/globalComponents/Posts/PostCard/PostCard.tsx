@@ -10,15 +10,20 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { JoinCommunity } from '../../../../utils/Community/JoinCommunity'
 import { LeaveCommunity } from '../../../../utils/Community/LeaveCommunity'
+import Image from 'next/image'
+
+import TimeAgo from 'react-timeago'
 
 interface IProps {
     postData: IPost
-    postedAt: string
+    page: string
 }
 
-const PostCard = ({ postData, postedAt }: IProps) => {
+const PostCard = ({ postData, page }: IProps) => {
     const router = useRouter()
     const [user, loading] = useAuthState(auth)
+
+    // States 
     const [communityDetails, setCommunityDetails] = useState<ICommunityData[]>([])
     const [isPostLiked, setIsPostLiked] = useState<Boolean>(false)
     const [isUserJoinedInCommunity, setIsUserJoinedInCommunity] = useState<boolean>(false)
@@ -26,17 +31,25 @@ const PostCard = ({ postData, postedAt }: IProps) => {
     const [isJoinedBtnClicked, setIsJoinedBtnClicked] = useState<boolean>(false)
     const [postLikeCount, setPostLikeCount] = useState<number>(postData.upvotedByUserID.length)
 
+    function convertDate(time: any) {
+        let dateInMillis = time * 1000
+        let date = new Date(dateInMillis)
+        let myDate = date.toDateString()
+        let myTime = date.toLocaleTimeString()
+        myDate = myDate.replaceAll('/', '-')
+        // return myDate + " " + myTime 
+        return date
+    }
+
+
+    const postCreadedAt = convertDate(postData?.createdAt?.seconds)
+
 
     const fetchCommunityDetails = async () => {
-        if (user && !loading) {
-            const communityRef = doc(db, "communities", postData.postCreateAtCommunityID as string)
-            const res = await getDoc(communityRef)
-            const data = res.data()
-            setCommunityDetails([data as ICommunityData])
-
-            
-        }
-
+        const communityRef = doc(db, "communities", postData?.postCreateAtCommunityID as string)
+        const res = await getDoc(communityRef)
+        const data = res.data()
+        setCommunityDetails([data as ICommunityData])
     }
 
 
@@ -108,6 +121,8 @@ const PostCard = ({ postData, postedAt }: IProps) => {
     }
 
 
+
+
     // const checkIsUserMember = async () => {
     //     if (user && !loading) {
     //         const userRef = doc(db, "users", user?.uid as string)
@@ -122,7 +137,7 @@ const PostCard = ({ postData, postedAt }: IProps) => {
     //         console.log(communityData.data());
 
     //         communityData.data()
-            
+
     //     }
     // }
 
@@ -148,17 +163,17 @@ const PostCard = ({ postData, postedAt }: IProps) => {
         checkIsPostLikedByUser()
 
 
-        if(postData.postCreatorID === user?.uid) {
+        if (postData.postCreatorID === user?.uid) {
             setIsUserJoinedInCommunity(true)
         }
 
-       
+
     }, [loading])
 
 
     useEffect(() => {
-        if(communityDetails[0] && user?.uid && !loading) {
-            if(communityDetails[0]?.communityMembersID.includes(user.uid)){
+        if (communityDetails[0] && user?.uid && !loading) {
+            if (communityDetails[0]?.communityMembersID.includes(user.uid)) {
                 setIsUserJoinedInCommunity(true)
                 // console.log(`ANS -> ${communityDetails[0]?.communityMembersID.includes(user.uid)}`)
             } else if (!communityDetails[0]?.communityMembersID.includes(user.uid)) {
@@ -167,15 +182,47 @@ const PostCard = ({ postData, postedAt }: IProps) => {
             }
         }
 
-    },[communityDetails, loading])
+    }, [communityDetails, loading])
 
     return (
-        // <div className={`${postedAt === "communityHomePage" && "w-full sm:w-[70%] md:w-[60%] lg:w-[70%] xl:w-[50%]"} ${postedAt === "explorePostsPage" && "w-full sm:w-[40%] md:w-[35%] xl:w-[25%]"}  bg-white border md:border-2 border-black flex flex-col justify-start items-center p-2 md:p-4 rounded-sm md:rounded-md my-2`} onClick={() => console.log(isUserJoinedInCommunity)}>
-        <div className={`"w-full sm:w-[70%] md:w-[60%] lg:w-[80%] xl:w-[60%] 2xl:w-[50%] bg-white border md:border-2 border-black flex flex-col justify-start items-center p-2 md:p-4 rounded-sm md:rounded-md my-2 `} onClick={() => console.log(isUserJoinedInCommunity)}>
+        <div className={`"w-full sm:w-[70%]  md:w-[60%] lg:w-[80%] xl:w-[60%] 2xl:w-[50%] bg-white border md:border-2 border-black flex flex-col justify-start items-center p-2 md:p-4 rounded-sm md:rounded-md my-2 `} onClick={() => {
+            console.log(postCreadedAt)
+        }}>
 
-            {/* Create details --- At Community Page */}
+            {/* Header */}
             <div className='w-full flex justify-between items-center space-x-2 py-2'>
-                <p className='text-sm font-InriaSans font-light'> posted by {postData?.postCreatorName} • 19 hours • <Link href={`/community/${postData.postCreateAtCommunityID}`}> {communityDetails[0]?.communityName} </Link> </p>
+
+                {/* For Community Post Page */}
+                {page === "communityPostsPage" && (
+                    <div className='w-full h-full flex flex-col sm:flex-row items-start justify-start '>
+                        <p className='text-xs sm:text-sm font-Roboto font-light text-black'> posted by {postData?.postCreatorName} </p>
+                        {/* <p className='text-xs sm:text-sm font-Roboto font-light text-black'> {postCreadedAt} </p> */}
+                        <TimeAgo date={postCreadedAt} className="text-xs sm:text-sm font-Roboto font-light text-black" />
+                    </div>
+                )}
+
+                {/* For Home Page */}
+                {page === "homePage" && (
+                    <div className='w-full h-full flex flex-col sm:flex-row items-start justify-start sm:items-center space-x-1'>
+
+                        <div className='h-12 flex justify-start items-center space-x-2 hover:cursor-pointer bg-gray-200' onClick={() => router.push(`/community/${postData?.postCreateAtCommunityID}`)}>
+                            <Image src={communityDetails[0]?.communityLogo as string} alt="logo" width={12} height={12} className="w-12 h-12 aspect-square rounded-sm" onClick={() => console.log(communityDetails)} />
+
+                            <div className='w-full flex flex-col justify-start items-start space-y-1 ' >
+                                <span className='text-xs sm:text-base font-Roboto font-medium text-black'> {communityDetails[0]?.communityName} </span>
+                                <div className="flex justify-start items-center space-x-1">
+                                    <p className='text-xs sm:text-sm font-Roboto font-light text-black'> posted by {postData?.postCreatorName}  </p>
+                                    <TimeAgo date={postCreadedAt} className="text-xs sm:text-sm font-Roboto font-light text-black" />
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                )}
+
+
 
 
                 {/* Join Button */}

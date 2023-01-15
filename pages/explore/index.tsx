@@ -4,7 +4,7 @@ import React from 'react'
 import PostCard from '../../components/globalComponents/Posts/PostCard/PostCard'
 import ExploreTabs from '../../components/pageWiseComponents/explore/ExploreTabs/ExploreTabs'
 import { IPost } from '../../customTypesAndInterfaces/Posts/postInterface'
-import { db } from '../../firebaseConfig'
+import { auth, db } from '../../firebaseConfig'
 
 interface IProps {
   allPostsArray: IPost[]
@@ -19,7 +19,7 @@ const Index = ({ allPostsArray }: IProps) => {
       <div className='w-full flex flex-col justify-start items-center my-14 space-y-5'>
           {allPostsArray && (
             allPostsArray.map((postData: IPost) => {
-              return <PostCard postData={postData} key={postData?.postID} postedAt={"explorePostsPage"} />
+              return <PostCard postData={postData} key={postData?.postID} page={"explorePostsPage"} />
             })
           )}
       </div>
@@ -36,18 +36,16 @@ export default Index
 export const getServerSideProps = async () => {
 
   // fetching all posts 
-  const allPostsArray: IPost[] = []
   const postCollectionRef = collection(db, "posts")
   const data = await getDocs(postCollectionRef)
 
-  data?.forEach((post) => {
-    allPostsArray.push(post?.data() as IPost)
-  })
+  const allPostsArray:IPost[] = JSON.parse(JSON.stringify( data?.docs?.map(doc => doc.data() as IPost)))
+
 
 
   return {
     props: {
-      allPostsArray
+      allPostsArray,
     }
   };
 }

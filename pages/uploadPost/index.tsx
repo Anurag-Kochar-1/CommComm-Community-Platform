@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { addDoc, arrayUnion, collection, doc, getDocs, query, updateDoc, where } from 'firebase/firestore'
+import { addDoc, arrayUnion, collection, doc, getDocs, query, serverTimestamp, Timestamp, updateDoc, where } from 'firebase/firestore'
 import { BsCameraVideo, BsImage, BsTextCenter } from 'react-icons/bs'
 import { GrAdd } from 'react-icons/gr'
 import { auth, db, storage } from '../../firebaseConfig'
@@ -95,7 +95,7 @@ const UploadPost = () => {
   const addPost = async (imageURL: string | null, videoURL: string | null) => {
     try {
       setIsPostPosting(true)
-
+      
       // --- Adding post to Posts's Collection
       const postDoc = await addDoc(postsCollectionRef, {
         postID: "",
@@ -107,6 +107,9 @@ const UploadPost = () => {
         postCreatorName: user?.displayName,
         postCreateAtCommunityID: selectedCommunity,
         upvotedByUserID: [],
+        
+        createdAt: serverTimestamp()
+        // createdAt: Timestamp.now()
       })
 
       // Upading post to add ID manually

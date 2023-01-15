@@ -1,3 +1,4 @@
+
 export interface IPost {
         postID: string
         postTitle: string | number
@@ -8,4 +9,6 @@ export interface IPost {
         postCreatorName: string
         postCreateAtCommunityID: string
         upvotedByUserID: [],
+
+        createdAt?:  any
 }

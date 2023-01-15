@@ -18,26 +18,20 @@ import { IUserData } from '../customTypesAndInterfaces/User/userInterfaces'
 
 // const inter = Inter({ subsets: ['latin'] })
 
-export default function Home({ allPostsArray }: any) {
+interface IProps {
+  allPostsArray: IPost[]
+  userFromSSR?: any
+}
+
+export default function Home({ allPostsArray, userFromSSR }: IProps) {
   const router = useRouter()
   const [user, loading] = useAuthState(auth)
   const dispatch = useDispatch()
 
-  const currentUserData:IUserData = useSelector((state: any) => state.user.currentUserData )
+  const currentUserData: IUserData = useSelector((state: any) => state.user.currentUserData)
 
 
-  const fetchCurrentUser = async () => {
-    if(user && !loading) {
-      if (!currentUserData.communitiesJoinedID) {
-        console.log(`Setting user data into redux`);
-        const userRef = doc(db, "users", user?.uid as string)
-        const data = await getDoc(userRef)
-        dispatch(setCurrentUserData(data.data()))
-      } else if (currentUserData) {
-        console.log('user data found from redux')
-      }
-    }
-  }
+  
 
 
   useEffect(() => {
@@ -47,25 +41,30 @@ export default function Home({ allPostsArray }: any) {
 
   }, [allPostsArray])
 
-  
+
 
 
   return (
     <main className='w-full lg:w-[60%] h-[80vh] lg:h-[90vh] mt-[12vh] mb-[10vh] lg:mb-0 bg-gray-100 flex flex-col justify-start items-center overflow-x-hidden overflow-y-scroll pt-14 pb-20 scrollbar-hide'>
 
       {/* <h1 className='text-4xl text-blue-500 font-bold mt-[7vh]' onClick={() => console.log(auth?.currentUser)}> LOG USER</h1> */}
-      <h1 className='font-bold text-xl my-5' onClick={() => console.log(currentUserData)}> LOG currentUserData </h1>
+      {/* <h1 className='font-bold text-xl my-5' onClick={() => console.log(currentUserData)}> LOG currentUserData </h1> */}
 
       {/* <h1 className='text-5xl my-2 text-black font-light'> HELLO  </h1> */}
       {/* <h1 className='text-5xl my-2 text-black font-Roboto font-light'> HELLO </h1> */}
 
 
+
+
+
+
       {/* ---- All Posts - for signed out user ---- */}
-      {allPostsArray && (
-        allPostsArray.map((postData: IPost) => {
-          return <PostCard postData={postData} key={postData?.postID} postedAt={"communityHomePage"} />
-        })
+      {true && (
+        <PostFeed posts={allPostsArray} page={"homePage"}/>
       )}
+      
+
+      
 
     </main>
   )
@@ -75,18 +74,21 @@ export default function Home({ allPostsArray }: any) {
 export const getServerSideProps = async () => {
 
   // fetching all posts 
-  const allPostsArray: IPost[] = []
   const postCollectionRef = collection(db, "posts")
   const data = await getDocs(postCollectionRef)
 
-  data?.forEach((post) => {
-    allPostsArray.push(post?.data() as IPost)
-  })
+  
+
+  const allPostsArray:IPost[] = JSON.parse(JSON.stringify( data?.docs?.map(doc => doc.data() as IPost)))
+
+
 
 
   return {
     props: {
-      allPostsArray
+      allPostsArray,
+      // userFromSSR
+
     }
   };
 }

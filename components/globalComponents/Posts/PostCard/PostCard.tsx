@@ -202,7 +202,7 @@ const PostCard = ({ postData, page }: IProps) => {
                 )}
 
                 {/* For Home Page */}
-                {page === "homePage" && (
+                {page === "homePage" || page==="explorePostsPage" ? (
                     <div className='w-full h-full flex flex-col sm:flex-row items-start justify-start sm:items-center space-x-1'>
 
                         <div className='h-12 flex justify-start items-center space-x-2 hover:cursor-pointer' onClick={() => router.push(`/community/${postData?.postCreateAtCommunityID}`)}>
@@ -221,7 +221,7 @@ const PostCard = ({ postData, page }: IProps) => {
 
 
                     </div>
-                )}
+                ): null}
 
 
 

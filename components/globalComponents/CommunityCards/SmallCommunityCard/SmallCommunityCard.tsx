@@ -23,6 +23,7 @@ const SmallCommunityCard = ({ community }: IProps) => {
             <div className={`w-full h-full -mt-1 -ml-1 ${randomBG}  border border-black rounded-sm flex justify-start items-center space-x-2 px-3`}>
                 {community.communityLogo !== null && (
                     <Image
+                        unoptimized
                         src={community.communityLogo as string}
                         width={8}
                         height={8}

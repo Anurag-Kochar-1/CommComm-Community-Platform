@@ -43,7 +43,7 @@ const TopSection = () => {
                     {/* {communityData} */}
 
                     {communityData?.communityLogo ? (
-                        <Image src={communityData?.communityLogo} width={15} height={15} alt="logo" className='absolute right-[4px] bottom-[4px] border border-black w-16 h-16 lg:w-20 lg:h-20 aspect-square rounded-sm' onClick={() => console.log(communityData)} draggable="false" />
+                        <Image unoptimized src={communityData?.communityLogo} width={15} height={15} alt="logo" className='absolute right-[4px] bottom-[4px] border border-black w-16 h-16 lg:w-20 lg:h-20 aspect-square rounded-sm' onClick={() => console.log(communityData)} draggable="false" />
                     ) : (
                         <div className='absolute right-[4px] bottom-[4px] border bg-BrutalPurple2 border-black w-16 h-16 lg:w-20 lg:h-20 aspect-square rounded-sm' />
                     )}

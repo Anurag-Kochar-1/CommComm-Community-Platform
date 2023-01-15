@@ -61,7 +61,7 @@ const RightSideBar = () => {
             <h3 className='font-BebasNeue px-2 text-center  lg:text-3xl xl:text-4xl text-black'> Trending Communities </h3>
 
             {trendingCommunitiesData[0] && (
-              trendingCommunitiesData?.map((community: ICommunityData) => {
+              trendingCommunitiesData?.slice(0, 10)?.map((community: ICommunityData) => {
                 return (
                   <SmallCommunityCard community={community}  key={community?.communityID}/>
                   )
@@ -78,7 +78,7 @@ const RightSideBar = () => {
             <h3 className='font-BebasNeue px-2 text-center  lg:text-3xl xl:text-4xl text-black' onClick={() => console.log(leaderBoardUsersState)}> Global Leaderboard </h3>
 
             {leaderBoardUsersState[0] && (
-              leaderBoardUsersState.slice(0, 10).map((user: IUserData) => {
+              leaderBoardUsersState?.map((user: IUserData) => {
                 return (
                   <UserCard userData={user} key={user?.userDisplayPicture} />
                 )

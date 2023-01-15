@@ -64,7 +64,7 @@ const Index = ({ tracksData, communityTrackPathsData }: IProps) => {
     <CommunityLayout>
       <main className='w-full h-auto flex flex-col justify-start items-center bg-white pt-12 pb-36 '>
 
-        <h1 onClick={() => console.log(communityTrackPathsDataReduxState)}> LOG communityTrackPathsDataReduxState REDUX </h1>
+        {/* <h1 onClick={() => console.log(communityTrackPathsDataReduxState)}> LOG communityTrackPathsDataReduxState REDUX </h1> */}
 
 
         {/* ---- Tracks Found !!! ---- */}

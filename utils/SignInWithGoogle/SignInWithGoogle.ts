@@ -13,27 +13,32 @@ const SignInWithGoogleFunction = async () => {
         const userRef = doc(db, "users", result?.user.uid)
         const userDoc = await getDoc(userRef)
 
-        if(userDoc.exists()) {
+        if (userDoc.exists()) {
             console.log(`User already Exist => ${userDoc.id}`);
-            
+
         } else {
             console.log(`Creating User !!!!!! `);
             await setDoc(doc(db, "users", result?.user?.uid), {
+
+                userName: result?.user?.displayName,
+                userDisplayPicture: result?.user?.photoURL,
+                userEmail: result?.user?.email,
+                userID: result?.user?.uid,
+
                 communitiesJoinedID: [],
                 communitiesOwnedID: [],
                 createdPostsID: [],
                 likedPostsID: [],
                 dislikedPostsID: [],
-
-                userCoins : 100
+                userCoins: 100
             })
         }
 
-        
+
     } catch (error) {
         alert(error)
     }
 }
 
 
-export {SignInWithGoogleFunction}
+export { SignInWithGoogleFunction }

@@ -18,6 +18,12 @@ const SignInWithFacebookFunction = async () => {
         } else {
             console.log(`Creating User !!!!!! `);
             await setDoc(doc(db, "users", result?.user?.uid), {
+
+                userName: result?.user?.displayName,
+                userDisplayPicture: result?.user?.photoURL,
+                userEmail: result?.user?.email,
+                userID: result?.user?.uid,
+
                 communitiesJoinedID: [],
                 communitiesOwnedID: [],
                 createdPostsID: [],

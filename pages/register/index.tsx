@@ -79,6 +79,11 @@ const Index = () => {
     console.log(`Creating user in DB from email and passowrd`);
 
     await setDoc(doc(db, "users", userID), {
+      userName: userNameInputValue,
+      userDisplayPicture: "https://firebasestorage.googleapis.com/v0/b/th3-hackathon.appspot.com/o/postImages%2F6cf18550-5ca7-491f-9725-171e5c38b6fc--220703-minions-music-hero_tfqnbm.jpg?alt=media&token=8c0fc36a-394a-413c-9b49-2e86342095a3",
+      userEmail: emailInputValue,
+      userID: userID,
+
       communitiesJoinedID: [],
       communitiesOwnedID: [],
       createdPostsID: [],

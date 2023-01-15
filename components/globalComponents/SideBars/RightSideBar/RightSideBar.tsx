@@ -80,7 +80,7 @@ const RightSideBar = () => {
             {leaderBoardUsersState[0] && (
               leaderBoardUsersState?.map((user: IUserData) => {
                 return (
-                  <UserCard userData={user} key={user?.userDisplayPicture} />
+                  <UserCard userData={user} key={user?.userID} />
                 )
               })
             )}

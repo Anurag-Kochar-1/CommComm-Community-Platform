@@ -35,7 +35,7 @@ const Index = () => {
             {communityUsersLeaderboardState[0] && (
               communityUsersLeaderboardState?.map((user: IUserData) => {
                 return (
-                  <UserCard userData={user} key={user?.userDisplayPicture} />
+                  <UserCard userData={user} key={user?.userID} />
                 )
               })
             )}

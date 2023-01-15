@@ -2,6 +2,7 @@ import { doc, getDoc } from 'firebase/firestore'
 import { useRouter } from 'next/router'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { ICommunityData } from '../../../customTypesAndInterfaces/Community/CommunityInterfaces'
 import { db } from '../../../firebaseConfig'
 import { setCurrentCommunityData } from '../../../redux/slices/communityDataSlice'
 import NavTabs from '../../pageWiseComponents/community/NavTabs/NavTabs'
@@ -19,10 +20,10 @@ const CommunityLayout = ({children}: IProps) => {
     const dispatch = useDispatch()
 
     // Redux States
-    const communityData = useSelector((state: any) => state.communityData.currentCommunityData[0])
+    const communityData:ICommunityData = useSelector((state: any) => state.communityData.currentCommunityData[0])
 
     const fetchCommunityDetails = async () => {
-        if (!communityData) {
+        if (communityData?.communityID !== id || !communityData) {
             console.log(`  communityDataRedux NOT FOUND !!! `);
             if (id) {
                 const communityRef = doc(db, "communities", id as string)

@@ -206,7 +206,13 @@ const PostCard = ({ postData, page }: IProps) => {
                     <div className='w-full h-full flex flex-col sm:flex-row items-start justify-start sm:items-center space-x-1'>
 
                         <div className='h-12 flex justify-start items-center space-x-2 hover:cursor-pointer' onClick={() => router.push(`/community/${postData?.postCreateAtCommunityID}`)}>
-                            <Image src={communityDetails[0]?.communityLogo as string} alt="logo" width={12} height={12} className="w-12 h-12 aspect-square rounded-sm" onClick={() => console.log(communityDetails)} draggable="false"/>
+                            <Image src={communityDetails[0]?.communityLogo as string} 
+                            alt="logo" 
+                            width={12} 
+                            height={12} 
+                            className="w-12 h-12 aspect-square rounded-sm border border-black" onClick={() => console.log(communityDetails)} draggable="false"
+                            unoptimized
+                            />
 
                             <div className='w-full flex flex-col justify-start items-start space-y-1'>
                                 <span className='text-sm sm:text-base font-Roboto font-medium text-black'> {communityDetails[0]?.communityName} </span>

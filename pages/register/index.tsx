@@ -14,9 +14,7 @@ import { setIsBottomBarVisible } from "../../redux/slices/bottomBarSlice"
 import { doc, setDoc } from 'firebase/firestore'
 import { useAuthState } from 'react-firebase-hooks/auth'
 
-// import blueLinesBG from "../../public/images/bg/blueLinesBG.svg"
-// import pattern1 from "../../public/images/bg/pattern1.svg"
-// import jigsaw from "../../public/images/bg/jigsaw.svg"
+import logoTwo from "../../public/images/logos/logoTwo.png"
 
 const Index = () => {
   const [user, loading] = useAuthState(auth)
@@ -113,7 +111,8 @@ const Index = () => {
 
           {/* ---- LOGO ---- */}
           <Link href={'/'} className='flex justify-center items-center space-x-3'>
-            <div className='w-6 h-6 rounded-full bg-BrutalPurple2 flex justify-center items-center text-white' />
+            {/* <div className='w-6 h-6 rounded-full bg-BrutalPurple2 flex justify-center items-center text-white' /> */}
+            <Image src={logoTwo as any} alt="logo" className='w-6 h-6 rounded-full' width={6} height={6} unoptimized quality={100}/>
             <span className='font-semibold'> CommComm </span>
           </Link>
 

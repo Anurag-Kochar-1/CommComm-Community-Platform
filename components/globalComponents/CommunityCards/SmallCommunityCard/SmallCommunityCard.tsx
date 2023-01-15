@@ -28,7 +28,7 @@ const SmallCommunityCard = ({ community }: IProps) => {
                         width={8}
                         height={8}
                         alt="pfp"
-                        className='w-auto h-[70%] rounded-sm aspect-square' draggable="false"
+                        className='w-auto h-[70%] rounded-sm aspect-square border border-black' draggable="false"
                     />
                 )}
 

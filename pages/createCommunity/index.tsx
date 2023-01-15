@@ -7,6 +7,10 @@ import { useRouter } from 'next/router'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { useDispatch } from 'react-redux'
 import { setIsBottomBarVisible } from '../../redux/slices/bottomBarSlice'
+import logoTwo from "../../public/images/logos/logoTwo.png"
+import Image from 'next/image'
+
+import { communityCategoriesBannersURLArray, communitySubCategoriesLogoArray } from '../../constants/createCommunityPage/communityCategories'
 
 
 
@@ -14,12 +18,35 @@ const Index = () => {
   const [user, loading] = useAuthState(auth)
   const router = useRouter()
   const dispatch = useDispatch()
+
   const [communityNameInputValue, setCommunityNameInputValue] = useState<string>("")
   const [communityCategory, setCommunityCategory] = useState<string>(communityCategoriesArray[0].label)
   const [communitySubCategory, setCommunitySubCategory] = useState<string>(communitySubCategoriesArray[0].parentLabel)
   const [isDemoOpen, setIsDemoOpen] = useState<boolean>(true)
-
+  const [categoryID, setCategoryID] = useState<number>(0)
   const communitiesCollectionRef = collection(db, "communities")
+
+  const [categoryBannerURL, setCategoryBannerURL] = useState<string>("https://firebasestorage.googleapis.com/v0/b/th3-hackathon.appspot.com/o/postImages%2FRectangle%20111.png?alt=media&token=228bdf8c-24e1-4ad1-bd99-3b1681aa0a0f")
+
+  const [communityLogoURL, setCommunityLogoURL] = useState<string>("")
+
+  const getBanner =  (categoryValue: string) => {
+    console.log(`getBanner is running`);
+    communityCategoriesBannersURLArray.map((category) => {
+      if(category.value === categoryValue) {
+        setCategoryBannerURL(category.bannerURL)
+      }
+    })
+  }
+
+  const getLogo = (subCategoryValue: string) => {
+    console.log(`getLogo is running`)
+    communitySubCategoriesLogoArray.map((subCategory) => {
+      if(subCategoryValue === subCategory.value) {
+        setCommunityLogoURL(subCategory.logoURL)
+      }
+    })
+  }
 
 
   const createCommunity = async () => {
@@ -37,7 +64,7 @@ const Index = () => {
             communityCategory: communityCategory,
             communitySubCategory: communitySubCategory,
             communityLogo: "https://firebasestorage.googleapis.com/v0/b/th3-hackathon.appspot.com/o/postImages%2F6cf18550-5ca7-491f-9725-171e5c38b6fc--220703-minions-music-hero_tfqnbm.jpg?alt=media&token=8c0fc36a-394a-413c-9b49-2e86342095a3",
-            communityBanner: "https://firebasestorage.googleapis.com/v0/b/th3-hackathon.appspot.com/o/postImages%2F132cd51d-593f-4b77-86ed-1ae1c895f70f--8i1bx8y9p3t9x223bjhf.png?alt=media&token=448d7efb-5982-436f-977f-04970af12537",
+            communityBanner: categoryBannerURL,
             communityMembersID: [auth?.currentUser?.uid],
             communityOwnerID: auth?.currentUser?.uid,
             communityOwnerDisplayName: auth?.currentUser?.displayName,
@@ -87,24 +114,37 @@ const Index = () => {
     }
   }, [loading])
 
+  useEffect(() => {
+    getBanner(communityCategory)
+  },[communityCategory]) 
+
+  useEffect(() => {
+    getLogo(communitySubCategory)
+  },[communitySubCategory])
+
   return (
-    <div className='fixed inset-0 w-[100%] h-[100vh] bg-BrutalOrange1 flex flex-row justify-center lg:justify-end items-center lg:px-32 xl:px-40 2xl:px-72 '>
+    <div className='fixed inset-0 w-[100%] h-[100vh] bg-BrutalOrange1 flex flex-row justify-center lg:justify-end items-center lg:px-32 xl:px-40 2xl:px-72'>
 
       <div className='z-50 w-full h-[90vh] mb-[10vh] lg:mb-0 sm:w-[70%] sm:h-[70vh] md:w-[70%] lg:w-[60%] xl:w-[40%] 2xl:w-[35%] bg-white rounded-md flex flex-col justify-start items-start pt-10 pb-5 px-5 space-y-5 overflow-x-hidden overflow-y-scroll scrollbar-hide'>
 
         {/* ---- LOGO ---- */}
         <div className='flex justify-center items-center space-x-3'>
-          <div className='w-6 h-6 rounded-full bg-BrutalBlack1' />
-          <span> TBH </span>
+          <Image src={logoTwo as any} alt="logo" className='w-6 h-6 rounded-full' width={6} height={6} unoptimized quality={100} />
+          <span> CommCom </span>
         </div>
 
         {/* ---- Heading ----- */}
-        <h1 className='text-3xl font-bold' onClick={() => console.log(communityCategory + " ___ " + communitySubCategory + `___ Name -> ${communityNameInputValue}`)}> Create a Community </h1>
+        <h1 className='text-3xl font-bold' onClick={() => {
+          console.log(communityCategory + " ___ " + communitySubCategory + `___ Name -> ${communityNameInputValue}`)
+        }}> Create a Community </h1>
 
 
         {/* ---- Fill community details ---- */}
         <div className='w-full h-full flex flex-col items-start justify-start'>
-          <p className='font-medium text-sm text-gray-900'> Your own community where you and others can build good habits and skills with the support of each other  </p>
+          <p className='font-medium text-sm text-gray-900' onClick={() => {
+            console.log(`categoryBannerURL -- ${categoryBannerURL} `)
+            console.log(`communityLogoURL -- ${communityLogoURL} `)
+          }}> Your own community where you and others can build good habits and skills with the support of each other  </p>
 
           <div className='w-full flex flex-col justify-between items-start space-y-4 py-3 mt-4'>
 

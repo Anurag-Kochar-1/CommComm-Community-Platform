@@ -12,7 +12,8 @@ import { auth } from '../../../firebaseConfig'
 import Link from 'next/link'
 import { useAuthState } from 'react-firebase-hooks/auth'
 
-import logo2 from "../../../public/images/icons/logo2.svg"
+import logoTwo from "../../../public/images/logos/logoTwo.png"
+import Image from 'next/image'
 
 
 
@@ -28,7 +29,8 @@ const Header = () => {
       {/*  DEMO LOGO  */}
       {/* <Link href={'/'} className='w-10 h-10 rounded-full bg-BrutalOrange1' onClick={() => console.log(0)} /> */}
       <Link href={'/'} className='flex justify-center items-center space-x-3'>
-        <div className='w-10 h-10 rounded-full bg-BrutalPurple2 flex justify-center items-center text-white' />
+        {/* <div className='w-10 h-10 rounded-full bg-BrutalPurple2 flex justify-center items-center text-white' /> */}
+        <Image src={logoTwo as any} alt="logo" className='w-16 h-16 rounded-full' width={14} height={14} unoptimized quality={100}/>
         <span className='hidden lg:inline-block font-bold font-Roboto text-xl'> CommComm </span>
       </Link>
 

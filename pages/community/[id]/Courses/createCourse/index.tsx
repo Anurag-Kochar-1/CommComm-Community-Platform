@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { useDispatch, useSelector } from 'react-redux'
 import CommunityLayout from '../../../../../components/layouts/Community/CommunityLayout'
@@ -215,12 +215,18 @@ const Index = () => {
         }
     }
 
+    useEffect(() => {
+        if(communityData?.communityOwnerID !== user?.uid) {
+            router.push(`/community/${id}/Courses`)
+        }
+    },[id])
+
 
     return (
         <>
             {!isLoading && (
                 <CommunityLayout>
-                    <main className='w-full h-[90vh] mb-[10vh] lg:mb-0 fixed lg:static inset-0 flex flex-col justify-start items-center bg-red-400 lg:pt-12 lg:pb-36'>
+                    <main className='w-full h-[90vh] mb-[10vh] lg:mb-0 fixed lg:static inset-0 flex flex-col justify-start items-center bg-gray-100 lg:pt-12 lg:pb-36'>
                         <div className='w-full h-full xl:w-[70%] 2xl:w-[50%] flex flex-col justify-start items-start pt-10 pb-5 px-5 space-y-5 overflow-x-hidden overflow-y-scroll scrollbar-hide bg-white border-2 border-black'>
 
                             {/* ---- LOGO ---- */}

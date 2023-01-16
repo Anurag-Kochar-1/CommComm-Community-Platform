@@ -8,9 +8,11 @@ import { PathPopover } from '../../../../components/globalComponents/PathPopover
 import CommunityLayout from '../../../../components/layouts/Community/CommunityLayout'
 import { ICourse } from '../../../../customTypesAndInterfaces/Course/courseInterfaces'
 import { IPathsData } from '../../../../customTypesAndInterfaces/Tracks/pathsInterface'
-import { db } from '../../../../firebaseConfig'
+import { auth, db } from '../../../../firebaseConfig'
 import { useDispatch, useSelector } from 'react-redux'
 import { setCommunityCoursePathsData } from '../../../../redux/slices/communityDataSlice'
+import { useAuthState } from 'react-firebase-hooks/auth'
+import { ICommunityData } from '../../../../customTypesAndInterfaces/Community/CommunityInterfaces'
 
 interface IProps {
     communityCoursesData: ICourse[]
@@ -18,6 +20,7 @@ interface IProps {
 }
 
 const Index = ({ communityCoursesData }: IProps) => {
+    const [user, loading] = useAuthState(auth)
     const router = useRouter()
     const { id } = router.query
     const dispatch = useDispatch()
@@ -26,17 +29,20 @@ const Index = ({ communityCoursesData }: IProps) => {
     const communityCoursePathsDataRedux: IPathsData[] = useSelector((state: any) => state?.communityData?.communityCoursePathsData)
 
 
-    // Dispatching courses
+    // Redux States
+    const communityData: ICommunityData = useSelector((state: any) => state?.communityData?.currentCommunityData[0])
 
 
     // Real time listening to communityCoursePathsData
     useEffect(() => {
-        const communityCoursePathsDataQuery = query(collection(db, "communityCourses", communityCoursesData[0]?.courseID as string, "coursePaths"), orderBy("pathNumber", "asc"))
-        const communityCoursePathsDataQueryRes = onSnapshot(communityCoursePathsDataQuery, (snapshot) => {
-            const data = snapshot?.docs?.map(doc => doc.data())
-            dispatch(setCommunityCoursePathsData(data))
-        })
-    }, [])
+        if (communityCoursesData[0] && communityCoursesData[0]?.communityID === id) {
+            const communityCoursePathsDataQuery = query(collection(db, "communityCourses", communityCoursesData[0]?.courseID as string, "coursePaths"), orderBy("pathNumber", "asc"))
+            const communityCoursePathsDataQueryRes = onSnapshot(communityCoursePathsDataQuery, (snapshot) => {
+                const data = snapshot?.docs?.map(doc => doc.data())
+                dispatch(setCommunityCoursePathsData(data))
+            })
+        }
+    }, [id])
 
 
 
@@ -48,7 +54,7 @@ const Index = ({ communityCoursesData }: IProps) => {
                 <h1 onClick={() => console.log(communityCoursesData)} className="text-xl my-10 bg-red-300">  LOG communityCoursesData </h1>
                 <h1 onClick={() => console.log(communityCoursePathsData)} className="text-xl my-10 bg-blue-300">  LOG communityCoursePathsData </h1> */}
 
-                <h1 onClick={() => console.log(communityCoursePathsDataRedux)} className="text-xl my-10 bg-blue-300">  LOG communityCoursePathsDataRedux </h1> 
+                <h1 onClick={() => console.log(communityCoursePathsDataRedux)} className="text-xl my-10 bg-blue-300">  LOG communityCoursePathsDataRedux </h1>
 
                 {/* Community Posts Header */}
                 <div className='w-full h-16 bg-black flex justify-start items-center space-x-2 px-4 mb-10'>
@@ -66,8 +72,23 @@ const Index = ({ communityCoursesData }: IProps) => {
                     </div>
                 )}
 
+                {/* ---- No Course found (Admin) ---- */}
+                {!communityCoursesData[0] ? (
+                    <div className="w-[90%] sm:w-[80%] md:w-[70%] lg:w-[60%] xl:w-[50%] h-72 border-2 border-black flex flex-col justify-start items-center rounded-md bg-white">
+                        <div className="w-full h-full -mt-2 -ml-3 flex flex-col justify-center items-center border-2 border-black rounded-md bg-white">
+                            <div className="w-full h-full -mt-3 -ml-4 flex flex-col justify-center items-center border-2 border-black bg-BrutalPurple2 rounded-md text-center p-2 space-y-2">
+                                <span className="text-black text-xl md:text-4xl font-Roboto font-bold"> No courses  </span>
+                                {communityData?.communityOwnerID === user?.uid && (
+                                    <Link href={`/community/${id}/Courses/createCourse`} className="text-black text-lg md:text-xl font-Roboto font-bold underline"> Create a Course  </Link>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+                ) : null}
+
                 {/* Course Header */}
-                <div className='w-full h-16 bg-black flex justify-center items-center space-x-4 px-4 mb-10'>
+                {communityCoursesData[0] && (
+                    <div className='w-full h-16 bg-black flex justify-center items-center space-x-4 px-4 mb-10'>
                     <button
                         onClick={() => setCourseNavTabs("paths")}
                         type='button'
@@ -87,15 +108,18 @@ const Index = ({ communityCoursesData }: IProps) => {
                         <span className={`text-xl ${courseNavTabs === 'details' ? "text-black" : "text-white"} font-Roboto font-bold`}> Details </span>
                     </button>
                 </div>
+                )}
 
 
-                {communityCoursePathsDataRedux[0] && courseNavTabs === 'paths' ? (
+                {communityCoursePathsDataRedux[0] && communityCoursesData[0] && courseNavTabs === 'paths' ? (
                     <div>
                         {communityCoursePathsDataRedux?.map((path: any) => {
                             return <PathPopover path={path} key={path?.pathID} />
                         })}
                     </div>
                 ) : null}
+
+
 
             </main>
         </CommunityLayout>

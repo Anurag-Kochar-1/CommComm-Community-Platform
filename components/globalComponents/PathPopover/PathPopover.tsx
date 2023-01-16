@@ -77,7 +77,7 @@ export function PathPopover({ path }: IProps) {
     const claimCoin = async () => {
         if (user) {
             if (!path?.coinsClaimedByUsers?.includes(user?.uid) && userDetails?.communitiesJoinedID?.includes(path?.communityID)) {
-                const pathRef = doc(db, `communities/${path?.communityID}/trackPaths/${path?.pathID}`)
+                const pathRef = doc(db, `communityCourses/${path?.courseID}/coursePaths/${path?.pathID}`)
                 const userRef = doc(db, `users/${user?.uid}`)
 
                 // Updating Path Doc

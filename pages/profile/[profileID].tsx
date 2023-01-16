@@ -42,7 +42,7 @@ const Index = ({ profileDetails, userCreatedPosts }: IProps) => {
           onClick={() => console.log(profileDetails)}
           className='w-full h-[25vh] bg-white flex justify-center items-end'
           style={{
-            backgroundImage: 'url(' + `${"https://firebasestorage.googleapis.com/v0/b/th3-hackathon.appspot.com/o/userBanners%2FR.jpg?alt=media&token=1d46e1a2-b17f-41b4-89b9-19dc74cff91e"}` + ')',
+            backgroundImage: 'url(' + `${"https://cdn.wallpapersafari.com/36/43/dCp6LB.jpg"}` + ')',
             backgroundSize: "cover",
           }}
           draggable="false"

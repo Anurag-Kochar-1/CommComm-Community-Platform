@@ -30,7 +30,7 @@ const Header = () => {
       {/* <Link href={'/'} className='w-10 h-10 rounded-full bg-BrutalOrange1' onClick={() => console.log(0)} /> */}
       <Link href={'/'} className='flex justify-center items-center space-x-3'>
         {/* <div className='w-10 h-10 rounded-full bg-BrutalPurple2 flex justify-center items-center text-white' /> */}
-        <Image src={logoTwo as any} alt="logo" className='w-16 h-16 rounded-full' width={14} height={14} unoptimized quality={100}/>
+        <Image src={logoTwo as any} alt="logo" className='w-12 h-12 md:w-16 md:h-16 rounded-full' width={14} height={14} unoptimized quality={100}/>
         <span className='hidden lg:inline-block font-bold font-Roboto text-xl'> CommComm </span>
       </Link>
 

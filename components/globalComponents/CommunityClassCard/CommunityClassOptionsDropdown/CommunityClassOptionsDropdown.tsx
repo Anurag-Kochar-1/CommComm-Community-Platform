@@ -60,7 +60,7 @@ const CommunityClassOptionsDropdown = ({ classData }: IProps) => {
                     leaveTo="transform opacity-0 scale-95"
                 >
                     
-                    <Menu.Items className="absolute right-0 mt-2 w-52 origin-top-right divide-y divide-gray-100 rounded-sm space-y-2 border-2 border-black bg-gray-100 p-2 z-50">
+                    <Menu.Items className="bg-white absolute right-0 mt-2 w-52 origin-top-right divide-y divide-gray-100 rounded-sm space-y-2 border-2 border-black p-2 z-50">
 
                         <div className="px-3 py-2 z-50 bg-BrutalOrange1 rounded-md hover:cursor-pointer">
                             <Menu.Item as={Fragment}>

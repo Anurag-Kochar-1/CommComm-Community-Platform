@@ -71,7 +71,7 @@ const CommunityClassCard = ({ classDetails }: IProps) => {
                     <div className='w-full flex justify-start items-center space-x-2'>
                         <IoMdCalendar className='text-xl text-BrutalPurple2' />
                         <p className='text-sm font-medium text-gray-800 flex-1'> {classDetails?.dateCreatedAt} {classDetails.communityCourseClassStartingTime} - {classDetails.communityCourseClassEndingTime} </p>
-                        <CommunityClassOptionsDropdown classData={classDetails} />
+                        { classDetails?.communityCourseClassCreatorID === user?.uid && <CommunityClassOptionsDropdown classData={classDetails} /> }
 
                     </div>
 
@@ -88,13 +88,13 @@ const CommunityClassCard = ({ classDetails }: IProps) => {
                             <p className='text-sm font-normal text-black'> {classDetails?.communityName} </p>
                         </div>
 
-                        <button
-                            type='button'
-                            className='outline-none border-none px-6 py-2 rounded-sm bg-BrutalPurple2 text-white font-medium text-sm'
-                            onClick={joinClass}
+                        <a
+                            href={`${classDetails?.communityCourseClassLink}`}
+                            target="_blank"
+                            className='outline-none border-none px-6 py-2 rounded-sm bg-BrutalPurple2'
                         >
-                            <p> Join </p>
-                        </button>
+                            <span className='text-white font-medium text-sm'> Join </span>
+                        </a>
 
                         {/* <FiSettings /> */}
                     </div>

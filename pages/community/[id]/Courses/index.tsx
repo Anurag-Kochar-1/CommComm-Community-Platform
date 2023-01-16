@@ -2,7 +2,7 @@ import { collection, getDocs, orderBy, query, where } from 'firebase/firestore'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import React from 'react'
+import React, { useState } from 'react'
 import CommunityCourseCard from '../../../../components/globalComponents/CommunityCourseCard/CommunityCourseCard'
 import { PathPopover } from '../../../../components/globalComponents/PathPopover/PathPopover'
 import CommunityLayout from '../../../../components/layouts/Community/CommunityLayout'
@@ -18,6 +18,8 @@ interface IProps {
 const Index = ({ communityCoursesData, communityCoursePathsData }: IProps) => {
     const router = useRouter()
     const { id } = router.query
+    const [courseNavTabs, setCourseNavTabs] = useState<string>("paths")
+
     return (
         <CommunityLayout>
             <main className='w-full h-auto flex flex-col justify-start items-center bg-white pt-12 pb-36 '>
@@ -34,15 +36,44 @@ const Index = ({ communityCoursesData, communityCoursePathsData }: IProps) => {
 
 
                 {/* ---- Course Found !!! ----  */}
-                {communityCoursesData[0] && (
-                    <div className='w-full h-auto bg-white flex flex-col justify-start items-center overflow-x-hidden overflow-y-scroll pb-20 scrollbar-hide'>
-
+                {communityCoursesData[0] &&  (
+                    <div className='w-full h-auto bg-white flex flex-col justify-start items-center overflow-x-hidden overflow-y-scroll pb-10 scrollbar-hide'>
                         {communityCoursesData?.map((communityCourse) => {
                             return <CommunityCourseCard communityCourseData={communityCourse} key={communityCourse?.courseID}/>
                         })}
-
                     </div>
                 )}
+
+                {/* Course Header */}
+                <div className='w-full h-16 bg-black flex justify-center items-center space-x-4 px-4 mb-10'>
+                    <button
+                    onClick={() => setCourseNavTabs("paths")}
+                    type='button'
+                    title='paths'
+                    className={`w-20 h-9 ${courseNavTabs === 'paths' && "bg-BrutalBlue1"} flex justify-center items-center`}
+                    >
+                        <span className={`text-xl ${courseNavTabs === 'paths' ? "text-black" : "text-white"} font-Roboto font-bold`}> Paths </span>
+                    </button>
+
+
+                    <button
+                    onClick={() => setCourseNavTabs("details")}
+                    type='button'
+                    title='paths'
+                    className={`w-20 h-9 ${courseNavTabs === 'details' && "bg-BrutalGreen1"} flex justify-center items-center`}
+                    >
+                        <span className={`text-xl ${courseNavTabs === 'details' ? "text-black" : "text-white"} font-Roboto font-bold`}> Details </span>
+                    </button>
+                </div>
+
+
+                {communityCoursePathsData[0] && courseNavTabs === 'paths' ? (
+                    <div>
+                        {communityCoursePathsData?.map((path: any) => {
+                             return <PathPopover path={path} key={path?.pathID} /> 
+                        }) }
+                    </div>
+                ): null}
 
             </main>
         </CommunityLayout>

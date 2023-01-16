@@ -23,7 +23,7 @@ const MessageCard = ({ message }: IProps) => {
 
                 <div className='flex flex-col items-start justify-start '>
                     <p className='font-Roboto text-black font-medium text-lg '> {message?.messageCreatorName} </p>
-                    <p className='font-Roboto text-black font-normal text-base'> {message?.messageText} </p>
+                    <p className='font-Roboto text-black font-normal text-base pr-5'> {message?.messageText} </p>
                 </div>
 
             </div>

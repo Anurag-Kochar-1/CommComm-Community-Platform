@@ -1,13 +1,13 @@
 
 export interface IPathsData {
     pathID: string
-    trackID: string
+    courseID: string
+    pathCreatorID: string
     communityID: string
     pathNumber: number
-    isUnlocked: boolean
-    isCompleted: boolean
-    pathCreatorID: string
+    isUnlocked: boolean,
+    isCompleted: boolean,
 
-    coinsClaimedByUsers: string[]
+    coinsClaimedByUsers: string[],
     isPathClassCreated: boolean
 }

@@ -32,7 +32,7 @@ export function PathPopover({ path }: IProps) {
     const markComplete = async () => {
         if (path?.pathCreatorID === user?.uid) {
             try {
-                const pathRef = doc(db, `communities/${path?.communityID}/trackPaths/${path?.pathID}`)
+                const pathRef = doc(db, `communityCourses/${path?.courseID}/coursePaths/${path?.pathID}`)
 
                 // marking complete
                 await updateDoc(pathRef, {
@@ -54,11 +54,12 @@ export function PathPopover({ path }: IProps) {
     const unlockingNextPath = async () => {
         try {
             // findin the next path to unlock
-            const trackPathCollectionRef = collection(db, `communities/${path?.communityID}/trackPaths`)
-            const nextPathQuery = query(trackPathCollectionRef, where("pathNumber", "==", path?.pathNumber + 1))
+            const coursePathCollectionRef = collection(db, `communityCourses/${path?.courseID}/coursePaths`)
+            const nextPathQuery = query(coursePathCollectionRef, where("pathNumber", "==", path?.pathNumber + 1))
             const queryData = await getDocs(nextPathQuery)
             const nextPath: IPathsData[] = queryData?.docs?.map((doc) => doc.data() as IPathsData)
-            const nextPathDocRef = doc(db, `communities/${path?.communityID}/trackPaths/${nextPath[0]?.pathID}`)
+
+            const nextPathDocRef = doc(db, `communityCourses/${path?.courseID}/coursePaths/${nextPath[0]?.pathID}`)
 
 
             // Updating the next path

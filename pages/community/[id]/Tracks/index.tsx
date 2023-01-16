@@ -26,30 +26,31 @@ const Index = ({ tracksData, communityTrackPathsData }: IProps) => {
 
   // Redux States
   const communityData: ICommunityData = useSelector((state: any) => state?.communityData?.currentCommunityData[0])
+
   const communityTracksData: ITrackData[] = useSelector((state: any) => state?.communityData?.communityTracksData)
   const communityTrackPathsDataReduxState: IPathsData[] = useSelector((state: any) => state?.communityData?.communityTrackPathsData)
 
   // const trackPathsRef = collection(db, "communities", id as string, "trackPaths")
 
-  useEffect(() => {
-    if(!communityTracksData[0]) {
-      dispatch(setCommunityTracksData(tracksData))
-      console.log(`Setting Community Tracks Data redux`)
-    } else if (communityTracksData[0]) {
-      console.log(`Community Tracks Data Found in redux`)
+  // useEffect(() => {
+  //   if(!communityTracksData[0]) {
+  //     dispatch(setCommunityTracksData(tracksData))
+  //     console.log(`Setting Community Tracks Data redux`)
+  //   } else if (communityTracksData[0]) {
+  //     console.log(`Community Tracks Data Found in redux`)
 
-    }
-  },[id])
+  //   }
+  // },[id])
 
 
-  // Listening to real time trackPaths data
-  useEffect(() => {
-    const trackPathsQuery = query(collection(db, "communities", id as string, "trackPaths"), orderBy("pathNumber", "asc"))
-    const trackPathsRealTimeListener = onSnapshot(trackPathsQuery, (snapshot) => {
-      const data = snapshot?.docs?.map(doc => doc.data())
-      dispatch(setCommunityTrackPathsData(data))
-    })
-  },[])
+  // // Listening to real time trackPaths data
+  // useEffect(() => {
+  //   const trackPathsQuery = query(collection(db, "communities", id as string, "trackPaths"), orderBy("pathNumber", "asc"))
+  //   const trackPathsRealTimeListener = onSnapshot(trackPathsQuery, (snapshot) => {
+  //     const data = snapshot?.docs?.map(doc => doc.data())
+  //     dispatch(setCommunityTrackPathsData(data))
+  //   })
+  // },[])
 
 
 

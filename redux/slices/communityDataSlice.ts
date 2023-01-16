@@ -12,7 +12,10 @@ const initialState = {
     trendingCommunities: [],
 
     communityTracksData: [],
-    communityTrackPathsData: []
+    communityTrackPathsData: [],
+
+    communityCoursesData: [],
+    communityCoursePathsData: []
 
 
 };
@@ -43,6 +46,15 @@ const communityDataSlice = createSlice({
         },
 
 
+        setCommunityCoursesData: (state, action) => {
+            state.communityCoursesData = action.payload
+        },
+        setCommunityCoursePathsData: (state, action) => {
+            state.communityCoursePathsData = action.payload
+        },
+
+
+
 
 
 
@@ -54,7 +66,9 @@ export const { setCurrentCommunityData,
     setSuggestedCommunities, 
     setTrendingCommunities,
     setCommunityTracksData,
-    setCommunityTrackPathsData
+    setCommunityTrackPathsData,
+    setCommunityCoursesData,
+    setCommunityCoursePathsData
 
 } = communityDataSlice.actions
 

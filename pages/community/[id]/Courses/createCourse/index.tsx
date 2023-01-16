@@ -6,11 +6,13 @@ import { useDispatch, useSelector } from 'react-redux'
 import CommunityLayout from '../../../../../components/layouts/Community/CommunityLayout'
 import { sourceOfLearningOptions } from '../../../../../constants/createTrackPage/sourceOfLearningOptions'
 import { ICommunityData } from '../../../../../customTypesAndInterfaces/Community/CommunityInterfaces'
-import { auth } from '../../../../../firebaseConfig'
+import { auth, db } from '../../../../../firebaseConfig'
 import { setIsBottomBarVisible } from '../../../../../redux/slices/bottomBarSlice'
 import logoTwo from "../../../../../public/images/logos/logoTwo.png"
 import Image from 'next/image'
 import axios from 'axios'
+import { addDoc, collection, doc, getDoc, updateDoc } from 'firebase/firestore'
+import { AiOutlineLoading3Quarters } from 'react-icons/ai'
 
 
 
@@ -32,38 +34,71 @@ const Index = () => {
     const [coursePrerequisitesInputValue, setCoursePrerequisitesInputValue] = useState<string>("")
     const [courseOptionalDescription, setCourseOptionalDescription] = useState<string>("")
 
+    const [youtubeCourseThumbnail, setYoutubeCourseThumbnail] = useState<string>("")
+    const [youtubeCourseChannelName, setYoutubeCourseChannelName] = useState<string>("")
+    const [youtubeCourseChannelID, setYoutubeCourseChannelID] = useState<string>("")
+    const [youtubeCourseChannelLogo, setYoutubeCourseChannelLogo] = useState<string>("")
+    const [youtubeCourseTitle, setYoutubeCourseTitle] = useState<string>("")
+    const [youtubeVideoID, setYoutubeVideoID] = useState<string>("")
+    const [youtubePlaylistID, setYoutubePlaylistID] = useState<string>("")
+
+
+
     // Redux States
     const communityData: ICommunityData = useSelector((state: any) => state?.communityData?.currentCommunityData[0])
     const communityOwnerID = communityData?.communityOwnerID
 
-    
+
 
     const fetchYouTubeVideoDetails = async () => {
-        if(sourceOfLearningDropdownLinkID) {
+        if (sourceOfLearningDropdownLinkID) {
             try {
+                console.log(`Fetching Video details`)
+                setIsLoading(true)
                 const res = await axios.get(`https://www.googleapis.com/youtube/v3/search/?key=${process.env.NEXT_PUBLIC_YOUTUBE_API_KEY}&part=snippet&q=${sourceOfLearningDropdownLinkID}`)
-    
+
                 console.log(res);
-                
+                console.log(res?.data?.items);
+
+                setYoutubeCourseChannelID(res?.data?.items[0]?.snippet?.channelId)
+                setYoutubeCourseTitle(res?.data?.items[0]?.snippet?.channelTitle)
+                setYoutubeCourseThumbnail(res?.data?.items[0]?.snippet?.thumbnails?.high?.url)
+                setYoutubeVideoID(res?.data?.items[0]?.id?.videoId || "")
+
+                setIsLoading(false)
+
             } catch (error) {
-                alert("Try Again")
+                alert("Invalid Video ID")
                 console.error(error)
+                setIsLoading(false)
             }
         } else {
             alert("Enter Video ID")
+            setIsLoading(false)
         }
     }
 
     const fetchYouTubePlaylistDetails = async () => {
-        if(sourceOfLearningDropdownLinkID) {
+        if (sourceOfLearningDropdownLinkID) {
             try {
+                console.log(`Fetching playlist details`)
+                setIsLoading(true)
                 const res = await axios.get(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=25&playlistId=${sourceOfLearningDropdownLinkID}&key=${process.env.NEXT_PUBLIC_YOUTUBE_API_KEY}`)
-    
-                console.log(res);
-                
+
+                // console.log(res);
+                setYoutubeCourseChannelID(res?.data?.items[0]?.snippet?.channelId)
+                setYoutubeCourseChannelName(res?.data?.items[0]?.snippet?.channelTitle)
+                setYoutubeCourseThumbnail(res?.data?.items[0]?.snippet?.thumbnails?.high?.url)
+                setYoutubePlaylistID(res?.data?.items[0]?.id?.playlistId || "")
+
+
+                setIsLoading(false)
+
             } catch (error) {
-                alert("Try Again")
+                alert("Invalid Playlist ID")
                 console.error(error)
+                setIsLoading(false)
+
             }
         } else {
             alert("Enter Valid Playlist ID")
@@ -71,7 +106,102 @@ const Index = () => {
     }
 
     const createCourse = async () => {
+        if (courseNameInputValue.length >= 10 && courseNameInputValue.length <= 50) {
+            if (courseDurationInputValue < 91) {
+                if (communityOwnerID === user?.uid) {
+                    if (user && !loading && courseNameInputValue && courseGoalInputValue && courseDurationInputValue && sourceOfLearningDropdownValue && sourceOfLearningDropdownLinkID && coursePrerequisitesInputValue) {
+                        try {
+                            setIsLoading(true)
+                            console.log(` createCourse is running`);
 
+                            const communityCoursesCollectionRef = collection(db, "communityCourses")
+                            const addingCourse = addDoc(communityCoursesCollectionRef, {
+                                courseID: "",
+                                communityID: communityData?.communityID,
+                                courseName: courseNameInputValue,
+                                courseGoal: courseGoalInputValue,
+                                courseDurationInDays: courseDurationInputValue,
+                                courseSourceOfLearning: sourceOfLearningDropdownValue,
+                                courseSourceOfLearningLinkID: sourceOfLearningDropdownLinkID,
+                                coursePrerequisites: coursePrerequisitesInputValue,
+                                courseDescription: courseOptionalDescription,
+                                courseCreatorID: user?.uid
+                            })
+
+                            // ---- adding ID ----
+                            const communityCourseRef = doc(db, "communityCourses", (await addingCourse).id)
+                            await updateDoc(communityCourseRef, {
+                                courseID: (await addingCourse).id
+                            })
+
+
+                            // -------- creating Community Course paths ---------
+                            // const data = await getDoc(communityCourseRef)
+                            // const pathsNumbers: number = data.data()?.trackDurationInDays
+                            // const communityPathsSubCollectionRef = collection(db, "communities", id as string, "trackPaths")
+
+                            const coursePathsSubCollectionRef = collection(db, 'communityCourses', (await addingCourse).id, "coursePaths")
+
+                            for (let i = 1; i <= courseDurationInputValue; i++) {
+                                // adding path
+                                if (i === 1) {
+                                    const addingPath = await addDoc(coursePathsSubCollectionRef, {
+                                        pathID: "",
+                                        courseID: (await addingCourse).id,
+                                        pathCreatorID: user?.uid,
+                                        communityID: id,
+                                        pathNumber: i,
+                                        isUnlocked: true,
+                                        isCompleted: false,
+
+                                        coinsClaimedByUsers: [],
+                                        isPathClassCreated: false
+
+                                    })
+
+                                    // adding ID manually
+                                    await updateDoc(addingPath, {
+                                        pathID: addingPath.id
+                                    })
+                                } else {
+                                    const addingPath = await addDoc(coursePathsSubCollectionRef, {
+                                        courseID: (await addingCourse).id,
+                                        pathID: "",
+                                        pathCreatorID: user?.uid,
+                                        communityID: id,
+                                        pathNumber: i,
+                                        isUnlocked: false,
+                                        isCompleted: false,
+
+                                        coinsClaimedByUsers: [],
+                                        isPathClassCreated: false
+
+                                    })
+
+                                    // adding ID manually
+                                    await updateDoc(addingPath, {
+                                        pathID: addingPath.id
+                                    })
+                                }
+
+                            }
+
+
+                            setTimeout(() => {
+                                setIsLoading(false)
+                            }, courseDurationInputValue > 30 ? 3500 : 4500);
+
+                        } catch (error) {
+                            setIsLoading(false)
+                        }
+                    }
+                }
+            } else if (courseDurationInputValue > 91) {
+                alert("Course duration should be less than 90 days and more than 1 days")
+            }
+        } else {
+            alert("Course Name should not be more than 50 characters and less than 10 characters")
+        }
     }
 
 
@@ -79,7 +209,7 @@ const Index = () => {
         <>
             {!isLoading && (
                 <CommunityLayout>
-                    <main className='w-full h-[90vh] mb-[10vh] lg:mb-0 fixed lg:static inset-0 flex flex-col justify-start items-center bg-white lg:pt-12 lg:pb-36'>
+                    <main className='w-full h-[90vh] mb-[10vh] lg:mb-0 fixed lg:static inset-0 flex flex-col justify-start items-center bg-red-400 lg:pt-12 lg:pb-36'>
                         <div className='w-full h-full xl:w-[70%] 2xl:w-[50%] flex flex-col justify-start items-start pt-10 pb-5 px-5 space-y-5 overflow-x-hidden overflow-y-scroll scrollbar-hide bg-white border-2 border-black'>
 
                             {/* ---- LOGO ---- */}
@@ -90,8 +220,17 @@ const Index = () => {
 
                             {/* ---- Heading and info ----- */}
                             <h2 className='text-3xl font-bold' onClick={() => {
-                                console.log(`User UID -> ${user?.uid}`);
-                                console.log(`communityOwnerID -> ${communityOwnerID}`);
+                                // console.log(`User UID -> ${user?.uid}`);
+                                // console.log(`communityOwnerID -> ${communityOwnerID}`);
+                                console.log(`youtubeCourseThumbnail => ${youtubeCourseThumbnail}`);
+                                console.log(`youtubeCourseChannelName => ${youtubeCourseChannelName}`)
+                                console.log(`youtubeCourseChannelID => ${youtubeCourseChannelID}`);
+                                console.log(`youtubeCourseChannelLogo => ${youtubeCourseChannelLogo}`)
+                                console.log(`youtubeCourseTitle => ${youtubeCourseTitle}`);
+                                console.log(`youtubeVideoID => ${youtubeVideoID}`)
+                                console.log(`youtubePlaylistID => ${youtubePlaylistID}`);
+
+
                             }}> Create a Course  </h2>
                             <p className='font-medium text-sm text-gray-900'>
                                 Setup a course for your community members to learn together and grow together at ZERO cost
@@ -263,14 +402,19 @@ const Index = () => {
                                                     // console.log(`courseDurationInputValue => ${courseDurationInputValue}`)
 
                                                     // console.log(`sourceOfLearningDropdownValue => ${sourceOfLearningDropdownValue}`)
-                                                    console.log(`sourceOfLearningDropdownLink => ${sourceOfLearningDropdownLinkID}`)
+                                                    // console.log(`sourceOfLearningDropdownLink => ${sourceOfLearningDropdownLinkID}`)
                                                     // console.log(`coursePrerequisitesInputValue => ${coursePrerequisitesInputValue}`);
                                                     // console.log(`courseOptionalDescription => ${courseOptionalDescription}`)
-                                                    console.log(communityOwnerID);
+                                                    // console.log(communityOwnerID);
 
-                                                    // createTrack()
+                                                    // createCourse()
                                                     // fetchYouTubeVideoDetails()
-                                                    fetchYouTubePlaylistDetails()
+
+                                                    if (sourceOfLearningDropdownValue === "youtube-playlist") {
+                                                        fetchYouTubePlaylistDetails()
+                                                    } else if (sourceOfLearningDropdownValue === "youtube-video") {
+                                                        fetchYouTubeVideoDetails()
+                                                    }
 
 
                                                 }}
@@ -290,6 +434,14 @@ const Index = () => {
                         </div>
                     </main>
                 </CommunityLayout>
+            )}
+
+
+            {isLoading && (
+                <div className='z-40 w-[100%] h-[100vh] fixed inset-0 flex flex-col justify-center items-center bg-white space-y-5'>
+                    <p className='text-4xl font-bold text-black'> Creating... </p>
+                    <AiOutlineLoading3Quarters className="w-10 h-10 text-black animate-spin" />
+                </div>
             )}
 
         </>

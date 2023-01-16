@@ -11,4 +11,13 @@ export interface ICourse {
     coursePrerequisites: string
     courseDescription: string
     courseCreatorID: string
+
+    youtubeCourseThumbnail: string
+    youtubeCourseChannelName: string
+    youtubeCourseChannelID: string
+    youtubeCourseChannelLogo: string 
+    youtubeCourseTitle: string
+
+    youtubeVideoID?: string
+    youtubePlaylistID?: string
 }

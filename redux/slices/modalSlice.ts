@@ -1,7 +1,8 @@
 import {createSlice} from "@reduxjs/toolkit"
 
 const initialState = {
-    isCreateOptionsModalOpen: false
+    isCreateOptionsModalOpen: false,
+    isNotificationModalOpen: false
 }
 
 const modalSlice =  createSlice({
@@ -10,9 +11,12 @@ const modalSlice =  createSlice({
     reducers: {
         setIsCreateOptionsModalOpen : (state, action) => {
             state.isCreateOptionsModalOpen = action.payload
+        },
+        setIsNotificationModalOpen : (state, action) => {
+            state.isNotificationModalOpen = action.payload
         }
     }
 })
 
-export const {setIsCreateOptionsModalOpen} = modalSlice.actions
+export const {setIsCreateOptionsModalOpen, setIsNotificationModalOpen} = modalSlice.actions
 export default modalSlice.reducer

@@ -14,6 +14,7 @@ import { useAuthState } from 'react-firebase-hooks/auth'
 
 import logoTwo from "../../../public/images/logos/logoTwo.png"
 import Image from 'next/image'
+import NotificationModal from '../Modals/NotificationModal/NotificationModal'
 
 
 
@@ -39,9 +40,13 @@ const Header = () => {
       {user !== null && (
         <div className='flex justify-between items-center space-x-4'>
           <SearchBarIcon />
+
           {/* <PlusIcon /> */}
           <CreateOptionsModal />
+
           <BellIcon />
+          {/* <NotificationModal /> */}
+
           <MessagesIcon />
         </div>
       )}

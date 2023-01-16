@@ -31,18 +31,18 @@ const Index = ({ communityCourseData, communityCourseClassesData }: IProps) => {
         {/* <Link href={`/community/${id}/Classes/createClass`} > create Class </Link> */}
 
 
-        {/* NO TRACKS */}
-        {/* {!communityTracksData[0] && (
+        {/* NO Course */}
+        {!communityCourseData[0] && (
           <div className="w-full flex flex-col justify-start items-center p-2">
             <div className="flex flex-col justify-center items-center px-8 py-4 space-y-2 bg-BrutalGreen2">
-              <p className="font-bold text-lg"> Create a learning Track for your community 🚀 </p>
+              <p className="font-bold text-lg"> Create a Course for your community 🚀 </p>
                 <Link href={`/community/${id}/Tracks/createTrack`} className="text-white font-medium text-lg"> Create one </Link>
             </div>
           </div>
-        )} */}
+        )}
 
 
-        {/* Track and Classes Found !!! */}
+        {/* Course and Classes Found !!! */}
         {communityCourseData[0] && communityCourseClassesData[0] ? (
           <div className='w-full flex flex-col justify-start items-center space-y-3 px-2 sm:px-0'>
             {communityCourseClassesData?.map((communityClass: IClassData) => (
@@ -52,14 +52,14 @@ const Index = ({ communityCourseData, communityCourseClassesData }: IProps) => {
         ) : null}
 
 
-        {/* Track But No Classes */}
-        {/* {communityTracksData[0] && !communityClassesData[0] ? (
+        {/* Course But No Classes */}
+        {communityCourseData[0] && !communityCourseClassesData[0] ? (
           <div className='w-full flex flex-col items-center justify-center'>
             <div className='relative w-[95%] sm:w-[80%] md:w-[60%] lg:w-[70%] xl:w-[50%] h-72 sm:h-56 md:h-56 bg-white border-2 border-black rounded-md scrollbar-hide'>
               <div className='absolute bottom-2 right-2 w-full h-full bg-white border-2 border-black rounded-md'>
                 <div className='absolute bottom-2 right-2 w-full h-full p-3 bg-white border-2 border-black rounded-md flex flex-col justify-center items-center space-y-3 overflow-x-hidden overflow-y-scroll  scrollbar-hide'>
                   <p className='text-3xl font-bold tet-black'> No Classes </p>
-                  {communityTracksData[0]?.trackCreatorID === user?.uid && (
+                  {communityCourseData[0]?.courseCreatorID === user?.uid && (
                     <Link href={`/community/${id}/Classes/createClass`} className="text-blue-500 font-medium text-lg"> Create one </Link>
                   )}
                 </div>
@@ -67,7 +67,7 @@ const Index = ({ communityCourseData, communityCourseClassesData }: IProps) => {
               </div>
             </div>
           </div>
-        ) : null} */}
+        ) : null}
 
 
 

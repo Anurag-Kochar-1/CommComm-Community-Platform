@@ -43,7 +43,7 @@ const PostCardDropdown = ({postData}: IProps) => {
     }
 
   return (
-    <div className="text-right hidden lg:inline-block z-50">
+    <div className="text-right z-50">
     <Menu as="div" className="relative inline-block text-left z-50">
       <div>
         <Menu.Button className="inline-flex w-full justify-center rounded-md text-sm font-medium text-white">

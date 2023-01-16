@@ -8,9 +8,11 @@ import { BsBook } from 'react-icons/bs'
 
 interface IProps {
     communityCourseData: ICourse
+    courseNavTabs: string
+    setCourseNavTabs: React.Dispatch<React.SetStateAction<string>>
 }
 // md:w-[60%] xl:w-[50%] 2xl:w-[45%]
-const CommunityCourseCard = ({ communityCourseData }: IProps) => {
+const CommunityCourseCard = ({ communityCourseData, courseNavTabs, setCourseNavTabs }: IProps) => {
     return (
         <div className='w-[90%] sm:w-[70%] lg:w-[90%] h-auto lg:h-72 flex flex-col justify-start items-center border-2 border-black bg-black rounded-md'
             onClick={() => console.log(communityCourseData)}
@@ -60,7 +62,7 @@ const CommunityCourseCard = ({ communityCourseData }: IProps) => {
                                 </span>
                                 <div className='flex justify-start items-center space-x-2'>
                                     <span className='text-black text-sm font-Roboto font-medium'> {"Goal : "} </span>
-                                    <p className='text-black text-sm font-Roboto font-medium'>  {communityCourseData?.courseGoal} </p>
+                                    <p className='text-blue-600 text-sm font-Roboto font-medium' onClick={() => setCourseNavTabs("details")}> {"Read Goals"} </p>
                                 </div>
                             </div>
 
@@ -71,29 +73,11 @@ const CommunityCourseCard = ({ communityCourseData }: IProps) => {
                                 </span>
                                 <div className='flex justify-start items-center space-x-2'>
                                     <span className='text-black text-sm font-Roboto font-medium'> {"Prerequisites : "} </span>
-                                    <p className='text-black text-sm font-Roboto font-medium'>  {communityCourseData?.coursePrerequisites} </p>
+                                    <p className='text-blue-600 text-sm font-Roboto font-medium'onClick={() => setCourseNavTabs("details")}> {"Read Prerequisites"} </p>
                                 </div>
                             </div>
                         </div>
 
-                        {/* Details */}
-                        {/* <div className='hidden w-full lg:inline-flex flex-col justify-start items-start space-y-1 '>
-
-                            <p className='text-black text-base font-Roboto font-medium'>
-                                Goal : {' '}
-                                <span className='text-gray-900 text-base font-Roboto font-medium'>
-                                    {communityCourseData?.courseGoal}
-                                </span>
-                            </p>
-
-                            <p className='text-black text-base font-Roboto font-medium'>
-                                Prerequisites : {' '}
-                                <span className='text-gray-900 text-base font-Roboto font-medium'>
-                                {communityCourseData?.coursePrerequisites}
-                                </span>
-                            </p>
-
-                        </div> */}
                     </div>
 
                 </div>

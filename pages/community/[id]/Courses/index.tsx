@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setCommunityCoursePathsData } from '../../../../redux/slices/communityDataSlice'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { ICommunityData } from '../../../../customTypesAndInterfaces/Community/CommunityInterfaces'
+import { BsBook } from 'react-icons/bs'
 
 interface IProps {
     communityCoursesData: ICourse[]
@@ -25,12 +26,13 @@ const Index = ({ communityCoursesData }: IProps) => {
     const { id } = router.query
     const dispatch = useDispatch()
 
+    // States
     const [courseNavTabs, setCourseNavTabs] = useState<string>("paths")
-    const communityCoursePathsDataRedux: IPathsData[] = useSelector((state: any) => state?.communityData?.communityCoursePathsData)
 
 
     // Redux States
     const communityData: ICommunityData = useSelector((state: any) => state?.communityData?.currentCommunityData[0])
+    const communityCoursePathsDataRedux: IPathsData[] = useSelector((state: any) => state?.communityData?.communityCoursePathsData)
 
 
     // Real time listening to communityCoursePathsData
@@ -54,7 +56,7 @@ const Index = ({ communityCoursesData }: IProps) => {
                 <h1 onClick={() => console.log(communityCoursesData)} className="text-xl my-10 bg-red-300">  LOG communityCoursesData </h1>
                 <h1 onClick={() => console.log(communityCoursePathsData)} className="text-xl my-10 bg-blue-300">  LOG communityCoursePathsData </h1> */}
 
-                <h1 onClick={() => console.log(communityCoursePathsDataRedux)} className="text-xl my-10 bg-blue-300">  LOG communityCoursePathsDataRedux </h1>
+                {/* <h1 onClick={() => console.log(communityCoursePathsDataRedux)} className="text-xl my-10 bg-blue-300">  LOG communityCoursePathsDataRedux </h1> */}
 
                 {/* Community Posts Header */}
                 <div className='w-full h-16 bg-black flex justify-start items-center space-x-2 px-4 mb-10'>
@@ -67,7 +69,7 @@ const Index = ({ communityCoursesData }: IProps) => {
                 {communityCoursesData[0] && (
                     <div className='w-full h-auto bg-white flex flex-col justify-start items-center overflow-x-hidden overflow-y-scroll pb-10 scrollbar-hide'>
                         {communityCoursesData?.map((communityCourse) => {
-                            return <CommunityCourseCard communityCourseData={communityCourse} key={communityCourse?.courseID} />
+                            return <CommunityCourseCard communityCourseData={communityCourse} key={communityCourse?.courseID} courseNavTabs={courseNavTabs} setCourseNavTabs={setCourseNavTabs} />
                         })}
                     </div>
                 )}
@@ -86,31 +88,32 @@ const Index = ({ communityCoursesData }: IProps) => {
                     </div>
                 ) : null}
 
-                {/* Course Header */}
+                {/* ---- Course Header ---- */}
                 {communityCoursesData[0] && (
                     <div className='w-full h-16 bg-black flex justify-center items-center space-x-4 px-4 mb-10'>
-                    <button
-                        onClick={() => setCourseNavTabs("paths")}
-                        type='button'
-                        title='paths'
-                        className={`w-20 h-9 ${courseNavTabs === 'paths' && "bg-BrutalBlue1"} flex justify-center items-center`}
-                    >
-                        <span className={`text-xl ${courseNavTabs === 'paths' ? "text-black" : "text-white"} font-Roboto font-bold`}> Paths </span>
-                    </button>
+                        <button
+                            onClick={() => setCourseNavTabs("paths")}
+                            type='button'
+                            title='paths'
+                            className={`w-20 h-9 ${courseNavTabs === 'paths' && "bg-BrutalBlue1"} flex justify-center items-center`}
+                        >
+                            <span className={`text-xl ${courseNavTabs === 'paths' ? "text-black" : "text-white"} font-Roboto font-bold`}> Paths </span>
+                        </button>
 
 
-                    <button
-                        onClick={() => setCourseNavTabs("details")}
-                        type='button'
-                        title='paths'
-                        className={`w-20 h-9 ${courseNavTabs === 'details' && "bg-BrutalGreen1"} flex justify-center items-center`}
-                    >
-                        <span className={`text-xl ${courseNavTabs === 'details' ? "text-black" : "text-white"} font-Roboto font-bold`}> Details </span>
-                    </button>
-                </div>
+                        <button
+                            onClick={() => setCourseNavTabs("details")}
+                            type='button'
+                            title='paths'
+                            className={`w-20 h-9 ${courseNavTabs === 'details' && "bg-BrutalGreen1"} flex justify-center items-center`}
+                        >
+                            <span className={`text-xl ${courseNavTabs === 'details' ? "text-black" : "text-white"} font-Roboto font-bold`}> Details </span>
+                        </button>
+                    </div>
                 )}
 
 
+                {/* ---- Paths ---- */}
                 {communityCoursePathsDataRedux[0] && communityCoursesData[0] && courseNavTabs === 'paths' ? (
                     <div>
                         {communityCoursePathsDataRedux?.map((path: any) => {
@@ -118,6 +121,31 @@ const Index = ({ communityCoursesData }: IProps) => {
                         })}
                     </div>
                 ) : null}
+
+                {/* Detials */}
+                {communityCoursePathsDataRedux[0] && communityCoursesData[0] && courseNavTabs === 'details' ? (
+                    <div className='w-full  flex flex-col items-start justify-start space-y-2'>
+
+                        {/* Prerequisites */}
+                        <div className='flex flex-col justify-start items-start space-y-2 bg-white p-2 text-left hover:cursor-pointer'>
+                            <div className='w-full flex justify-start items-center space-x-2 bg-white'>
+                                <span className='text-black text-lg font-Roboto font-medium'> {"Goal : "} </span>
+                            </div>
+                            <p className='text-blue-600 text-base font-Roboto font-medium'> {communityCoursesData[0]?.courseGoal} </p>
+                        </div>
+
+                        {/* Prerequisites */}
+                        <div className='flex flex-col justify-start items-start space-y-2 bg-white p-2 text-left hover:cursor-pointer'>
+                            <div className='w-full flex justify-start items-center space-x-2 bg-white'>
+                                <span className='text-black text-lg font-Roboto font-medium'> {"Prerequisites : "} </span>
+                            </div>
+                            <p className='text-blue-600 text-base font-Roboto font-medium'> {communityCoursesData[0]?.coursePrerequisites} </p>
+                        </div>
+                    </div>
+                ) : null}
+
+
+
 
 
 

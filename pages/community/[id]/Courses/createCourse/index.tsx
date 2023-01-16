@@ -38,7 +38,7 @@ const Index = () => {
     const [youtubeCourseChannelName, setYoutubeCourseChannelName] = useState<string>("")
     const [youtubeCourseChannelID, setYoutubeCourseChannelID] = useState<string>("")
     const [youtubeCourseChannelLogo, setYoutubeCourseChannelLogo] = useState<string>("")
-    const [youtubeCourseTitle, setYoutubeCourseTitle] = useState<string>("")
+    // const [youtubeCourseTitle, setYoutubeCourseTitle] = useState<string>("")
     const [youtubeVideoID, setYoutubeVideoID] = useState<string>("")
     const [youtubePlaylistID, setYoutubePlaylistID] = useState<string>("")
 
@@ -58,13 +58,13 @@ const Index = () => {
                 const res = await axios.get(`https://www.googleapis.com/youtube/v3/search/?key=${process.env.NEXT_PUBLIC_YOUTUBE_API_KEY}&part=snippet&q=${sourceOfLearningDropdownLinkID}`)
 
                 console.log(res);
-                console.log(res?.data?.items);
 
                 setYoutubeCourseChannelID(res?.data?.items[0]?.snippet?.channelId)
-                setYoutubeCourseTitle(res?.data?.items[0]?.snippet?.channelTitle)
                 setYoutubeCourseThumbnail(res?.data?.items[0]?.snippet?.thumbnails?.high?.url)
+                setYoutubeCourseChannelName(res?.data?.items[0]?.snippet?.channelTitle)
                 setYoutubeVideoID(res?.data?.items[0]?.id?.videoId || "")
 
+                createCourse()
                 setIsLoading(false)
 
             } catch (error) {
@@ -85,13 +85,15 @@ const Index = () => {
                 setIsLoading(true)
                 const res = await axios.get(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=25&playlistId=${sourceOfLearningDropdownLinkID}&key=${process.env.NEXT_PUBLIC_YOUTUBE_API_KEY}`)
 
-                // console.log(res);
+                console.log(res);
+
                 setYoutubeCourseChannelID(res?.data?.items[0]?.snippet?.channelId)
-                setYoutubeCourseChannelName(res?.data?.items[0]?.snippet?.channelTitle)
                 setYoutubeCourseThumbnail(res?.data?.items[0]?.snippet?.thumbnails?.high?.url)
-                setYoutubePlaylistID(res?.data?.items[0]?.id?.playlistId || "")
+                setYoutubeCourseChannelName(res?.data?.items[0]?.snippet?.channelTitle)
+                setYoutubePlaylistID(res?.data?.items[0]?.snippet?.playlistId || "")
 
 
+                createCourse()
                 setIsLoading(false)
 
             } catch (error) {
@@ -125,7 +127,14 @@ const Index = () => {
                                 courseSourceOfLearningLinkID: sourceOfLearningDropdownLinkID,
                                 coursePrerequisites: coursePrerequisitesInputValue,
                                 courseDescription: courseOptionalDescription,
-                                courseCreatorID: user?.uid
+                                courseCreatorID: user?.uid,
+
+                                youtubeCourseThumbnail: youtubeCourseThumbnail,
+                                youtubeCourseChannelName: youtubeCourseChannelName,
+                                youtubeCourseChannelID: youtubeCourseChannelID,
+                                youtubeCourseChannelLogo:  youtubeCourseChannelLogo,
+                                youtubeVideoID: youtubeVideoID,
+                                youtubePlaylistID: youtubePlaylistID,
                             })
 
                             // ---- adding ID ----
@@ -191,6 +200,8 @@ const Index = () => {
                                 setIsLoading(false)
                             }, courseDurationInputValue > 30 ? 3500 : 4500);
 
+                            router.push(`/community/${id}/Courses`)
+
                         } catch (error) {
                             setIsLoading(false)
                         }
@@ -226,7 +237,7 @@ const Index = () => {
                                 console.log(`youtubeCourseChannelName => ${youtubeCourseChannelName}`)
                                 console.log(`youtubeCourseChannelID => ${youtubeCourseChannelID}`);
                                 console.log(`youtubeCourseChannelLogo => ${youtubeCourseChannelLogo}`)
-                                console.log(`youtubeCourseTitle => ${youtubeCourseTitle}`);
+                                // console.log(`youtubeCourseTitle => ${youtubeCourseTitle}`);
                                 console.log(`youtubeVideoID => ${youtubeVideoID}`)
                                 console.log(`youtubePlaylistID => ${youtubePlaylistID}`);
 

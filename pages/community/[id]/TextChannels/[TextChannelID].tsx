@@ -63,20 +63,20 @@ const Index = ({ allCommunityMessage }: any) => {
 
 
   useEffect(() => {
-    const communityMessagesRefAndQuery = query(collection(db, "communities", id as string, "communityMessages"), orderBy("messageCreatedAtTime", "desc"))
+    const communityMessagesRefAndQuery = query(collection(db, "communities", id as string, "communityMessages"), orderBy("messageCreatedAtTime", "asc"))
     const unSubRealTimeMessagesOnSnapShotListener = onSnapshot(communityMessagesRefAndQuery, (snapshot) => {
       setRealTimeMessagesState(snapshot.docs.map(doc => doc.data()))
     })
   }, [])
 
-  useEffect(() => {
-    console.log(` sorting messages `)
-    realTimeMessagesState.sort(function (a, b) {
-      if (a.messageCreatedAtTime < b.messageCreatedAtTime) { return -1 }
-      if (a.messageCreatedAtTime > b.messageCreatedAtTime) { return 1 }
-      return 0
-    })
-  },[realTimeMessagesState])
+  // useEffect(() => {
+  //   console.log(` sorting messages `)
+  //   realTimeMessagesState.sort(function (a, b) {
+  //     if (a.messageCreatedAtTime < b.messageCreatedAtTime) { return -1 }
+  //     if (a.messageCreatedAtTime > b.messageCreatedAtTime) { return 1 }
+  //     return 0
+  //   })
+  // },[realTimeMessagesState])
 
   return (
     <CommunityLayout>

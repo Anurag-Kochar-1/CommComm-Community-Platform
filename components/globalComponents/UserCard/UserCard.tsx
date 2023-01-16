@@ -10,7 +10,8 @@ interface IProps {
 
 const UserCard = ({ userData }: IProps) => {
     return (
-        <div
+        <Link  
+            href={`/profile/${userData?.userID}`}
             key={userData?.userDisplayPicture}
             className="w-[90%] h-14 xl:h-20 flex justify-start items-center bg-back border bg-black border-black space-x-2 rounded-lg hover:cursor-pointer hover:scale-105"
         >
@@ -34,7 +35,7 @@ const UserCard = ({ userData }: IProps) => {
                     </div>
                 </div>
             </div>
-        </div>
+        </Link>
     )
 }
 

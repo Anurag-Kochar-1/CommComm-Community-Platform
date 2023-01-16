@@ -23,11 +23,11 @@ const Index = ({ profileDetails, userCreatedPosts }: IProps) => {
 
 
   useEffect(() => {
-    // if (!user && !loading) {
-    //   router.push(`/register`)
-    // }
+    if (!user && !loading) {
+      router.push(`/register`)
+    }
 
-  }, [])
+  }, [user])
 
   return (
     <main className='w-full lg:w-[60%] h-[80vh] lg:h-[90vh] mt-[12vh] mb-[10vh] lg:mb-0 bg-purple-50 shadow-lg shadow-gray-300 flex flex-col justify-start items-center overflow-x-hidden overflow-y-scroll pb-20 scrollbar-hide'>
@@ -37,27 +37,29 @@ const Index = ({ profileDetails, userCreatedPosts }: IProps) => {
         }}> Sign out </h1> */}
 
       {/* ----  Banner and Display Picture ----  */}
-      <div
-        onClick={() => console.log(profileDetails)}
-        className='w-full bg-white h-[25vh] flex justify-center items-end mb-12'
-        style={{
-          backgroundImage: 'url(' + `${"https://firebasestorage.googleapis.com/v0/b/th3-hackathon.appspot.com/o/userBanners%2FR.jpg?alt=media&token=1d46e1a2-b17f-41b4-89b9-19dc74cff91e"}` + ')',
-          backgroundSize: "cover",
-        }}
-        draggable="false"
-      >
+      <div className='w-full flex flex-col items-center justify-start mb-12'>
+        <div
+          onClick={() => console.log(profileDetails)}
+          className='w-full h-[25vh] bg-white flex justify-center items-end'
+          style={{
+            backgroundImage: 'url(' + `${"https://firebasestorage.googleapis.com/v0/b/th3-hackathon.appspot.com/o/userBanners%2FR.jpg?alt=media&token=1d46e1a2-b17f-41b4-89b9-19dc74cff91e"}` + ')',
+            backgroundSize: "cover",
+          }}
+          draggable="false"
+        >
 
-        {/* ----  Display Picture ----  */}
-        <div className='w-28 h-28 -mb-5 border-2 border-black bg-black rounded-md'>
-          <Image
-            unoptimized
-            src={user?.photoURL as string}
-            alt="dp"
-            width={12}
-            height={12}
-            className="w-full h-full -mt-1 -ml-1 border-2 border-black rounded-md" />
+          {/* ----  Display Picture ----  */}
+          <div className='w-28 h-28 -mb-5 border-2 border-black bg-black rounded-md'>
+            <Image
+              unoptimized
+              src={user?.photoURL as string}
+              alt="dp"
+              width={12}
+              height={12}
+              className="w-full h-full -mt-1 -ml-1 border-2 border-black rounded-md" />
+          </div>
+
         </div>
-
       </div>
 
       {/* ---- Name and Email ---- */}

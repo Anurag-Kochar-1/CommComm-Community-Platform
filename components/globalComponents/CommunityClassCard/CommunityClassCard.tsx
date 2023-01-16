@@ -17,7 +17,7 @@ const CommunityClassCard = ({ classDetails }: IProps) => {
     const [user, loading] = useAuthState(auth)
 
     const joinClass =  () => {
-        router.push(`${classDetails?.communityClassLink}`)
+        router.push(`${classDetails?.communityCourseClassLink}`)
     }
 
     return (
@@ -28,19 +28,19 @@ const CommunityClassCard = ({ classDetails }: IProps) => {
                     {/* Timing Header */}
                     <div className='w-full flex justify-start items-center space-x-2'>
                         <IoMdCalendar className='text-xl text-BrutalPurple2' />
-                        <p className='text-sm font-medium text-gray-800'> {classDetails?.dateCreatedAt} {classDetails.communityClassStartingTime} - {classDetails.communityClassEndingTime} </p>
+                        <p className='text-sm font-medium text-gray-800'> {classDetails?.dateCreatedAt} {classDetails.communityCourseClassStartingTime} - {classDetails.communityCourseClassEndingTime} </p>
                     </div>
 
                     {/* Community Class Name */}
-                    <h3 className='text-lg font-bold'> {classDetails?.communityClassName} </h3>
-                    <p className='text-sm font-medium'> {classDetails?.communityClassDescription} </p>
+                    <h3 className='text-lg font-bold'> {classDetails?.communityCourseClassName} </h3>
+                    <p className='text-sm font-medium'> {classDetails?.communityCourseClassDescription} </p>
 
                     {/* Line Divider */}
                     <div className='w-full h-[1px] bg-black' />
 
                     <div className='w-full flex justify-between items-center'>
                         <div className='flex justify-center items-center space-x-2'>
-                            {classDetails?.communityLogo && <Image src={classDetails?.communityLogo} alt="logo" className='w-7 h-7 rounded-full' width={7} height={7} />}
+                            {classDetails?.communityLogo && <Image unoptimized src={classDetails?.communityLogo} alt="logo" className='w-7 h-7 rounded-full ' width={7} height={7} />}
                             <p className='text-sm font-normal text-black'> {classDetails?.communityName} </p>
                         </div>
 

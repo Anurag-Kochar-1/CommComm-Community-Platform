@@ -1,17 +1,20 @@
 export interface IClassData {
-    communityClassID: string
-    trackID: string
-    communityClassName: string
-    communityClassLink: string
-    communityClassDescription: string
-    communityClassStartingTime: string
-    communityClassEndingTime: string
+    classID: string
+    courseID: string
+
+    communityCourseClassName: string
+    communityCourseClassLink: string
+    communityCourseClassDescription: string
+    communityCourseClassStartingTime: string
+    communityCourseClassEndingTime: string
+
     dateCreatedAt: string
-    communityClassCreatorID: string
+    communityCourseClassCreatorID: string
     communityID: string
     communityName: string
     communityLogo: string
     pathNumber: number
+    pathID: string
 
     isClassStarted: boolean
     isClassEnded: boolean

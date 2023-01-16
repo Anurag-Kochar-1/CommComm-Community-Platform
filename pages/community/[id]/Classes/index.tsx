@@ -1,4 +1,4 @@
-import { collection, getDocs } from 'firebase/firestore'
+import { collection, getDocs, query, where } from 'firebase/firestore'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React from 'react'
@@ -6,16 +6,17 @@ import { useAuthState } from 'react-firebase-hooks/auth'
 import CommunityClassCard from '../../../../components/globalComponents/CommunityClassCard/CommunityClassCard'
 import CommunityLayout from '../../../../components/layouts/Community/CommunityLayout'
 import { IClassData } from '../../../../customTypesAndInterfaces/Class/classInterfaces'
+import { ICourse } from '../../../../customTypesAndInterfaces/Course/courseInterfaces'
 import { IPathsData } from '../../../../customTypesAndInterfaces/Tracks/pathsInterface'
 import { ITrackData } from '../../../../customTypesAndInterfaces/Tracks/tracksInterface'
 import { auth, db } from '../../../../firebaseConfig'
 
 interface IProps {
-  communityClassesData: any[]
-  communityTracksData: any[]
+  communityCourseData: ICourse[]
+  communityCourseClassesData: IClassData[]
 }
 
-const Index = ({ communityClassesData, communityTracksData }: IProps) => {
+const Index = ({ communityCourseData, communityCourseClassesData }: IProps) => {
   const [user] = useAuthState(auth)
   const router = useRouter()
   const { id } = router.query
@@ -24,35 +25,35 @@ const Index = ({ communityClassesData, communityTracksData }: IProps) => {
     <CommunityLayout>
       <main className='w-full h-full flex flex-col justify-start items-center bg-white pt-12 pb-36'>
 
-        {/* <h1 onClick={( ) => console.log(communityClassesData)} className="text-xl my-5"> LOG communityClassesData </h1> */}
-        {/* <h1 onClick={( ) => console.log(communityTracksData)} className="text-xl my-5"> LOG communityTrackPathsData </h1> */}
+        <h1 onClick={() => console.log(communityCourseData)} className="text-xl my-5"> LOG communityCourseData </h1>
+        <h1 onClick={() => console.log(communityCourseClassesData)} className="text-xl my-5"> LOG communityCourseClassesData </h1>
 
         {/* <Link href={`/community/${id}/Classes/createClass`} > create Class </Link> */}
 
 
         {/* NO TRACKS */}
-        {!communityTracksData[0] && (
+        {/* {!communityTracksData[0] && (
           <div className="w-full flex flex-col justify-start items-center p-2">
             <div className="flex flex-col justify-center items-center px-8 py-4 space-y-2 bg-BrutalGreen2">
               <p className="font-bold text-lg"> Create a learning Track for your community 🚀 </p>
                 <Link href={`/community/${id}/Tracks/createTrack`} className="text-white font-medium text-lg"> Create one </Link>
             </div>
           </div>
-        )}
+        )} */}
 
 
         {/* Track and Classes Found !!! */}
-        {communityTracksData[0] && communityClassesData[0] ? (
+        {communityCourseData[0] && communityCourseClassesData[0] ? (
           <div className='w-full flex flex-col justify-start items-center space-y-3 px-2 sm:px-0'>
-            {communityClassesData?.map((communityClass: IClassData) => (
-              <CommunityClassCard classDetails={communityClass} key={communityClass?.communityClassID} />
+            {communityCourseClassesData?.map((communityClass: IClassData) => (
+              <CommunityClassCard classDetails={communityClass} key={communityClass?.classID} />
             ))}
           </div>
         ) : null}
 
 
         {/* Track But No Classes */}
-        {communityTracksData[0] && !communityClassesData[0] ? (
+        {/* {communityTracksData[0] && !communityClassesData[0] ? (
           <div className='w-full flex flex-col items-center justify-center'>
             <div className='relative w-[95%] sm:w-[80%] md:w-[60%] lg:w-[70%] xl:w-[50%] h-72 sm:h-56 md:h-56 bg-white border-2 border-black rounded-md scrollbar-hide'>
               <div className='absolute bottom-2 right-2 w-full h-full bg-white border-2 border-black rounded-md'>
@@ -66,7 +67,7 @@ const Index = ({ communityClassesData, communityTracksData }: IProps) => {
               </div>
             </div>
           </div>
-        ) : null}
+        ) : null} */}
 
 
 
@@ -83,20 +84,26 @@ export default Index
 export const getServerSideProps = async ({ params }: any) => {
   const { id } = params
 
-  // fetching classes
-  const communityClassesSubCollectionRef = collection(db, "communities", id, "communityClasses")
-  const res = await getDocs(communityClassesSubCollectionRef)
-  const communityClassesData: any[] = res?.docs?.map(doc => doc.data())
+   // Fetching community course
+  const communityCoursesCollectionRef = collection(db, "communityCourses")
+  const communityCourseQuery = query(communityCoursesCollectionRef, where("communityID", "==", id))
+  const communityCourseQueryRes = await getDocs(communityCourseQuery)
+  const communityCourseData: ICourse[] = communityCourseQueryRes?.docs?.map(doc => doc.data() as ICourse)
 
-  // fetching tracks Paths
-  const communityTracksSubCollectionRef = collection(db, "communities", id as string, "communityTracks")
-  const data = await getDocs(communityTracksSubCollectionRef)
-  const communityTracksData: ITrackData[] = data?.docs?.map(doc => doc.data() as ITrackData)
 
+  let communityCourseClassesData:IClassData[] = []
+
+  // Fetching classes
+  if (communityCourseData[0]) {
+    const classCollectionRef = collection(db, "communityCourses", communityCourseData[0]?.courseID, "courseClasses")
+    const classRes = await getDocs(classCollectionRef)
+    const data: IClassData[] = classRes?.docs?.map(doc => doc.data() as IClassData)
+    communityCourseClassesData = data
+  }
 
 
 
   return {
-    props: { communityClassesData, communityTracksData }
+    props: { communityCourseData, communityCourseClassesData }
   }
 }

@@ -38,7 +38,7 @@ const Index = ({ communityCoursesData, communityCoursePathsData }: IProps) => {
                     <div className='w-full h-auto bg-white flex flex-col justify-start items-center overflow-x-hidden overflow-y-scroll pb-20 scrollbar-hide'>
 
                         {communityCoursesData?.map((communityCourse) => {
-                            return <CommunityCourseCard communityCourseData={communityCourse} />
+                            return <CommunityCourseCard communityCourseData={communityCourse} key={communityCourse?.courseID}/>
                         })}
 
                     </div>

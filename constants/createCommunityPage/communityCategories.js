@@ -195,7 +195,7 @@ export const communitySubCategoriesLogoArray = [
         id: 4,
         label: "Fiction",
         value: "Fiction",
-        logoURL: "https://firebasestorage.googleapis.com/v0/b/th3-hackathon.appspot.com/o/communityLogos%2F3d-fluency-unicorn.png?alt=media&token=af2499eb-cdce-4469-ab99-c7600d44d03a"
+        logoURL: "https://firebasestorage.googleapis.com/v0/b/th3-hackathon.appspot.com/o/communityLogos%2FGroup%2040.png?alt=media&token=a4cd4180-7112-4feb-88de-9529626c78d8"
     },
     {
         id: 5,

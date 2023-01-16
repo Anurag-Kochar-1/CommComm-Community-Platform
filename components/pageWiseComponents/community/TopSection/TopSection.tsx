@@ -31,7 +31,7 @@ const TopSection = () => {
             {/* ---- Banner ----  */}
             <div
                 onClick={() => console.log(communityData)}
-                className='w-full bg-black h-[25vh] lg:h-[20vh] flex justify-start items-end'
+                className='w-full bg-white h-[25vh] lg:h-[20vh] flex justify-start items-end'
                 style={{
                     backgroundImage: 'url(' + `${communityData?.communityBanner || "https://designmodo.com/wp-content/uploads/2017/08/gradient-1.jpg"}` + ')',
                     backgroundSize: "cover",
@@ -39,11 +39,11 @@ const TopSection = () => {
                 draggable="false"
             >
 
-                <div className='relative w-16 h-16 lg:w-20 lg:h-20  border border-black mx-3 -my-5 lg:mx-5 bg-black rounded-sm'>
+                <div className='relative w-16 h-16 lg:w-20 lg:h-20 border-1 border-black mx-3 -my-5 lg:mx-5 bg-black rounded-sm'>
                     {/* {communityData} */}
 
                     {communityData?.communityLogo ? (
-                        <Image unoptimized src={communityData?.communityLogo} width={15} height={15} alt="logo" className='absolute right-[4px] bottom-[4px] border border-black w-16 h-16 lg:w-20 lg:h-20 aspect-square rounded-sm' onClick={() => console.log(communityData)} draggable="false" />
+                            <Image unoptimized src={communityData?.communityLogo} width={15} height={15} alt="logo" className='absolute right-[4px] bottom-[4px] border border-black w-16 h-16 lg:w-20 lg:h-20 aspect-square rounded-sm' onClick={() => console.log(communityData)} draggable="false" />
                     ) : (
                         <div className='absolute right-[4px] bottom-[4px] border bg-BrutalPurple2 border-black w-16 h-16 lg:w-20 lg:h-20 aspect-square rounded-sm' />
                     )}

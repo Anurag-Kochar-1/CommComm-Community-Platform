@@ -28,7 +28,7 @@ const Index = () => {
 
   const [categoryBannerURL, setCategoryBannerURL] = useState<string>("https://firebasestorage.googleapis.com/v0/b/th3-hackathon.appspot.com/o/postImages%2FRectangle%20111.png?alt=media&token=228bdf8c-24e1-4ad1-bd99-3b1681aa0a0f")
 
-  const [communityLogoURL, setCommunityLogoURL] = useState<string>("")
+  const [communityLogoURL, setCommunityLogoURL] = useState<string>("https://firebasestorage.googleapis.com/v0/b/th3-hackathon.appspot.com/o/communityLogos%2Ftile-2822716_960_720.webp?alt=media&token=c7e987df-b500-42a2-9334-a87dfd33e1d1")
 
   const getBanner =  (categoryValue: string) => {
     console.log(`getBanner is running`);
@@ -44,6 +44,8 @@ const Index = () => {
     communitySubCategoriesLogoArray.map((subCategory) => {
       if(subCategoryValue === subCategory.value) {
         setCommunityLogoURL(subCategory.logoURL)
+      } else {
+        setCommunityLogoURL("https://firebasestorage.googleapis.com/v0/b/th3-hackathon.appspot.com/o/communityLogos%2Ftile-2822716_960_720.webp?alt=media&token=c7e987df-b500-42a2-9334-a87dfd33e1d1")
       }
     })
   }
@@ -63,7 +65,7 @@ const Index = () => {
             communityName: communityNameInputValue,
             communityCategory: communityCategory,
             communitySubCategory: communitySubCategory,
-            communityLogo: "https://firebasestorage.googleapis.com/v0/b/th3-hackathon.appspot.com/o/postImages%2F6cf18550-5ca7-491f-9725-171e5c38b6fc--220703-minions-music-hero_tfqnbm.jpg?alt=media&token=8c0fc36a-394a-413c-9b49-2e86342095a3",
+            communityLogo: communityLogoURL,
             communityBanner: categoryBannerURL,
             communityMembersID: [auth?.currentUser?.uid],
             communityOwnerID: auth?.currentUser?.uid,

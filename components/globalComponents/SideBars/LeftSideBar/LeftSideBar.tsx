@@ -111,7 +111,7 @@ const LeftSideBar = () => {
               <div className='w-full flex flex-col justify-start items-start space-y-1'>
                 <p className='font-InriaSans text-sm font-semibold'> {user?.displayName} </p>
                 <div className='w-full flex justify-start items-center space-x-2'>
-                  <Image src={coinIcon as string} alt="icon" width={5} height={5} className="w-5 h-5" />
+                  <Image unoptimized src={coinIcon as string} alt="icon" width={5} height={5} className="w-5 h-5" />
                   <span className='font-InriaSans font-semibold text-black text-sm'> {currentUserData?.userCoins} </span>
                 </div>
               </div>

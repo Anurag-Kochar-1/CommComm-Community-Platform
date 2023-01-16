@@ -13,6 +13,7 @@ import { LeaveCommunity } from '../../../../utils/Community/LeaveCommunity'
 import Image from 'next/image'
 
 import TimeAgo from 'react-timeago'
+import PostCardDropdown from '../../Modals/PostCardDropdown/PostCardDropdown'
 
 interface IProps {
     postData: IPost
@@ -232,8 +233,8 @@ const PostCard = ({ postData, page }: IProps) => {
 
 
 
-                {/* Join Button */}
-                {router.pathname === `/community/[id]` ? (
+                {/* Join Button  router.pathname === `/community/[id]`*/}
+                {postData?.postCreatorID !== user?.uid && router.pathname !== `/community/[id]` ? (
                     <button type='button' className='w-14 h-6 bg-black border border-black flex justify-center items-center rounded-full'>
                         <span
                             onClick={() => {
@@ -252,6 +253,9 @@ const PostCard = ({ postData, page }: IProps) => {
                         </span>
                     </button>
                 ) : null}
+
+
+                {postData?.postCreatorID === user?.uid &&  <PostCardDropdown postData={postData} /> }
             </div>
 
             {/* Title */}

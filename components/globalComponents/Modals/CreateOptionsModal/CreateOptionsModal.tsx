@@ -8,6 +8,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 
 export default function CreateOptionsModal() {
+    // console.log(`===== CreateOptionsModal is running =====`);
     const router = useRouter()
     const dispatch = useDispatch()
     const isCreateOptionsModalOpen = useSelector((state: any) => state?.modal?.isCreateOptionsModalOpen)

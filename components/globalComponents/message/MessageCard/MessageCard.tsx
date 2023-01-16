@@ -18,7 +18,7 @@ const MessageCard = ({ message }: IProps) => {
             <div className={`flex justify-end items-center space-x-3 ${message?.messageCreatorID === user?.uid ? "bg-purple-200 " : "bg-blue-200" } py-2 px-2 rounded-md`}>
 
                 <div className='w-10 h-10 flex justify-center items-center'>
-                    <Image src={message?.messageCreatorDisplayPicture || userDPdemo} alt="dp" className='w-7 h-7 rounded-full' width={7} height={7} />
+                    <Image src={message?.messageCreatorDisplayPicture || userDPdemo} alt="dp" className='w-7 h-7 rounded-full aspect-square' width={7} height={7} />
                 </div>
 
                 <div className='flex flex-col items-start justify-start '>

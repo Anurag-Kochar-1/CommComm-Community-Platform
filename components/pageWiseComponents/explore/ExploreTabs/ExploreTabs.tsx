@@ -3,10 +3,10 @@ import React from 'react'
 
 const ExploreTabs = () => {
   return (
-    <div className='w-full flex justify-center itemce space-x-2 sm:space-x-3 md:space-x-5 lg:space-x-10 flex-wrap sticky top-0 z-50 bg-green-400 border-b-2 border-r-2 border-l-2 border-b-black border-r-black border-l-black '>
+    <div className='w-full flex justify-center items-center py-4 space-x-2 sm:space-x-3 md:space-x-5 lg:space-x-10 flex-wrap sticky top-0 z-50 bg-BrutalGreen1 '>
         <Link 
         href={'/explore'}
-        className="w-16 h-10 relative bg-black border border-black flex justify-center items-center rounded-lg my-5"
+        className="w-16 h-10 relative bg-black border border-black flex justify-center items-center rounded-lg my-2"
         >
           <div className='absolute w-16 h-10 right-1 bottom-1 bg-BrutalAqua1 border border-black flex justify-center items-center rounded-lg active:right-0 active:bottom-0'>
             <p className='font-BebasNeue text-black text-xl '> Posts </p>
@@ -15,7 +15,7 @@ const ExploreTabs = () => {
 
         <Link 
         href={'/explore/communities'}
-        className="w-28 h-10 relative bg-black border border-black flex justify-center items-center rounded-lg my-5"
+        className="w-28 h-10 relative bg-black border border-black flex justify-center items-center rounded-lg my-2"
         >
           <div className='absolute w-28 h-10 right-1 bottom-1 bg-BrutalAqua1 border border-black flex justify-center items-center rounded-lg active:right-0 active:bottom-0'>
             <p className='font-BebasNeue text-black text-xl '> Communities </p>
@@ -24,9 +24,9 @@ const ExploreTabs = () => {
 
         <Link 
         href={'/explore/classes'}
-        className="w-16 h-10 relative bg-black border border-black flex justify-center items-center rounded-lg my-5"
+        className="w-20 h-10 relative bg-black border border-black flex justify-center items-center rounded-lg my-2"
         >
-          <div className='absolute w-16 h-10 right-1 bottom-1 bg-BrutalAqua1 border border-black flex justify-center items-center rounded-lg active:right-0 active:bottom-0'>
+          <div className='absolute w-20 h-10 right-1 bottom-1 bg-BrutalAqua1 border border-black flex justify-center items-center rounded-lg active:right-0 active:bottom-0'>
             <p className='font-BebasNeue text-black text-xl '> Classes </p>
           </div>
         </Link>

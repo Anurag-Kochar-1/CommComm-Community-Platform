@@ -62,9 +62,8 @@ const PostCardDropdown = ({postData}: IProps) => {
         <Menu.Items className="z-50 absolute right-0 mt-2 w-52 origin-top-right divide-y divide-gray-100 rounded-sm space-y-2 border-2 border-black">
           <div className="px-3 py-2 z-50 bg-BrutalRed1">
             <Menu.Item as={Fragment}>
-                  <div>
+                  <div onClick={deletePost}>
                     <button
-                    onClick={deletePost}
                     type='button'
                     className='text-white font-Roboto font-semibold'
                     >

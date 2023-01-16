@@ -12,7 +12,7 @@ interface IProps {
 
 const Index = ({ allPostsArray }: IProps) => {
   return (
-    <main className='w-full lg:w-[60%] h-[80vh] lg:h-[90vh] mt-[10vh] mb-[10vh] lg:mb-0 bg-BgSecondaryBrutalSkin1 flex flex-col justify-start items-center overflow-x-hidden overflow-y-scroll scrollbar-hide'>
+    <main className='w-full lg:w-[60%] h-[80vh] lg:h-[90vh] mt-[10vh] mb-[10vh] lg:mb-0 bg-gray-100 flex flex-col justify-start items-center overflow-x-hidden overflow-y-scroll scrollbar-hide'>
 
       <ExploreTabs />
 
@@ -39,7 +39,15 @@ export const getServerSideProps = async () => {
   const postCollectionRef = collection(db, "posts")
   const data = await getDocs(postCollectionRef)
 
+  
+
   const allPostsArray:IPost[] = JSON.parse(JSON.stringify( data?.docs?.map(doc => doc.data() as IPost)))
+
+  allPostsArray.sort(function (a, b) {
+        if (a.upvotedByUserID.length < b.upvotedByUserID.length) { return 1 }
+        if (a.upvotedByUserID.length > b.upvotedByUserID.length) { return -1 }
+        return 0
+      })
 
 
 

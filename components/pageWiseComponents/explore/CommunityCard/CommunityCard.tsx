@@ -9,27 +9,27 @@ interface IProps {
 
 const CommunityCard = ({ communityData }: IProps) => {
     return (
-        <div className='w-full h-72 sm:w-[60%] md:w-[40%] xl:w-[30%] relative  bg-black flex flex-col justify-start items-center rounded-lg' onClick={() => console.log(communityData)}>
+        <div className='w-full h-72 sm:w-[60%] md:w-[40%] xl:w-[30%] relative  bg-black flex flex-col justify-start items-center rounded-md' onClick={() => console.log(communityData)}>
 
             <Link
             href={`/community/${communityData.communityID}`}
-            className="absolute sm:right-2 sm:bottom-2 w-full h-72 border bg-white border-black flex flex-col justify-start items-center rounded-lg"
+            className="absolute sm:right-1 sm:bottom-1 w-full h-72 border bg-white border-black flex flex-col justify-start items-center rounded-md"
             >
 
                 {/* Banner and Logo */}
                 <div
-                    className='w-full h-full flex justify-center items-end p-5 border-1 border-black rounded-lg'
+                    className='w-full h-full flex justify-center items-end p-5 border-1 border-black rounded-md'
                     style={{
-                        backgroundImage: 'url(' + `https://designmodo.com/wp-content/uploads/2017/08/gradient-1.jpg` + ')',
+                        backgroundImage: 'url(' + `${communityData?.communityBanner || "https://designmodo.com/wp-content/uploads/2017/08/gradient-1.jpg"}` + ')',
                         backgroundSize: "cover",
                     }}>
 
                     {communityData.communityLogo !== null && (
-                        <img src={communityData.communityLogo as string} width={16} height={16} alt="pfp" className='w-16 h-16  rounded-full object-contain aspect-square' />
+                        <img src={communityData.communityLogo as string} width={16} height={16} alt="pfp" className='w-16 h-16  rounded-full object-contain aspect-square border-2 border-black' />
                     )}
 
                     {communityData.communityLogo === null && (
-                        <div className='w-16 h-16  rounded-full bg-BrutalAqua1 aspect-square' />
+                        <div className='w-16 h-16  rounded-full bg-BrutalAqua1 aspect-square border-2 border-black' />
                     )}
                 </div>
 

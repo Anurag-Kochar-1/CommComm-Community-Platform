@@ -11,7 +11,7 @@ interface IProps {
 
 const Index = ({ allCommunitiesArray }: IProps) => {
   return (
-    <main className='w-full lg:w-[60%] h-[80vh] lg:h-[90vh] mt-[10vh] mb-[10vh] lg:mb-0 bg-BgSecondaryBrutalSkin1 flex flex-col justify-start items-center overflow-x-hidden overflow-y-scroll scrollbar-hide'>
+    <main className='w-full lg:w-[60%] h-[80vh] lg:h-[90vh] mt-[10vh] mb-[10vh] lg:mb-0 bg-gray-100 flex flex-col justify-start items-center overflow-x-hidden overflow-y-scroll scrollbar-hide'>
       <ExploreTabs />
 
       {/* <h1 onClick={() => console.log(allCommunitiesArray)}> LOG allCommunitiesArray </h1> */}
@@ -24,16 +24,6 @@ const Index = ({ allCommunitiesArray }: IProps) => {
           })
         )}
 
-{allCommunitiesArray && (
-          allCommunitiesArray.map((community: ICommunityData) => {
-            return <CommunityCard communityData={community} key={community.communityID} />
-          })
-        )}
-        {allCommunitiesArray && (
-          allCommunitiesArray.map((community: ICommunityData) => {
-            return <CommunityCard communityData={community} key={community.communityID} />
-          })
-        )}
       </div>
 
     </main>

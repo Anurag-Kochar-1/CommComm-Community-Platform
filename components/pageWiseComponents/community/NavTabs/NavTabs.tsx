@@ -18,8 +18,8 @@ const NavTabs = () => {
         <div className='w-20 h-10 -mt-1 -mr-1 right-[2px] bottom-[2px] bg-BrutalAqua1 text-black border-2 border-black py-2 text-center text-sm hover:cursor-pointer rounded-md font-InriaSans font-semibold' > Chat </div>
       </Link>
 
-      <Link href={`/community/${id}/Tracks`} className=' w-20 h-10 flex justify-center items-center bg-black border border-black rounded-md hover:scale-105 active:border-0' >
-        <div className='w-20 h-10 -mt-1 -mr-1 right-[2px] bottom-[2px] bg-BrutalAqua1 text-black border-2 border-black py-2 text-center text-sm hover:cursor-pointer rounded-md font-InriaSans font-semibold'> Tracks </div>
+      <Link href={`/community/${id}/Courses`} className=' w-20 h-10 flex justify-center items-center bg-black border border-black rounded-md hover:scale-105 active:border-0' >
+        <div className='w-20 h-10 -mt-1 -mr-1 right-[2px] bottom-[2px] bg-BrutalAqua1 text-black border-2 border-black py-2 text-center text-sm hover:cursor-pointer rounded-md font-InriaSans font-semibold'> Courses </div>
       </Link>
 
       <Link href={`/community/${id}/Classes`} className=' w-20 h-10 flex justify-center items-center bg-black border border-black rounded-md hover:scale-105 active:border-0'>
@@ -33,34 +33,6 @@ const NavTabs = () => {
       <Link href={`/community/${id}/about`} className=' w-20 h-10 flex justify-center items-center bg-black border border-black rounded-md hover:scale-105 active:border-0'>
         <div className='w-20 h-10 -mt-1 -mr-1 right-[2px] bottom-[2px] bg-BrutalAqua1 text-black border-2 border-black py-2 text-center text-sm hover:cursor-pointer rounded-md font-InriaSans font-semibold'> About </div>
       </Link>
-
-
-
-      {/* <Link href={`/community/${id}/`} className=' w-20 h-10 relative flex justify-center items-center bg-black border border-black rounded-md hover:scale-105'>
-        <div className='w-20 h-10 absolute right-[2px] bottom-[2px] bg-BrutalAqua1 text-black border-2 border-black py-2 text-center text-sm hover:cursor-pointer active:right-0 active:bottom-0 rounded-md font-InriaSans font-semibold' > Posts  </div>
-      </Link>
-
-
-      <Link href={`/community/${id}/TextChannels/first`} className='relative w-20 h-10 flex justify-center items-center bg-black border border-black rounded-md hover:scale-105'>
-        <div className='w-20 h-10 absolute right-[2px] bottom-[2px] bg-BrutalAqua1 text-black border-2 border-black py-2 text-center text-sm hover:cursor-pointer active:right-0 active:bottom-0 rounded-md font-InriaSans font-semibold' > Chat </div>
-      </Link>
-
-      <Link href={`/community/${id}/Tracks`} className='relative w-20 h-10 flex justify-center items-center bg-black border border-black rounded-md hover:scale-105' >
-        <div className='w-20 h-10 absolute right-[2px] bottom-[2px] bg-BrutalAqua1 text-black border-2 border-black py-2 text-center text-sm hover:cursor-pointer active:right-0 active:bottom-0 rounded-md font-InriaSans font-semibold'> Tracks </div>
-      </Link>
-
-      <Link href={`/community/${id}/Classes`} className='relative w-20 h-10 flex justify-center items-center bg-black border border-black rounded-md hover:scale-105'>
-        <div className='w-20 h-10 absolute right-[2px] bottom-[2px] bg-BrutalAqua1 text-black border-2 border-black py-2 text-center text-sm hover:cursor-pointer active:right-0 active:bottom-0 rounded-md font-InriaSans font-semibold'> Classes </div>
-      </Link>
-
-      <Link href={`/community/${id}/Leaderboard`} className='relative w-28 h-10 flex justify-center items-center bg-black border border-black rounded-md hover:scale-105'>
-        <div className='w-28 h-10 absolute right-[2px] bottom-[2px] bg-BrutalAqua1 text-black border-2 border-black py-2 text-center text-sm hover:cursor-pointer active:right-0 active:bottom-0 rounded-md font-InriaSans font-semibold'> Leaderboard </div>
-      </Link>
-
-      <Link href={`/community/${id}/about`} className='relative w-20 h-10 flex justify-center items-center bg-black border border-black rounded-md hover:scale-105'>
-        <div className='w-20 h-10 absolute right-[2px] bottom-[2px] bg-BrutalAqua1 text-black border-2 border-black py-2 text-center text-sm hover:cursor-pointer active:right-0 active:bottom-0 rounded-md font-InriaSans font-semibold'> About </div>
-      </Link> */}
-
 
 
 

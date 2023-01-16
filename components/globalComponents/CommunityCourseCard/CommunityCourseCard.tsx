@@ -5,14 +5,18 @@ import { HiCalendarDays } from "react-icons/hi2"
 import { AiFillYoutube } from 'react-icons/ai'
 import { FiTarget } from 'react-icons/fi'
 import { BsBook } from 'react-icons/bs'
+import { useRouter } from 'next/router'
 
 interface IProps {
     communityCourseData: ICourse
-    courseNavTabs: string
-    setCourseNavTabs: React.Dispatch<React.SetStateAction<string>>
+    courseNavTabs?: string
+    setCourseNavTabs?: React.Dispatch<React.SetStateAction<string>>
 }
 // md:w-[60%] xl:w-[50%] 2xl:w-[45%]
 const CommunityCourseCard = ({ communityCourseData, courseNavTabs, setCourseNavTabs }: IProps) => {
+
+    const router = useRouter()
+
     return (
         <div className='w-[90%] sm:w-[70%] lg:w-[90%] h-auto lg:h-72 flex flex-col justify-start items-center border-2 border-black bg-black rounded-md'
             onClick={() => console.log(communityCourseData)}
@@ -62,7 +66,13 @@ const CommunityCourseCard = ({ communityCourseData, courseNavTabs, setCourseNavT
                                 </span>
                                 <div className='flex justify-start items-center space-x-2'>
                                     <span className='text-black text-sm font-Roboto font-medium'> {"Goal : "} </span>
-                                    <p className='text-blue-600 text-sm font-Roboto font-medium' onClick={() => setCourseNavTabs("details")}> {"Read Goals"} </p>
+                                    <p className='text-blue-600 text-sm font-Roboto font-medium' onClick={() => {
+                                        if(setCourseNavTabs) {
+                                            setCourseNavTabs("details")
+                                        } else {
+                                            router.push(`/community/${communityCourseData?.communityID}/Courses`)
+                                        }
+                                    } }> {"Read Goals"} </p>
                                 </div>
                             </div>
 
@@ -73,7 +83,13 @@ const CommunityCourseCard = ({ communityCourseData, courseNavTabs, setCourseNavT
                                 </span>
                                 <div className='flex justify-start items-center space-x-2'>
                                     <span className='text-black text-sm font-Roboto font-medium'> {"Prerequisites : "} </span>
-                                    <p className='text-blue-600 text-sm font-Roboto font-medium'onClick={() => setCourseNavTabs("details")}> {"Read Prerequisites"} </p>
+                                    <p className='text-blue-600 text-sm font-Roboto font-medium'onClick={() => {
+                                        if(setCourseNavTabs) {
+                                            setCourseNavTabs("details")
+                                        }else {
+                                            router.push(`/community/${communityCourseData?.communityID}/Courses`)
+                                        }
+                                    } }> {"Read Prerequisites"} </p>
                                 </div>
                             </div>
                         </div>

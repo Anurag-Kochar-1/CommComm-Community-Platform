@@ -23,7 +23,7 @@ const ExploreTabs = () => {
         </Link>
 
         <Link 
-        href={'/explore/classes'}
+        href={'/explore/courses'}
         className="w-20 h-10 relative bg-black border border-black flex justify-center items-center rounded-lg my-2"
         >
           <div className='absolute w-20 h-10 right-1 bottom-1 bg-BrutalAqua1 border border-black flex justify-center items-center rounded-lg active:right-0 active:bottom-0'>

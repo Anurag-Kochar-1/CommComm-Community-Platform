@@ -238,18 +238,20 @@ const PostCard = ({ postData, page }: IProps) => {
                     <button type='button' className='w-14 h-6 bg-black border border-black flex justify-center items-center rounded-full'>
                         <span
                             onClick={() => {
-                                if (isUserJoinedInCommunity == false) {
-                                    JoinCommunity(user?.uid as string, postData.postCreateAtCommunityID as string)
-                                    setIsUserJoinedInCommunity(true)
-                                }
+                                // if (isUserJoinedInCommunity == false) {
+                                //     JoinCommunity(user?.uid as string, postData.postCreateAtCommunityID as string)
+                                //     setIsUserJoinedInCommunity(true)
+                                // }
 
-                                if (isJoinedBtnClicked == true) {
-                                    LeaveCommunity(user?.uid as string, postData.postCreateAtCommunityID as string)
-                                    setIsUserJoinedInCommunity(false)
-                                }
+                                // if (isJoinedBtnClicked == true) {
+                                //     LeaveCommunity(user?.uid as string, postData.postCreateAtCommunityID as string)
+                                //     setIsUserJoinedInCommunity(false)
+                                // }
+                                router.push(`/community/${postData?.postCreateAtCommunityID}`)
                             }}
                             className='w-14 h-6 -mt-1 -ml-1 bg-BrutalGreen2 text-lg font-medium text-black border border-black rounded-full font-BebasNeue'>
-                            {isUserJoinedInCommunity ? "JOINED" : "JOIN"}
+                            {/* {isUserJoinedInCommunity ? "JOINED" : "JOIN"} */}
+                            Visit
                         </span>
                     </button>
                 ) : null}

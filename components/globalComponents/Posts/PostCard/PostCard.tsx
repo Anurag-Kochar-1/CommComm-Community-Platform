@@ -202,8 +202,8 @@ const PostCard = ({ postData, page }: IProps) => {
                     </div>
                 )}
 
-                {/* For Home Page */}
-                {page === "homePage" || page==="explorePostsPage" ? (
+                {/* For Home Page OR profilePage */}
+                {page === "homePage" || page === "explorePostsPage" || page === "profilePage" ? (
                     <div className='w-full h-full flex flex-col sm:flex-row items-start justify-start sm:items-center space-x-1'>
 
                         <div className='h-12 flex justify-start items-center space-x-2 hover:cursor-pointer' onClick={() => router.push(`/community/${postData?.postCreateAtCommunityID}`)}>

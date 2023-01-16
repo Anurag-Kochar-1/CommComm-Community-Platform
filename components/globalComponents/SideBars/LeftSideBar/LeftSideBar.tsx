@@ -14,13 +14,14 @@ import { signOut } from 'firebase/auth'
 import { IUserData } from '../../../../customTypesAndInterfaces/User/userInterfaces'
 import { useSelector } from 'react-redux'
 import SmallCommunityCard from '../../CommunityCards/SmallCommunityCard/SmallCommunityCard'
+import { useRouter } from 'next/router'
 
 const LeftSideBar = () => {
   // console.log(`------- Left Side Bar -------`);
+  const router = useRouter()
   const [user, loading] = useAuthState(auth)
   const communityCollectionRef = collection(db, "communities")
 
-  // --- States ----
 
   // --- Redux States ---
   const currentUserData: IUserData = useSelector((state: any) => state.user.currentUserData)
@@ -100,18 +101,18 @@ const LeftSideBar = () => {
 
         {/* ------- Profile Card  -------*/}
         {user?.uid && (
-          <div className='w-[20%] fixed bottom-0 left-0  flex flex-col justify-end items-center '>
+          <div className='w-[20%] fixed bottom-0 left-0  flex flex-col justify-end items-center'>
             <div className='w-[95%] bg-gray-200 flex justify-start items-center px-2 py-4 space-x-3'>
               {user?.photoURL ? (
-                <Image src={user?.photoURL} alt="dp" width={12} height={12} className='w-12 h-12 rounded-full' />
+                <Image src={user?.photoURL} alt="dp" width={12} height={12} className='w-12 h-12 rounded-full hover:cursor-pointer' onClick={() => router.push(`/profile/${user?.uid}`)}/>
               ) :
-                <Image src={userDPdemo as any} alt="dp" width={12} height={12} className='w-12 h-12 rounded-full' />
+                <Image src={userDPdemo as any} alt="dp" width={12} height={12} className='w-12 h-12 rounded-full hover:cursor-pointer' onClick={() => router.push(`/profile/${user?.uid}`)}/>
               }
 
               <div className='w-full flex flex-col justify-start items-start space-y-1'>
-                <p className='font-InriaSans text-sm font-semibold'> {user?.displayName} </p>
+                <p className='font-InriaSans text-sm font-semibold hover:cursor-pointer' onClick={() => router.push(`/profile/${user?.uid}`)}> {user?.displayName} </p>
                 <div className='w-full flex justify-start items-center space-x-2'>
-                  <Image unoptimized src={coinIcon as string} alt="icon" width={5} height={5} className="w-5 h-5" />
+                  <Image unoptimized src={coinIcon as string} alt="icon" width={5} height={5} className="w-5 h-5 rounded-full" onClick={() => router.push(`/profile/${user?.uid}`)} />
                   <span className='font-InriaSans font-semibold text-black text-sm'> {currentUserData?.userCoins} </span>
                 </div>
               </div>

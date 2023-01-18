@@ -2,7 +2,10 @@ import { createSlice } from "@reduxjs/toolkit"
 
 const initialState = {
     allCommunitiesData: [],
+
     currentCommunityData: [],
+    currentCommunityMembers: [],
+
     communityPosts: [],
     communitySettings: [],
     communityEvents: [],
@@ -53,6 +56,10 @@ const communityDataSlice = createSlice({
             state.communityCoursePathsData = action.payload
         },
 
+        setCurrentCommunityMembers: (state, action) => {
+            state.currentCommunityMembers = action.payload
+        }
+
 
 
 
@@ -68,7 +75,8 @@ export const { setCurrentCommunityData,
     setCommunityTracksData,
     setCommunityTrackPathsData,
     setCommunityCoursesData,
-    setCommunityCoursePathsData
+    setCommunityCoursePathsData,
+    setCurrentCommunityMembers
 
 } = communityDataSlice.actions
 

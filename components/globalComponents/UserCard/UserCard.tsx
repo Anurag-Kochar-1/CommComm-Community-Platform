@@ -13,7 +13,7 @@ const UserCard = ({ userData }: IProps) => {
         <Link  
             href={`/profile/${userData?.userID}`}
             key={userData?.userDisplayPicture}
-            className="w-[90%] h-14 xl:h-20 flex justify-start items-center bg-back border bg-black border-black space-x-2 rounded-lg hover:cursor-pointer hover:scale-105"
+            className="w-[90%] h-14 xl:h-20 flex justify-start items-center bg-back border bg-black border-black space-x-2 rounded-lg hover:cursor-pointer"
         >
             <div className={`w-full h-full -mt-1 -ml-1 bg-white  border border-black rounded-sm flex justify-start items-center space-x-2 px-3`}>
                 <Image

@@ -25,12 +25,18 @@ const CommunityCourseCard = ({ communityCourseData, courseNavTabs, setCourseNavT
             <div className='w-full h-full flex flex-col lg:flex-row justify-start items-center border border-black bg-white rounded-md'>
                 {/* Thumbnail */}
                 <div className='w-full h-[70%] lg:h-full lg:w-[50%] xl:w-[45%] 2xl:w-[35%] aspect-video lg:p-2'>
-                    <Image
+                    {/* <Image
                         unoptimized
                         src={communityCourseData?.youtubeCourseThumbnail}
                         alt="thumbnail"
                         width={20}
                         height={20}
+                        className={"h-full w-full aspect-video rounded-sm "}
+                    /> */}
+
+                    <img
+                        src={communityCourseData?.youtubeCourseThumbnail}
+                        alt="thumbnail"
                         className={"h-full w-full aspect-video rounded-sm "}
                     />
                 </div>
@@ -67,12 +73,12 @@ const CommunityCourseCard = ({ communityCourseData, courseNavTabs, setCourseNavT
                                 <div className='flex justify-start items-center space-x-2'>
                                     <span className='text-black text-sm font-Roboto font-medium'> {"Goal : "} </span>
                                     <p className='text-blue-600 text-sm font-Roboto font-medium' onClick={() => {
-                                        if(setCourseNavTabs) {
+                                        if (setCourseNavTabs) {
                                             setCourseNavTabs("details")
                                         } else {
                                             router.push(`/community/${communityCourseData?.communityID}/Courses`)
                                         }
-                                    } }> {"Read Goals"} </p>
+                                    }}> {"Read Goals"} </p>
                                 </div>
                             </div>
 
@@ -83,13 +89,13 @@ const CommunityCourseCard = ({ communityCourseData, courseNavTabs, setCourseNavT
                                 </span>
                                 <div className='flex justify-start items-center space-x-2'>
                                     <span className='text-black text-sm font-Roboto font-medium'> {"Prerequisites : "} </span>
-                                    <p className='text-blue-600 text-sm font-Roboto font-medium'onClick={() => {
-                                        if(setCourseNavTabs) {
+                                    <p className='text-blue-600 text-sm font-Roboto font-medium' onClick={() => {
+                                        if (setCourseNavTabs) {
                                             setCourseNavTabs("details")
-                                        }else {
+                                        } else {
                                             router.push(`/community/${communityCourseData?.communityID}/Courses`)
                                         }
-                                    } }> {"Read Prerequisites"} </p>
+                                    }}> {"Read Prerequisites"} </p>
                                 </div>
                             </div>
                         </div>

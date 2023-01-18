@@ -75,7 +75,9 @@ const Index = () => {
             communityDescription: `This is community is for ${communityCategory} (${communitySubCategory}), made by ${user?.displayName}`,
 
             isCommunitySuggested: false,
-            isCommunityTrending: false
+            isCommunityTrending: false,
+
+            communityCoursesID: []
           })
 
           const communityRef = doc(db, "communities", addingCommunityDoc.id)

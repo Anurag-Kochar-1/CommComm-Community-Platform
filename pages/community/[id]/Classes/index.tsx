@@ -3,12 +3,14 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React from 'react'
 import { useAuthState } from 'react-firebase-hooks/auth'
+import { useSelector } from 'react-redux'
 import CommunityClassCard from '../../../../components/globalComponents/CommunityClassCard/CommunityClassCard'
 import CommunityLayout from '../../../../components/layouts/Community/CommunityLayout'
 import { IClassData } from '../../../../customTypesAndInterfaces/Class/classInterfaces'
 import { ICourse } from '../../../../customTypesAndInterfaces/Course/courseInterfaces'
 import { IPathsData } from '../../../../customTypesAndInterfaces/Tracks/pathsInterface'
 import { ITrackData } from '../../../../customTypesAndInterfaces/Tracks/tracksInterface'
+import { IUserData } from '../../../../customTypesAndInterfaces/User/userInterfaces'
 import { auth, db } from '../../../../firebaseConfig'
 
 interface IProps {
@@ -21,22 +23,26 @@ const Index = ({ communityCourseData, communityCourseClassesData }: IProps) => {
   const router = useRouter()
   const { id } = router.query
 
+  const currentUserData: IUserData = useSelector((state: any) => state?.user?.currentUserData)
+
   return (
     <CommunityLayout>
       <main className='w-full h-full flex flex-col justify-start items-center bg-white pt-12 pb-36'>
 
-        <h1 onClick={() => console.log(communityCourseData)} className="text-xl my-5"> LOG communityCourseData </h1>
-        <h1 onClick={() => console.log(communityCourseClassesData)} className="text-xl my-5"> LOG communityCourseClassesData </h1>
+        {/* <h1 onClick={() => console.log(communityCourseData)} className="text-xl my-5"> LOG communityCourseData </h1>
+        <h1 onClick={() => console.log(communityCourseClassesData)} className="text-xl my-5"> LOG communityCourseClassesData </h1> */}
 
         {/* <Link href={`/community/${id}/Classes/createClass`} > create Class </Link> */}
 
 
         {/* NO Course */}
         {!communityCourseData[0] && (
-          <div className="w-full flex flex-col justify-start items-center p-2">
-            <div className="flex flex-col justify-center items-center px-8 py-4 space-y-2 bg-BrutalGreen2">
-              <p className="font-bold text-lg"> Create a Course for your community 🚀 </p>
-                <Link href={`/community/${id}/Tracks/createTrack`} className="text-white font-medium text-lg"> Create one </Link>
+          <div className="w-full flex flex-col justify-start items-center py-4">
+            <div className="flex flex-col justify-center items-center p-5 space-y-2 bg-BrutalGreen2">
+              <p className="font-bold text-xl" onClick={() => console.log(currentUserData)}> No Course Availabe </p>
+                {currentUserData?.communitiesJoinedID?.includes(id as string) && (
+                  <Link href={`/community/${id}/Courses/createCourse`} className="font-medium text-base hover:cursor-pointer"> Create a course 🚀 </Link>
+                )}
             </div>
           </div>
         )}

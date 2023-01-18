@@ -15,4 +15,6 @@ export interface ICommunityData {
         communityDescription: string 
         isCommunitySuggested: boolean
         isCommunityTrending: boolean
+
+        communityCoursesID: string[]
 }

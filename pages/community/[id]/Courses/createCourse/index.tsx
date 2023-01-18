@@ -11,7 +11,7 @@ import { setIsBottomBarVisible } from '../../../../../redux/slices/bottomBarSlic
 import logoTwo from "../../../../../public/images/logos/logoTwo.png"
 import Image from 'next/image'
 import axios from 'axios'
-import { addDoc, collection, doc, getDoc, updateDoc } from 'firebase/firestore'
+import { addDoc, arrayUnion, collection, doc, getDoc, updateDoc } from 'firebase/firestore'
 import { AiOutlineLoading3Quarters } from 'react-icons/ai'
 
 
@@ -64,7 +64,9 @@ const Index = () => {
                 setYoutubeCourseChannelName(res?.data?.items[0]?.snippet?.channelTitle)
                 setYoutubeVideoID(res?.data?.items[0]?.id?.videoId || "")
 
-                createCourse()
+                setTimeout(() => {
+                    createCourse()
+                }, 1500);
                 setIsLoading(false)
 
             } catch (error) {
@@ -93,7 +95,10 @@ const Index = () => {
                 setYoutubePlaylistID(res?.data?.items[0]?.snippet?.playlistId || "")
 
 
-                createCourse()
+                setTimeout(() => {
+                    createCourse()
+                }, 1500);
+
                 setIsLoading(false)
 
             } catch (error) {
@@ -141,6 +146,12 @@ const Index = () => {
                             const communityCourseRef = doc(db, "communityCourses", (await addingCourse).id)
                             await updateDoc(communityCourseRef, {
                                 courseID: (await addingCourse).id
+                            })
+
+                            // Adding course Id to community
+                            const communityRef = doc(db, "communities", id as string)
+                            await updateDoc(communityRef, {
+                                communityCoursesID: arrayUnion((await addingCourse).id)
                             })
 
 
@@ -200,7 +211,7 @@ const Index = () => {
                                 setIsLoading(false)
                             }, courseDurationInputValue > 30 ? 3500 : 4500);
 
-                            router.push(`/community/${id}/Courses`)
+                            // router.push(`/community/${id}/Courses`)
 
                         } catch (error) {
                             setIsLoading(false)

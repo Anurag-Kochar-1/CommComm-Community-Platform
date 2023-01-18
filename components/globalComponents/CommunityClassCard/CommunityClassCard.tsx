@@ -63,7 +63,7 @@ const CommunityClassCard = ({ classDetails }: IProps) => {
 
         // h-72 sm:h-56 md:h-56
 
-        <div className='w-[95%] sm:w-[80%] md:w-[60%] lg:w-[70%] xl:w-[50%]   bg-white border-2 border-black rounded-md scrollbar-hide ' onClick={() => console.log(classDetails)}>
+        <div className='w-[95%] sm:w-[80%] md:w-[60%] lg:w-[70%] xl:w-[50%]  bg-white border-2 border-black rounded-md scrollbar-hide my-10' onClick={() => console.log(classDetails)}>
             <div className='w-full h-full -mt-2 -ml-2 bg-white border-2 border-black rounded-md '>
                 <div className='w-full h-full -mt-2 -ml-2 p-3 pb-12 bg-white border-2 border-black rounded-md flex flex-col justify-start items-start space-y-3 '>
 

@@ -130,7 +130,7 @@ export default function NotificationModal() {
                                         <div className='w-full  flex flex-col items-center justify-start my-8 space-y-2'>
                                             {userNotificationsState[0] && userNotificationsState?.map((notification) => {
                                                 return (
-                                                    <div className='w-full h-16 border border-black bg-black flex items-center justify-center rounded-md hover:cursor-pointer'>
+                                                    <div key={notification?.notificationID} className='w-full h-16 border border-black bg-black flex items-center justify-center rounded-md hover:cursor-pointer'>
                                                         <div className='w-full h-full -mt-1 -ml-1 border border-black bg-white flex items-center justify-between rounded-md px-5'>
                                                             <div className='flex justify-center items-center'>
                                                                 <Image src={coinIcon} alt="coin" width={6} height={6} className="w-8 h-8 rounded-full" />

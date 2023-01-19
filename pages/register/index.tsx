@@ -15,6 +15,7 @@ import { doc, setDoc } from 'firebase/firestore'
 import { useAuthState } from 'react-firebase-hooks/auth'
 
 import logoTwo from "../../public/images/logos/logoTwo.png"
+import { UserProfileDisplayPictures } from '../../constants/User/UserProfileDisplayPictures'
 
 const Index = () => {
   const [user, loading] = useAuthState(auth)
@@ -78,9 +79,10 @@ const Index = () => {
 
     await setDoc(doc(db, "users", userID), {
       userName: userNameInputValue,
-      userDisplayPicture: "https://firebasestorage.googleapis.com/v0/b/th3-hackathon.appspot.com/o/postImages%2F6cf18550-5ca7-491f-9725-171e5c38b6fc--220703-minions-music-hero_tfqnbm.jpg?alt=media&token=8c0fc36a-394a-413c-9b49-2e86342095a3",
+      userDisplayPicture: UserProfileDisplayPictures[`${Math.floor(Math.random() * 4) }`],
       userEmail: emailInputValue,
       userID: userID,
+      userProfileBanner: "",
 
       communitiesJoinedID: [],
       communitiesOwnedID: [],

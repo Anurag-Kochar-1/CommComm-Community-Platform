@@ -30,7 +30,8 @@ const SignInWithFacebookFunction = async () => {
                 likedPostsID: [],
                 dislikedPostsID: [],
 
-                userCoins : 100
+                userCoins : 100,
+                userProfileBanner: ""
             })
             
             const credantial = FacebookAuthProvider.credentialFromResult(result)

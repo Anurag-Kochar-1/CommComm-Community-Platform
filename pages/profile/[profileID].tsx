@@ -4,7 +4,8 @@ import { signOut } from 'firebase/auth'
 import { auth, db } from '../../firebaseConfig'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { IUserData } from '../../customTypesAndInterfaces/User/userInterfaces'
-import { useSelector } from 'react-redux'
+import { UserProfileBanners } from "../../constants/User/UserProfileBanners"
+import { UserProfileDisplayPictures} from "../../constants/User/UserProfileDisplayPictures"
 import Image from 'next/image'
 import { collection, doc, getDoc, getDocs, query, where } from 'firebase/firestore'
 import { IPost } from '../../customTypesAndInterfaces/Posts/postInterface'
@@ -20,11 +21,7 @@ const Index = ({ profileDetails, userCreatedPosts }: IProps) => {
   const router = useRouter()
   // const currentUserData: IUserData = useSelector((state: any) => state.user.currentUserData)
 
-  const BannerURLsArray = [
-    "https://cdn.wallpapersafari.com/36/43/dCp6LB.jpg",
-    "https://i1.wp.com/onlyvectorbackgrounds.com/wp-content/uploads/2018/10/Abstract-Geometric-Background-Purple.jpg?fit=1191%2C842"
-
-  ]
+  
 
 
 
@@ -48,7 +45,7 @@ const Index = ({ profileDetails, userCreatedPosts }: IProps) => {
           onClick={() => console.log(profileDetails)}
           className='w-full h-[25vh] bg-white flex justify-center items-end'
           style={{
-            backgroundImage: 'url(' + `${"https://firebasestorage.googleapis.com/v0/b/th3-hackathon.appspot.com/o/userBanners%2FdCp6LB.jpg?alt=media&token=398e39fb-e3a9-4bb0-9815-40b87b99ebb7"}` + ')',
+            backgroundImage: 'url(' + `${ UserProfileBanners[`${Math.floor(Math.random() * 2) }`]  }` + ')',
             backgroundSize: "cover",
           }}
           draggable="false"
@@ -58,7 +55,7 @@ const Index = ({ profileDetails, userCreatedPosts }: IProps) => {
           <div className='w-28 h-28 -mb-5 border-2 border-black bg-black rounded-md'>
             <Image
               unoptimized
-              src={profileDetails?.userDisplayPicture as string || "https://firebasestorage.googleapis.com/v0/b/th3-hackathon.appspot.com/o/postImages%2F62a66919-640f-40dd-a0ea-85b6069dbb02--kat.PNG?alt=media&token=3f7e4953-5f49-4b6a-9fc7-c54eeaadf4d9"}
+              src={profileDetails?.userDisplayPicture as string ||  UserProfileDisplayPictures[`${Math.floor(Math.random() * 4) }`]}
               alt="dp"
               width={12}
               height={12}

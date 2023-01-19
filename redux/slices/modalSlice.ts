@@ -3,6 +3,7 @@ import {createSlice} from "@reduxjs/toolkit"
 const initialState = {
     isCreateOptionsModalOpen: false,
     isNotificationModalOpen: false
+    
 }
 
 const modalSlice =  createSlice({

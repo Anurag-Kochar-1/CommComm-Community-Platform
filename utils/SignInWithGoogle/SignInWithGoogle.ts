@@ -1,4 +1,3 @@
-
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
 import { doc, getDoc, setDoc } from 'firebase/firestore'
 import { useRouter } from 'next/router'
@@ -30,7 +29,8 @@ const SignInWithGoogleFunction = async () => {
                 createdPostsID: [],
                 likedPostsID: [],
                 dislikedPostsID: [],
-                userCoins: 100
+                userCoins: 100,
+                userProfileBanner: ""
             })
         }
 

@@ -15,6 +15,8 @@ import { useAuthState } from 'react-firebase-hooks/auth'
 import logoTwo from "../../../public/images/logos/logoTwo.png"
 import Image from 'next/image'
 import NotificationModal from '../Modals/NotificationModal/NotificationModal'
+import ProfileOptionsMenu from '../ProfileOptionsMenu/ProfileOptionsMenu'
+import WalletDropdownMenu from '../DropdownMenus/WalletDropdownMenu/WalletDropdownMenu'
 
 
 
@@ -44,10 +46,14 @@ const Header = () => {
           {/* <PlusIcon /> */}
           <CreateOptionsModal />
 
-          <BellIcon />
-          {/* <NotificationModal /> */}
+          {/* <BellIcon /> */}
+          <NotificationModal />
 
-          <MessagesIcon />
+          {/* <MessagesIcon /> */}
+
+          {user?.uid && <WalletDropdownMenu /> }
+
+          {user?.uid && <ProfileOptionsMenu />}
         </div>
       )}
 

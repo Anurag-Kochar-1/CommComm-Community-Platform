@@ -3,6 +3,7 @@ export interface IUserData {
     userDisplayPicture: string
     userEmail: string
     userID: string
+    userProfileBanner: string
 
     communitiesJoinedID: string[]
     communitiesOwnedID: string[]

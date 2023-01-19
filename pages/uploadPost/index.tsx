@@ -12,6 +12,7 @@ import { useRouter } from 'next/router'
 import { AiOutlineLoading3Quarters } from 'react-icons/ai'
 import { useSelector } from 'react-redux'
 import { ICommunityData } from '../../customTypesAndInterfaces/Community/CommunityInterfaces'
+import Link from 'next/link'
 
 const UploadPost = () => {
   const router = useRouter()
@@ -145,30 +146,34 @@ const UploadPost = () => {
   }
 
 
-  // useEffect(() => {
-  //   if (user && !loading) {
-  //     fetchUserJoinedAndOwnedCommunities()
-  //   }
-  // }, [loading])
+  
 
-  useEffect(() => {
-    if (userJoinedCommunitiesData[0]) {
-      console.log("second useEffect is running")
-      setSelectedCommunity(userJoinedCommunitiesData[0]?.communityID)
-    } else if (!userJoinedCommunitiesData[0]) {
-      router.push("/")
-    }
-  }, [userJoinedCommunitiesData])
+  // useEffect(() => {
+  //   if (userJoinedCommunitiesData[0]) {
+  //     console.log("second useEffect is running")
+  //     setSelectedCommunity(userJoinedCommunitiesData[0]?.communityID)
+  //   } else if (!userJoinedCommunitiesData[0]) {
+  //     router.push("/")
+  //   }
+  // }, [userJoinedCommunitiesData])
 
   
 
   useEffect(() => {
-    if (!user && loading === false) {
+    if (!user && !loading) {
       router.push("/register")
     }
   }, [loading])
 
 
+  if(!userJoinedCommunitiesData[0]) return (
+    <main className='w-full lg:w-[60%] h-[80vh] lg:h-[90vh] mt-[10vh] mb-[10vh] lg:mb-0 bg-blue-100 flex flex-col justify-center items-center space-y-2'>
+      <p className='text-center text-black font-Roboto font-bold text-xl'> Join some community to post  </p>
+      <Link href={`/explore/communities`} className='text-center text-blue-500 font-Roboto font-semibold text-xl'> Explore Communities </Link> 
+
+      <span onClick={() => console.log(userJoinedCommunitiesData)}>  Log </span>
+    </main>
+  )
 
   return (
     <main className='w-full lg:w-[60%] h-[80vh] lg:h-[90vh] mt-[10vh] mb-[10vh] lg:mb-0 bg-white flex flex-col justify-center items-center'>

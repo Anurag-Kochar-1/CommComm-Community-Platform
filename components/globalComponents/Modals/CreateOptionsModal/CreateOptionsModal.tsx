@@ -49,7 +49,7 @@ export default function CreateOptionsModal() {
 
                                     <div className='w-full h-full bg-white flex flex-col justify-start items-start px-5 py-6 md:py-12'>
 
-                                        <Link href={'/uploadPost'}
+                                        <Link href={'/UploadPost'}
                                             onClick={() => {
                                                 closeModal()
                                             }}

@@ -1,4 +1,4 @@
-import { arrayRemove, arrayUnion, doc, getDoc, updateDoc } from 'firebase/firestore'
+import { arrayRemove, arrayUnion, collection, doc, getDoc, getDocs, query, updateDoc, where } from 'firebase/firestore'
 import { useRouter } from 'next/router'
 import React, { useEffect, useRef, useState } from 'react'
 import { useAuthState } from 'react-firebase-hooks/auth'
@@ -8,7 +8,7 @@ import { ICommunityData } from '../../../customTypesAndInterfaces/Community/Comm
 import { IUserData } from '../../../customTypesAndInterfaces/User/userInterfaces'
 import { auth, db } from '../../../firebaseConfig'
 import { setCurrentCommunityData } from '../../../redux/slices/communityDataSlice'
-import { setCurrentUserData } from '../../../redux/slices/userSlice'
+import { setCurrentUserData, setUserJoinedCommunities } from '../../../redux/slices/userSlice'
 import { fetchCommunityData } from '../../../utils/Community/fetchCommunityData'
 import { fetchCurrentUserData } from '../../../utils/User/fetchCurrentUserData'
 
@@ -53,9 +53,22 @@ const JoinCommunityButton = () => {
                 // const newCommunityData = fetchCommunityData( communityData?.communityID )
                 // const newCommunityDataRes = await newCommunityData
                 // dispatch(setCurrentCommunityData([newCommunityDataRes]))
-
                 const data = await getDoc(communityRef)
                 dispatch(setCurrentCommunityData([data.data()]))
+
+
+
+                // re-fetching userJoinedCommunities
+                const communityCollectionRef = collection(db, 'communities')
+                const userJoinedCommunitiesQuery = query(communityCollectionRef, where("communityMembersID", "array-contains", user?.uid))
+                const userJoinedCommunitiesRes = await getDocs(userJoinedCommunitiesQuery)
+                const userJoinedCommunitiesDataRes = userJoinedCommunitiesRes?.docs?.map(doc => doc?.data())
+                dispatch(setUserJoinedCommunities(userJoinedCommunitiesDataRes))
+                console.log(`re fetching and dispatch user joined communities data`)
+
+
+
+
 
 
             } catch (error) {
@@ -101,9 +114,17 @@ const JoinCommunityButton = () => {
                     // const newCommunityData = fetchCommunityData( communityData?.communityID)
                     // const newCommunityDataRes = await newCommunityData
                     // dispatch(setCurrentCommunityData([newCommunityDataRes]))
-
                     const data = await getDoc(communityRef)
                     dispatch(setCurrentCommunityData([data.data()]))
+
+
+                    // re-fetching userJoinedCommunities
+                    const communityCollectionRef = collection(db, 'communities')
+                    const userJoinedCommunitiesQuery = query(communityCollectionRef, where("communityMembersID", "array-contains", user?.uid))
+                    const userJoinedCommunitiesRes = await getDocs(userJoinedCommunitiesQuery)
+                    const userJoinedCommunitiesDataRes = userJoinedCommunitiesRes?.docs?.map(doc => doc?.data())
+                    dispatch(setUserJoinedCommunities(userJoinedCommunitiesDataRes))
+                    console.log(`re fetching and dispatch user joined communities data`)
 
                 } catch (error) {
                     alert(error)
@@ -119,7 +140,9 @@ const JoinCommunityButton = () => {
 
 
     useEffect(() => {
-        setIsUserJoined(currentUserData?.communitiesJoinedID?.includes(communityData?.communityID))
+        if (user && !loading) {
+            setIsUserJoined(currentUserData?.communitiesJoinedID?.includes(communityData?.communityID))
+        }
     }, [currentUserData])
 
 

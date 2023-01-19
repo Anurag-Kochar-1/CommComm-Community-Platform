@@ -25,8 +25,9 @@ const UploadPost = () => {
   const [video, setVideo] = useState<any[]>([])
 
   // States
-  // const [userJoinedCommunitiesState, setUserJoinedCommunitiesState] = useState<any[] | []>([])
   const [selectedCommunity, setSelectedCommunity] = useState<any | null>(null)
+  const [imagePreview, setImagePreview] = useState<any>(null)
+  const [videoPreview, setVideoPreview] = useState<any>(null)
 
 
   // Redux states
@@ -96,7 +97,7 @@ const UploadPost = () => {
   const addPost = async (imageURL: string | null, videoURL: string | null) => {
     try {
       setIsPostPosting(true)
-      
+
       // --- Adding post to Posts's Collection
       const postDoc = await addDoc(postsCollectionRef, {
         postID: "",
@@ -108,7 +109,7 @@ const UploadPost = () => {
         postCreatorName: user?.displayName,
         postCreateAtCommunityID: selectedCommunity,
         upvotedByUserID: [],
-        
+
         createdAt: serverTimestamp()
         // createdAt: Timestamp.now()
       })
@@ -146,7 +147,7 @@ const UploadPost = () => {
   }
 
 
-  
+
 
   // useEffect(() => {
   //   if (userJoinedCommunitiesData[0]) {
@@ -157,7 +158,28 @@ const UploadPost = () => {
   //   }
   // }, [userJoinedCommunitiesData])
 
-  
+
+
+  const createImagePreview = () => {
+    if (image[0]?.[0]) {
+      setImagePreview(URL?.createObjectURL(image[0][0]));
+    }
+  }
+
+  const createVideoPreview = () => {
+    if (video[0]?.[0]) {
+      setVideoPreview(URL?.createObjectURL(video[0][0]));
+    }
+  }
+
+  useEffect(() => {
+    createImagePreview()
+  }, [image])
+
+  useEffect(() => {
+    createVideoPreview()
+  }, [video])
+
 
   useEffect(() => {
     if (!user && !loading) {
@@ -166,10 +188,10 @@ const UploadPost = () => {
   }, [loading])
 
 
-  if(!userJoinedCommunitiesData[0]) return (
+  if (!userJoinedCommunitiesData[0]) return (
     <main className='w-full lg:w-[60%] h-[80vh] lg:h-[90vh] mt-[10vh] mb-[10vh] lg:mb-0 bg-blue-100 flex flex-col justify-center items-center space-y-2'>
       <p className='text-center text-black font-Roboto font-bold text-xl'> Join some community to post  </p>
-      <Link href={`/explore/communities`} className='text-center text-blue-500 font-Roboto font-semibold text-xl'> Explore Communities </Link> 
+      <Link href={`/explore/communities`} className='text-center text-blue-500 font-Roboto font-semibold text-xl'> Explore Communities </Link>
 
       <span onClick={() => console.log(userJoinedCommunitiesData)}>  Log </span>
     </main>
@@ -304,18 +326,17 @@ const UploadPost = () => {
                   />
                 </div>
 
-                <div className='w-full h-full flex justify-center items-center py-2 bg-lightColor'>
-                  <div className='w-[90%] h-[90%] rounded-sm border-2 border-dashed bg-lightColor border-black flex justify-center items-center '>
-                    <label className='w-full h-full flex justify-center items-center hover:cursor-pointer'>
+                <div className='w-full h-full flex justify-center items-center py-2'>
+                  <div className='w-[90%] h-[90%] rounded-sm border-2 border-dashed  border-black flex justify-center items-center'>
+                    <label className='h-full w-full flex justify-center items-center hover:cursor-pointer'>
                       <input type="file" placeholder='image' accept="image/*" hidden
                         onChange={(e) => {
                           const imageFile = e.target.files
                           setImage([imageFile])
-                          // setImage( URL.createObjectURL(imageFile[0]) )
-
                         }}
                       />
-                      <RxImage className='text-3xl' />
+                      {!imagePreview && !image[0] && <RxImage className='text-3xl text-BrutalPurple2' />}
+                      {imagePreview && image[0] && <img src={imagePreview} alt="preview" className='w-[30%] h-[30%]aspect-square' />}
                     </label>
                   </div>
                 </div>
@@ -382,16 +403,17 @@ const UploadPost = () => {
                   />
                 </div>
 
-                <div className='w-full h-full flex justify-center items-center py-2 bg-lightColor'>
-                  <div className='w-[90%] h-[90%] rounded-sm border-2 border-dashed bg-white border-black flex justify-center items-center '>
-                    <label className='w-full h-full flex justify-center items-center hover:cursor-pointer'>
+                <div className='w-full h-full flex justify-center items-center py-2'>
+                  <div className='w-[90%] h-[90%] rounded-sm border-2 border-dashed  border-black flex justify-center items-center'>
+                    <label className='h-full w-full flex justify-center items-center hover:cursor-pointer'>
                       <input type="file" placeholder='image' accept="video/*" hidden
                         onChange={(e) => {
                           const videoFile = e.target.files
                           setVideo([videoFile])
                         }}
                       />
-                      <RiVideoAddFill className='text-3xl' />
+                      {!videoPreview && !video[0] && <RiVideoAddFill className='text-2xl text-BrutalPurple2' />}
+                      {videoPreview && video[0] && <video src={videoPreview} controls className='w-[30%] aspect-video' />}
                     </label>
                   </div>
                 </div>
@@ -448,12 +470,13 @@ const UploadPost = () => {
 
 
       {/*  Small Screen  */}
-      <div className='lg:hidden w-full h-full bg-white flex flex-col justify-start items-center'>
+      <div className='lg:hidden w-full h-full bg-white flex flex-col justify-start items-center overflow-x-hidden overflow-y-scroll scrollbar-hide'>
 
-        <div className='w-full flex space-x-2 justify-start items-center mb-4 bg-lightColor px-3 py-5'>
-          <p className='text-lg font-normal' onClick={() => console.log(selectedCommunity)}>Posting to  </p>
+        {/* dropdown */}
+        <div className='w-full flex space-x-2 justify-start items-center mb-4 bg-lightColor px-5 py-5'>
+          <p className='text-base font-Roboto font-medium' onClick={() => console.log(selectedCommunity)}>Posting to  </p>
 
-          {/* dropdown */}
+
           <div className='w-[40%] h-10 relative bg-black flex justify-start items-center '>
             <select
               title='choose'
@@ -483,7 +506,7 @@ const UploadPost = () => {
           <input
             type="text"
             placeholder="An interesting title"
-            className='w-[90%] border-none outline-none text-lg bg-gray-200 font-InriaSans font-semibold focus:ring-0 px-2 placeholder:text-black text-black py-1 rounded-sm'
+            className='w-[90%] border-none outline-none text-base bg-gray-100 font-Roboto font-medium focus:ring-0 px-2 placeholder:text-black text-black py-1 rounded-sm'
             autoFocus
             onChange={(e) => setPostTitleInputValue(e.target.value)}
             value={postTitleInputValue}
@@ -493,35 +516,39 @@ const UploadPost = () => {
             <textarea
               typeof='text'
               placeholder='Add caption'
-              className='w-[90%] h-[60%] border-none outline-none bg-gray-200 font-InriaSans font-medium focus:ring-0 px-2 placeholder:text-black text-black py-1 rounded-sm'
+              className='w-[90%] h-[60%] border-none outline-none text-base bg-gray-100 font-Roboto font-medium focus:ring-0 px-2 placeholder:text-black text-black py-1 rounded-sm'
               onChange={(e) => setPostCaptionInputValue(e.target.value)}
               value={postCaptionInputValue}
             />
           )}
 
           {postType === "image" && (
-            <div className='w-full flex justify-start items-center px-3 py-2'>
-              <div className='w-32 h-32 rounded-sm border border-dashed border-BrutalPurple2 flex justify-center items-center '>
+            <div className='w-full h-full flex justify-center items-center px-3 py-2'>
+              <div className='w-[90%] h-[90%]  rounded-sm border border-dashed border-BrutalPurple2 flex justify-center items-center'>
                 <label className='w-full h-full flex justify-center items-center hover:cursor-pointer'>
                   <input type="file" placeholder='image' accept="image/*" hidden
                     onChange={(e) => {
                       const imageFile = e.target.files
                       setImage([imageFile])
-                      // setImage( URL.createObjectURL(imageFile[0]) )
-
                     }}
                   />
-                  <RxImage className='text-2xl text-BrutalPurple2' />
+                  {!imagePreview && !image[0] && <RxImage className='text-2xl text-BrutalPurple2' />}
+                  {imagePreview && image[0] && <img src={imagePreview} alt="preview" className='w-[90%] h-[90%]' />}
 
 
                 </label>
               </div>
+              {/* <span onClick={() => console.log(image)}> Log image </span>
+              <span onClick={() => console.log(imagePreview)}> Log image  preview</span> */}
+
+
+
             </div>
           )}
 
           {postType === "video" && (
-            <div className='w-full flex justify-start items-center px-3 py-2'>
-              <div className='w-32 h-32 rounded-sm border border-dashed border-BrutalPurple2 flex justify-center items-center '>
+            <div className='w-full h-full flex justify-center items-center px-3 py-2'>
+              <div className='w-[90%] h-[90%]  rounded-sm border border-dashed border-BrutalPurple2 flex justify-center items-center'>
                 <label className='w-full h-full flex justify-center items-center hover:cursor-pointer'>
                   <input type="file" placeholder='image' accept="video/*" hidden
                     onChange={(e) => {
@@ -529,9 +556,13 @@ const UploadPost = () => {
                       setVideo([videoFile])
                     }}
                   />
-                  <RiVideoAddFill className='text-2xl text-BrutalPurple2' />
+                  {!videoPreview && !video[0] && <RiVideoAddFill className='text-2xl text-BrutalPurple2' />}
+                  {videoPreview && video[0] && <video src={videoPreview} controls className='w-[90%] h-[90%]' />}
                 </label>
               </div>
+
+              {/* <span onClick={() => console.log(video)} className="mx-2"> LOG VIDEO </span>
+              <span onClick={() => console.log(videoPreview)} className="mx-2"> LOG VIDEO </span> */}
             </div>
           )}
 
@@ -589,10 +620,10 @@ const UploadPost = () => {
           {/* MOBILE POST BTN */}
           <button
             onClick={() => {
-              if(!postTitleInputValue) {
+              if (!postTitleInputValue) {
                 alert("Fill the required fields")
               } else {
-                if( postCaptionInputValue || image || video ) {
+                if (postCaptionInputValue || image || video) {
                   if (postType === "caption") {
                     addPost(null, null)
                   } else if (postType === "image") {
@@ -600,7 +631,7 @@ const UploadPost = () => {
                   } else if (postType === "video") {
                     uploadVideo()
                   }
-                } else if( !postCaptionInputValue || !image || !video ) {
+                } else if (!postCaptionInputValue || !image || !video) {
                   alert("Fill the required fields")
                 }
               }
@@ -608,8 +639,8 @@ const UploadPost = () => {
             type='button'
             title='post'
             className='w-[40%] h-10 flex justify-center items-center bg-black rounded-sm border border-black '>
-            <div className='w-full h-full -mt-2 -ml-2 bg-BrutalPurple2 flex justify-center items-center rounded-sm border-2 border-black active:-mt-0 active:-ml-0'>
-              <p className='text-sm font-semibol'> POST  </p>
+            <div className='w-full h-full -mt-2 -ml-2 bg-BrutalPurple1 flex justify-center items-center rounded-sm border-2 border-black active:-mt-0 active:-ml-0'>
+              <p className='text-sm font-semibold'> POST  </p>
             </div>
           </button>
         </div>

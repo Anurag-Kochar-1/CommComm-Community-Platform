@@ -78,15 +78,27 @@ const Index = ({ communityCoursesData }: IProps) => {
                 {!communityCoursesData[0] ? (
                     <div className="w-[90%] sm:w-[80%] md:w-[70%] lg:w-[60%] xl:w-[50%] h-72 border-2 border-black flex flex-col justify-start items-center rounded-md bg-white">
                         <div className="w-full h-full -mt-2 -ml-3 flex flex-col justify-center items-center border-2 border-black rounded-md bg-white">
-                            <div className="w-full h-full -mt-3 -ml-4 flex flex-col justify-center items-center border-2 border-black bg-BrutalPurple2 rounded-md text-center p-2 space-y-2">
-                                <span className="text-black text-xl md:text-4xl font-Roboto font-bold"> No courses  </span>
-                                {communityData?.communityOwnerID === user?.uid && (
-                                    <Link href={`/community/${id}/Courses/createCourse`} className="text-black text-lg md:text-xl font-Roboto font-bold underline"> Create a Course  </Link>
-                                )}
+                            <div className="w-full h-full -mt-3 -ml-4 flex flex-col justify-start items-center border-2 border-black bg-white rounded-md text-center space-y-2">
+
+                                <div className='w-full h-12 bg-[#7E4BDE] rounded-tr-sm rounded-tl-sm flex justify-start items-center space-x-2 px-2'>
+                                    <div className='w-4 h-4 rounded-full bg-[#DE5D53] border border-black hover:cursor-pointer' />
+                                    <div className='w-4 h-4 rounded-full bg-[#68C6BA] border border-black hover:cursor-pointer' />
+                                    <div className='w-4 h-4 rounded-full bg-[#F5A860] border border-black hover:cursor-pointer' />
+                                </div>
+
+                                <div className='w-full h-full flex flex-col justify-center items-center'>
+                                    <span className=" text-[#F2A048] text-5xl font-Roboto font-bold"> No courses  </span>
+                                    {communityData?.communityOwnerID === user?.uid && (
+                                        <Link href={`/community/${id}/Courses/createCourse`} className="text-[#7E4BDE] text-xl font-Roboto font-bold my-1"> Create a Course  </Link>
+                                    )}
+                                </div>
                             </div>
                         </div>
                     </div>
                 ) : null}
+
+
+
 
                 {/* ---- Course Header ---- */}
                 {communityCoursesData[0] && (

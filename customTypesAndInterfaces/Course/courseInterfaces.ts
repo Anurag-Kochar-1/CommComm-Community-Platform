@@ -15,9 +15,12 @@ export interface ICourse {
     youtubeCourseThumbnail: string
     youtubeCourseChannelName: string
     youtubeCourseChannelID: string
-    youtubeCourseChannelLogo: string 
+    youtubeCourseChannelLogo: string
     youtubeCourseTitle: string
 
     youtubeVideoID?: string
     youtubePlaylistID?: string
+
+    isCommunityCourseTrending: boolean
+    isCommunityCoursePopular: boolean
 }

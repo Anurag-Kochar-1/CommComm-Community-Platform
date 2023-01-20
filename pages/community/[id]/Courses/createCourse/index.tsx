@@ -253,6 +253,10 @@ const Index = () => {
                                 youtubeCourseChannelLogo:  youtubeCourseChannelLogo,
                                 youtubeVideoID: "",
                                 youtubePlaylistID: playlistId,
+
+
+                                isCommunityCourseTrending: false,
+                                isCommunityCoursePopular: false,
                             })
 
                             // ---- adding ID ----
@@ -367,6 +371,9 @@ const Index = () => {
                                 youtubeCourseChannelLogo:  youtubeCourseChannelLogo,
                                 youtubeVideoID: videoID,
                                 youtubePlaylistID: "",
+
+                                isCommunityCourseTrending: false,
+                                isCommunityCoursePopular: false,
                             })
 
                             // ---- adding ID ----

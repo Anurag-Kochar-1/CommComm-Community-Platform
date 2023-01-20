@@ -76,7 +76,7 @@ const Index = ({ communityCoursesData }: IProps) => {
                 )}
 
 
-                <CoinCreditedModal />
+                {/* <CoinCreditedModal /> */}
 
                 {/* ---- No Course found  ---- */}
                 {!communityCoursesData[0] ? (

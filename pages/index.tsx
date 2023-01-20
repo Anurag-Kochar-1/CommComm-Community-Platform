@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 import { auth, db } from '../firebaseConfig'
 import { signOut } from 'firebase/auth'
 import Link from 'next/link'
-import { collection, doc, getDoc, getDocs } from 'firebase/firestore'
+import { collection, doc, getDoc, getDocs, query, where } from 'firebase/firestore'
 import { IPost } from '../customTypesAndInterfaces/Posts/postInterface'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -14,16 +14,19 @@ import PostCard from '../components/globalComponents/Posts/PostCard/PostCard'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { setCurrentUserData } from '../redux/slices/userSlice'
 import { IUserData } from '../customTypesAndInterfaces/User/userInterfaces'
+import { ICourse } from '../customTypesAndInterfaces/Course/courseInterfaces'
+import CommunityCourseCard from '../components/globalComponents/CommunityCourseCard/CommunityCourseCard'
+import AliceCarousel from 'react-alice-carousel'
 // import { Bebas_Neue } from '@next/font/google'
 
 // const inter = Inter({ subsets: ['latin'] })
 
 interface IProps {
   allPostsArray: IPost[]
-  userFromSSR?: any
+  popularCommunityCoursesData: ICourse[]
 }
 
-export default function Home({ allPostsArray, userFromSSR }: IProps) {
+export default function Home({ allPostsArray, popularCommunityCoursesData }: IProps) {
   const router = useRouter()
   const [user, loading] = useAuthState(auth)
   const dispatch = useDispatch()
@@ -31,7 +34,7 @@ export default function Home({ allPostsArray, userFromSSR }: IProps) {
   const currentUserData: IUserData = useSelector((state: any) => state.user.currentUserData)
 
 
-  
+
 
 
   useEffect(() => {
@@ -57,27 +60,80 @@ export default function Home({ allPostsArray, userFromSSR }: IProps) {
 
 
 
+
+  const items = popularCommunityCoursesData?.map((course) => {
+    return (
+      <div className='w-full flex justify-center items-center'>
+        <CommunityCourseCard key={course?.courseID} communityCourseData={course} />
+      </div>
+    )
+  })
+
+  const responsive = {
+    0: {
+      items: 1,
+    },
+    1280: {
+      items: 1,
+    }
+  };
+
+
+
+
   return (
-    <main className='w-full lg:w-[60%] h-[80vh] lg:h-[90vh] mt-[12vh] mb-[10vh] lg:mb-0 bg-gray-100 flex flex-col justify-start items-center overflow-x-hidden overflow-y-scroll pt-14 pb-20 scrollbar-hide'>
+    <main className='w-full lg:w-[60%] h-[80vh] lg:h-[90vh] mt-[12vh] mb-[10vh] lg:mb-0 bg-gray-100 flex flex-col justify-start items-center overflow-x-hidden overflow-y-scroll pt-5 pb-20 scrollbar-hide'>
 
       {/* <h1 className='text-4xl text-blue-500 font-bold mt-[7vh]' onClick={() => console.log(auth?.currentUser)}> LOG USER</h1> */}
       {/* <h1 className='font-bold text-xl my-5' onClick={() => console.log(currentUserData)}> LOG currentUserData </h1> */}
 
       {/* <h1 className='text-5xl my-2 text-black font-light'> HELLO  </h1> */}
-      {/* <h1 className='text-5xl my-2 text-black font-Roboto font-light'> HELLO </h1> */}
+      {/* <h1 onClick={() => console.log(popularCommunityCoursesData)} className='text-5xl my-2 text-black font-Roboto font-light'> popularCommunityCoursesData </h1> */}
 
 
+      {/* Popular Courses */}
 
 
+      <div className='w-full bg-white border-2 border-black rounded-md flex flex-col justify-start items-center'>
+
+        <div className='w-full h-12 md:h-16 bg-[#7E4BDE] rounded-tr-sm rounded-tl-sm flex justify-between items-center px-3'>
+          {/* Dots */}
+          <div className='flex justify-self-start items-center space-x-1 md:space-x-2'>
+            <div className='w-3 h-3 md:w-4 md:h-4 rounded-full bg-[#DE5D53] border border-black hover:cursor-pointer' />
+            <div className='w-3 h-3 md:w-4 md:h-4 rounded-full bg-[#68C6BA] border border-black hover:cursor-pointer' />
+            <div className='w-3 h-3 md:w-4 md:h-4 rounded-full bg-[#F5A860] border border-black hover:cursor-pointer' />
+          </div>
+          <p className=' text-black text-xl md:text-3xl font-Roboto font-bold'> Popular Courses </p>
+
+          <span></span>
+        </div>
+
+        <div className='w-full flex flex-col justify-start items-start mb-5 scrollbar-hide py-5'>
+          <div className='w-full flex justify-center items-center'>
+
+          </div>
+
+          <AliceCarousel
+            infinite
+            autoPlayInterval={2000}
+            animationDuration={2500}
+            disableButtonsControls
+            disableDotsControls
+            responsive={responsive}
+            items={items}
+            autoPlay
+          />
+        </div>
+      </div>
 
 
       {/* ---- All Posts - for signed out user ---- */}
       {true && (
-        <PostFeed posts={allPostsArray} page={"homePage"}/>
+        <PostFeed posts={allPostsArray} page={"homePage"} />
       )}
-      
 
-      
+
+
 
     </main>
   )
@@ -89,14 +145,18 @@ export const getServerSideProps = async () => {
   // fetching all posts 
   const postCollectionRef = collection(db, "posts")
   const data = await getDocs(postCollectionRef)
-  const allPostsArray:IPost[] = JSON.parse(JSON.stringify( data?.docs?.map(doc => doc.data() as IPost)))
+  const allPostsArray: IPost[] = JSON.parse(JSON.stringify(data?.docs?.map(doc => doc.data() as IPost)))
 
-  
-  // fetching top communitiy courses
+
+  // fetching popular communitiy courses
   const communityCoursesCollectionRef = collection(db, "communityCourses")
+  const coursesQuery = query(communityCoursesCollectionRef, where("isCommunityCoursePopular", "==", true))
+  const coursesQueryRes = await getDocs(coursesQuery)
+  const popularCommunityCoursesData: ICourse[] = coursesQueryRes?.docs?.map(doc => doc.data() as ICourse)
 
 
-  
+
+
 
 
 
@@ -105,7 +165,7 @@ export const getServerSideProps = async () => {
   return {
     props: {
       allPostsArray,
-      // userFromSSR
+      popularCommunityCoursesData
 
     }
   };

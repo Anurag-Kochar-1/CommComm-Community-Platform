@@ -265,7 +265,7 @@ const PostCard = ({ postData, page }: IProps) => {
 
             {/* Image */}
             {postData.postImageURL && (
-                <img src={postData.postImageURL} alt="title" className='w-full h-full aspect-square rounded-sm my-2' draggable="false" />
+                <img src={postData.postImageURL} alt="title" className='w-full h-full aspect-square rounded-sm my-2 object-contain' draggable="false" />
             )}
 
             {/* Video */}

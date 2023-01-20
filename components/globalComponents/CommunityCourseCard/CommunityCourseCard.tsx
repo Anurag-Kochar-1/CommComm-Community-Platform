@@ -18,8 +18,8 @@ const CommunityCourseCard = ({ communityCourseData, courseNavTabs, setCourseNavT
     const router = useRouter()
 
     return (
-        <div className='w-[90%] sm:w-[70%] lg:w-[90%] h-auto lg:h-72 flex flex-col justify-start items-center border-2 border-black bg-black rounded-md'
-            onClick={() => console.log(communityCourseData)}
+        <div className='w-[90%] sm:w-[70%] lg:w-[90%] h-auto lg:h-72 flex flex-col justify-start items-center border-2 border-black bg-black rounded-md hover:cursor-pointer'
+            onClick={() => router.push(`/community/${communityCourseData?.communityID}/Courses`) }
         >
 
             <div className='w-full h-full flex flex-col lg:flex-row justify-start items-center border border-black bg-white rounded-md'>

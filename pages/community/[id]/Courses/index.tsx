@@ -78,7 +78,7 @@ const Index = ({ communityCoursesData }: IProps) => {
 
                 <CoinCreditedModal />
 
-                {/* ---- No Course found (Admin) ---- */}
+                {/* ---- No Course found  ---- */}
                 {!communityCoursesData[0] ? (
                     <div className="w-[90%] sm:w-[80%] md:w-[70%] lg:w-[60%] xl:w-[50%] h-72 border-2 border-black flex flex-col justify-start items-center rounded-md bg-white">
                         <div className="w-full h-full -mt-2 -ml-3 flex flex-col justify-center items-center border-2 border-black rounded-md bg-white">

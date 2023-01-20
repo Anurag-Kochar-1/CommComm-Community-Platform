@@ -25,7 +25,7 @@ const PostFeed = ( {posts, page}:IProps ) => {
 
 
       {!posts[0] && (
-        <div className={`"w-full h-96 sm:w-[70%] md:w-[60%] lg:w-[50%] xl:w-[40%] bg-white border-2 border-black flex flex-col justify-center items-center p-2 md:p-4 rounded-sm md:rounded-md my-2 space-y-3`} >
+        <div className={`w-[90%] h-96 sm:w-[70%] md:w-[60%] lg:w-[50%] xl:w-[40%] bg-white border-2 border-black flex flex-col justify-center items-center p-2 md:p-4 rounded-sm md:rounded-md my-2 space-y-3`} >
             <p className='text-3xl font-bold tet-black'> No Posts yet </p>
             <Link href={'/UploadPost'} className="text-blue-500 font-medium text-lg"> Create some </Link>
         </div>

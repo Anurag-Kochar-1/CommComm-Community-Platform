@@ -21,6 +21,8 @@ const CommunityClassCard = ({ classDetails }: IProps) => {
         router.push(`${classDetails?.communityCourseClassLink}`)
     }
 
+    
+
     return (
         // <div className='relative w-[95%] sm:w-[80%] md:w-[60%] lg:w-[70%] xl:w-[50%] h-72 sm:h-56 md:h-56 bg-white border-2 border-black rounded-md scrollbar-hide' onClick={() => console.log(classDetails)}>
         //     <div className='absolute bottom-2 right-2 w-full h-full bg-white border-2 border-black rounded-md scrollbar-hide'>

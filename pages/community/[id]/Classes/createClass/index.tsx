@@ -108,7 +108,7 @@ const Index = ({ pathToCreateClassForData, communityCourseData }: IProps) => {
 
                     
                     // Redirecting
-                    // router.push(`/community/${id}/Classes`)
+                    router.push(`/community/${id}/Classes`)
                     
                 } catch (error) {
                     alert(error)

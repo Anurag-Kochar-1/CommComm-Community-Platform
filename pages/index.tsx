@@ -42,6 +42,19 @@ export default function Home({ allPostsArray, userFromSSR }: IProps) {
   }, [allPostsArray])
 
 
+  // useEffect(() => {
+  //   if (communityCourseData[0]) {
+  //     const classCollectionRef = collection(db, "communityCourses", communityCourseData[0]?.courseID, "courseClasses")
+  //     const classesQuery = query(classCollectionRef, where("isClassEnded", "==", false))
+
+  //     const unSubRealTimeClassesDataOnSnapShotListener = onSnapshot(classesQuery, (snapshot) => {
+  //       setcommunityCourseClassesData(snapshot?.docs?.map(doc => doc.data() as IClassData))
+  //     })
+
+  //   }
+  // }, [])
+
+
 
 
   return (
@@ -76,10 +89,15 @@ export const getServerSideProps = async () => {
   // fetching all posts 
   const postCollectionRef = collection(db, "posts")
   const data = await getDocs(postCollectionRef)
+  const allPostsArray:IPost[] = JSON.parse(JSON.stringify( data?.docs?.map(doc => doc.data() as IPost)))
+
+  
+  // fetching top communitiy courses
+  const communityCoursesCollectionRef = collection(db, "communityCourses")
+
 
   
 
-  const allPostsArray:IPost[] = JSON.parse(JSON.stringify( data?.docs?.map(doc => doc.data() as IPost)))
 
 
 

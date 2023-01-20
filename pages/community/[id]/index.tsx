@@ -51,7 +51,6 @@ const Index = ({ communityData, currentCommunityPosts, currentCommunityMembersDa
           <p className='text-2xl text-white font-Roboto font-bold'> {communityData?.communityName}'s  Posts </p>
         </div>
 
-        <h1 onClick={() => console.log(currentCommunityMembersData)}> log current Community Members Data </h1>
 
         <PostFeed posts={currentCommunityPosts} page={"communityPostsPage"} />
 

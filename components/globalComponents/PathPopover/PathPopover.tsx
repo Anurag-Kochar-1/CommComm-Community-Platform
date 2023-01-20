@@ -108,7 +108,7 @@ export function PathPopover({ path }: IProps) {
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        theme: "light",
+        theme: "dark",
     });
 
 
@@ -134,12 +134,7 @@ export function PathPopover({ path }: IProps) {
                                     {!path?.isUnlocked && (<FaLock className='text-2xl text-[#AFAFAF]' />)}
                                     {path?.isUnlocked && !path.isCompleted ? (<AiFillStar className='text-3xl text-white' />) : null}
                                     {path.isCompleted ? (<BsCheckLg className='text-2xl text-white' />) : null}
-
-
-
-                                    {/* <div>
-                    <p> {path?.pathNumber} </p>
-                  </div> */}
+                                 
                                 </div>
                             </div>
                         </Popover.Button>
@@ -199,7 +194,6 @@ export function PathPopover({ path }: IProps) {
                                                 <button
                                                     onClick={() => {
                                                         claimCoin()
-                                                        // dispatch(setIsCoinCreditedModalOpen(true))
                                                     }}
                                                     type='button'
                                                     className={`w-[95%] flex justify-center items-center space-x-2 bg-white ${path?.coinsClaimedByUsers?.includes(user?.uid as string) && "opacity-80"} rounded-md py-3 px-4`}>
@@ -209,18 +203,7 @@ export function PathPopover({ path }: IProps) {
                                             )}
 
 
-                                            {true && (
-                                                <button
-                                                    onClick={() => {
-                                                        claimCoinToastSuccess()
-                                                        // dispatch(setIsCoinCreditedModalOpen(true))
-                                                    }}
-                                                    type='button'
-                                                    className={`w-[95%] flex justify-center items-center space-x-2 bg-white ${path?.coinsClaimedByUsers?.includes(user?.uid as string) && "opacity-80"} rounded-md py-3 px-4`}>
-                                                    <p className='font-semibold text-base '> TEST TOAST </p>
-                                                    
-                                                </button>
-                                            )}
+                                           
 
                                         </div>
 

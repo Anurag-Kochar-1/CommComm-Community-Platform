@@ -63,8 +63,8 @@ export default function Home({ allPostsArray, popularCommunityCoursesData }: IPr
 
   const items = popularCommunityCoursesData?.map((course) => {
     return (
-      <div className='w-full flex justify-center items-center'>
-        <CommunityCourseCard key={course?.courseID} communityCourseData={course} />
+      <div className='w-full flex justify-center items-center' key={course?.courseID}>
+        <CommunityCourseCard communityCourseData={course} />
       </div>
     )
   })
@@ -130,6 +130,7 @@ export default function Home({ allPostsArray, popularCommunityCoursesData }: IPr
       {/* ---- All Posts - for signed out user ---- */}
       {true && (
         <PostFeed posts={allPostsArray} page={"homePage"} />
+
       )}
 
 

@@ -14,6 +14,7 @@ import { setCommunityCoursePathsData } from '../../../../redux/slices/communityD
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { ICommunityData } from '../../../../customTypesAndInterfaces/Community/CommunityInterfaces'
 import { BsBook } from 'react-icons/bs'
+import CoinCreditedModal from '../../../../components/globalComponents/Modals/CoinCreditedModal/CoinCreditedModal'
 
 interface IProps {
     communityCoursesData: ICourse[]
@@ -73,6 +74,9 @@ const Index = ({ communityCoursesData }: IProps) => {
                         })}
                     </div>
                 )}
+
+
+                <CoinCreditedModal />
 
                 {/* ---- No Course found (Admin) ---- */}
                 {!communityCoursesData[0] ? (

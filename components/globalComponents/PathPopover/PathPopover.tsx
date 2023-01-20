@@ -9,8 +9,10 @@ import { IPathsData } from '../../../customTypesAndInterfaces/Tracks/pathsInterf
 import { auth, db } from '../../../firebaseConfig'
 import { IUserData } from "../../../customTypesAndInterfaces/User/userInterfaces"
 import { AiFillStar } from "react-icons/ai"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { useRouter } from "next/router"
+import { setIsCoinCreditedModalOpen } from "../../../redux/slices/modalSlice"
+import { toast } from "react-toastify"
 // import coinIcon from "../../../public/images/icons/coinIcon.svg"
 
 
@@ -19,9 +21,10 @@ interface IProps {
 }
 
 export function PathPopover({ path }: IProps) {
-
     const [user, loading] = useAuthState(auth)
     const router = useRouter()
+    const dispatch = useDispatch()
+
 
 
     // Redux States
@@ -90,10 +93,25 @@ export function PathPopover({ path }: IProps) {
                     userCoins: increment(50)
                 })
 
+                claimCoinToastSuccess()
+
 
             }
         }
     }
+
+    const claimCoinToastSuccess = () => toast('✅ 50 coins credited!!!', {
+        position: "bottom-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+    });
+
+
 
 
 
@@ -143,14 +161,14 @@ export function PathPopover({ path }: IProps) {
                                         <div className="w-full h-full space-y-5 p-1 flex flex-col justify-start items-center">
 
                                             {/* Create Class Button*/}
-                                            {user?.uid === path.pathCreatorID &&  !path?.isPathClassCreated ? (
+                                            {user?.uid === path.pathCreatorID && !path?.isPathClassCreated ? (
                                                 <button
                                                     onClick={() => router.push(`/community/${path?.communityID}/Classes/createClass`)}
                                                     type='button'
                                                     className='w-[95%] flex justify-center items-center space-x-2  bg-white rounded-md py-3 px-4'>
                                                     <p className='font-semibold text-base'> Create Class </p>
                                                 </button>
-                                            ): null}
+                                            ) : null}
 
                                             {/* Mark Complete Button*/}
                                             {user?.uid === path.pathCreatorID && (
@@ -164,14 +182,14 @@ export function PathPopover({ path }: IProps) {
 
 
                                             {/* Attend Class Button */}
-                                            {userDetails?.communitiesJoinedID?.includes(path?.communityID) && path?.isPathClassCreated ?(
+                                            {userDetails?.communitiesJoinedID?.includes(path?.communityID) && path?.isPathClassCreated ? (
                                                 <button
                                                     onClick={() => (router.push(`/community/${path?.communityID}/Classes`))}
                                                     type='button'
                                                     className='w-[95%] flex justify-center items-center space-x-2  bg-white rounded-md py-3 px-4'>
                                                     <p className='font-semibold text-base'> Attend Class </p>
                                                 </button>
-                                            ): null}
+                                            ) : null}
 
 
 
@@ -179,11 +197,28 @@ export function PathPopover({ path }: IProps) {
                                             {/* Claim Coins Button*/}
                                             {userDetails?.communitiesJoinedID?.includes(path?.communityID) && (
                                                 <button
-                                                    onClick={() => claimCoin()}
+                                                    onClick={() => {
+                                                        claimCoin()
+                                                        // dispatch(setIsCoinCreditedModalOpen(true))
+                                                    }}
                                                     type='button'
                                                     className={`w-[95%] flex justify-center items-center space-x-2 bg-white ${path?.coinsClaimedByUsers?.includes(user?.uid as string) && "opacity-80"} rounded-md py-3 px-4`}>
                                                     {!path?.coinsClaimedByUsers?.includes(user?.uid as string) && <p className='font-semibold text-base '> Claim 50 coins </p>}
                                                     {path?.coinsClaimedByUsers?.includes(user?.uid as string) && <p className='font-semibold text-base '> CLAIMED !!! </p>}
+                                                </button>
+                                            )}
+
+
+                                            {true && (
+                                                <button
+                                                    onClick={() => {
+                                                        claimCoinToastSuccess()
+                                                        // dispatch(setIsCoinCreditedModalOpen(true))
+                                                    }}
+                                                    type='button'
+                                                    className={`w-[95%] flex justify-center items-center space-x-2 bg-white ${path?.coinsClaimedByUsers?.includes(user?.uid as string) && "opacity-80"} rounded-md py-3 px-4`}>
+                                                    <p className='font-semibold text-base '> TEST TOAST </p>
+                                                    
                                                 </button>
                                             )}
 

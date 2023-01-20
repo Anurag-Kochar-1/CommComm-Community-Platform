@@ -65,9 +65,10 @@ const Index = () => {
                 setYoutubeVideoID(res?.data?.items[0]?.id?.videoId || "")
 
                 setTimeout(() => {
-                    createCourse()
-                }, 1500);
-                setIsLoading(false)
+                    createCourseFromVideo(res?.data?.items[0]?.snippet?.channelId, res?.data?.items[0]?.snippet?.thumbnails?.high?.url, res?.data?.items[0]?.snippet?.channelTitle, res?.data?.items[0]?.id?.videoId)
+                }, 2500);
+
+
 
             } catch (error) {
                 alert("Invalid Video ID")
@@ -96,10 +97,8 @@ const Index = () => {
 
 
                 setTimeout(() => {
-                    createCourse()
-                }, 1500);
-
-                setIsLoading(false)
+                    createCourseFromPlaylist(res?.data?.items[0]?.snippet?.channelId, res?.data?.items[0]?.snippet?.thumbnails?.high?.url, res?.data?.items[0]?.snippet?.channelTitle, res?.data?.items[0]?.snippet?.playlistId)
+                }, 2500);
 
             } catch (error) {
                 alert("Invalid Playlist ID")
@@ -140,6 +139,234 @@ const Index = () => {
                                 youtubeCourseChannelLogo:  youtubeCourseChannelLogo,
                                 youtubeVideoID: youtubeVideoID,
                                 youtubePlaylistID: youtubePlaylistID,
+                            })
+
+                            // ---- adding ID ----
+                            const communityCourseRef = doc(db, "communityCourses", (await addingCourse).id)
+                            await updateDoc(communityCourseRef, {
+                                courseID: (await addingCourse).id
+                            })
+
+                            // Adding course Id to community
+                            const communityRef = doc(db, "communities", id as string)
+                            await updateDoc(communityRef, {
+                                communityCoursesID: arrayUnion((await addingCourse).id)
+                            })
+
+
+                            // -------- creating Community Course paths ---------
+                            // const data = await getDoc(communityCourseRef)
+                            // const pathsNumbers: number = data.data()?.trackDurationInDays
+                            // const communityPathsSubCollectionRef = collection(db, "communities", id as string, "trackPaths")
+
+                            const coursePathsSubCollectionRef = collection(db, 'communityCourses', (await addingCourse).id, "coursePaths")
+
+                            for (let i = 1; i <= courseDurationInputValue; i++) {
+                                // adding path
+                                if (i === 1) {
+                                    const addingPath = await addDoc(coursePathsSubCollectionRef, {
+                                        pathID: "",
+                                        courseID: (await addingCourse).id,
+                                        pathCreatorID: user?.uid,
+                                        communityID: id,
+                                        pathNumber: i,
+                                        isUnlocked: true,
+                                        isCompleted: false,
+
+                                        coinsClaimedByUsers: [],
+                                        isPathClassCreated: false
+
+                                    })
+
+                                    // adding ID manually
+                                    await updateDoc(addingPath, {
+                                        pathID: addingPath.id
+                                    })
+                                } else {
+                                    const addingPath = await addDoc(coursePathsSubCollectionRef, {
+                                        courseID: (await addingCourse).id,
+                                        pathID: "",
+                                        pathCreatorID: user?.uid,
+                                        communityID: id,
+                                        pathNumber: i,
+                                        isUnlocked: false,
+                                        isCompleted: false,
+
+                                        coinsClaimedByUsers: [],
+                                        isPathClassCreated: false
+
+                                    })
+
+                                    // adding ID manually
+                                    await updateDoc(addingPath, {
+                                        pathID: addingPath.id
+                                    })
+                                }
+
+                            }
+
+
+                            setTimeout(() => {
+                                setIsLoading(false)
+                            }, courseDurationInputValue > 30 ? 3500 : 4500);
+
+                            // router.push(`/community/${id}/Courses`)
+
+                        } catch (error) {
+                            setIsLoading(false)
+                        }
+                    }
+                }
+            } else if (courseDurationInputValue > 91) {
+                alert("Course duration should be less than 90 days and more than 1 days")
+            }
+        } else {
+            alert("Course Name should not be more than 50 characters and less than 10 characters")
+        }
+    }
+
+    const createCourseFromPlaylist = async ( channelId: string, thumbnail: string, channelName: string, playlistId: string ) => {
+        if (courseNameInputValue.length >= 10 && courseNameInputValue.length <= 50) {
+            if (courseDurationInputValue < 91) {
+                if (communityOwnerID === user?.uid) {
+                    if (user && !loading && courseNameInputValue && courseGoalInputValue && courseDurationInputValue && sourceOfLearningDropdownValue && sourceOfLearningDropdownLinkID && coursePrerequisitesInputValue) {
+                        try {
+                            setIsLoading(true)
+                            console.log(` createCourseFromPlaylist is running`);
+
+                            const communityCoursesCollectionRef = collection(db, "communityCourses")
+                            const addingCourse = addDoc(communityCoursesCollectionRef, {
+                                courseID: "",
+                                communityID: communityData?.communityID,
+                                courseName: courseNameInputValue,
+                                courseGoal: courseGoalInputValue,
+                                courseDurationInDays: courseDurationInputValue,
+                                courseSourceOfLearning: sourceOfLearningDropdownValue,
+                                courseSourceOfLearningLinkID: sourceOfLearningDropdownLinkID,
+                                coursePrerequisites: coursePrerequisitesInputValue,
+                                courseDescription: courseOptionalDescription,
+                                courseCreatorID: user?.uid,
+
+                                youtubeCourseThumbnail: thumbnail,
+                                youtubeCourseChannelName: channelName,
+                                youtubeCourseChannelID: channelId,
+                                youtubeCourseChannelLogo:  youtubeCourseChannelLogo,
+                                youtubeVideoID: "",
+                                youtubePlaylistID: playlistId,
+                            })
+
+                            // ---- adding ID ----
+                            const communityCourseRef = doc(db, "communityCourses", (await addingCourse).id)
+                            await updateDoc(communityCourseRef, {
+                                courseID: (await addingCourse).id
+                            })
+
+                            // Adding course Id to community
+                            const communityRef = doc(db, "communities", id as string)
+                            await updateDoc(communityRef, {
+                                communityCoursesID: arrayUnion((await addingCourse).id)
+                            })
+
+
+                            // -------- creating Community Course paths ---------
+                            // const data = await getDoc(communityCourseRef)
+                            // const pathsNumbers: number = data.data()?.trackDurationInDays
+                            // const communityPathsSubCollectionRef = collection(db, "communities", id as string, "trackPaths")
+
+                            const coursePathsSubCollectionRef = collection(db, 'communityCourses', (await addingCourse).id, "coursePaths")
+
+                            for (let i = 1; i <= courseDurationInputValue; i++) {
+                                // adding path
+                                if (i === 1) {
+                                    const addingPath = await addDoc(coursePathsSubCollectionRef, {
+                                        pathID: "",
+                                        courseID: (await addingCourse).id,
+                                        pathCreatorID: user?.uid,
+                                        communityID: id,
+                                        pathNumber: i,
+                                        isUnlocked: true,
+                                        isCompleted: false,
+
+                                        coinsClaimedByUsers: [],
+                                        isPathClassCreated: false
+
+                                    })
+
+                                    // adding ID manually
+                                    await updateDoc(addingPath, {
+                                        pathID: addingPath.id
+                                    })
+                                } else {
+                                    const addingPath = await addDoc(coursePathsSubCollectionRef, {
+                                        courseID: (await addingCourse).id,
+                                        pathID: "",
+                                        pathCreatorID: user?.uid,
+                                        communityID: id,
+                                        pathNumber: i,
+                                        isUnlocked: false,
+                                        isCompleted: false,
+
+                                        coinsClaimedByUsers: [],
+                                        isPathClassCreated: false
+
+                                    })
+
+                                    // adding ID manually
+                                    await updateDoc(addingPath, {
+                                        pathID: addingPath.id
+                                    })
+                                }
+
+                            }
+
+
+                            setTimeout(() => {
+                                setIsLoading(false)
+                            }, courseDurationInputValue > 30 ? 3500 : 4500);
+
+                            // router.push(`/community/${id}/Courses`)
+
+                        } catch (error) {
+                            setIsLoading(false)
+                        }
+                    }
+                }
+            } else if (courseDurationInputValue > 91) {
+                alert("Course duration should be less than 90 days and more than 1 days")
+            }
+        } else {
+            alert("Course Name should not be more than 50 characters and less than 10 characters")
+        }
+    }
+
+    const createCourseFromVideo = async ( channelId: string, thumbnail: string, channelName: string, videoID: string ) => {
+        if (courseNameInputValue.length >= 10 && courseNameInputValue.length <= 50) {
+            if (courseDurationInputValue < 91) {
+                if (communityOwnerID === user?.uid) {
+                    if (user && !loading && courseNameInputValue && courseGoalInputValue && courseDurationInputValue && sourceOfLearningDropdownValue && sourceOfLearningDropdownLinkID && coursePrerequisitesInputValue) {
+                        try {
+                            setIsLoading(true)
+                            console.log(` createCourseFromVideo is running`);
+
+                            const communityCoursesCollectionRef = collection(db, "communityCourses")
+                            const addingCourse = addDoc(communityCoursesCollectionRef, {
+                                courseID: "",
+                                communityID: communityData?.communityID,
+                                courseName: courseNameInputValue,
+                                courseGoal: courseGoalInputValue,
+                                courseDurationInDays: courseDurationInputValue,
+                                courseSourceOfLearning: sourceOfLearningDropdownValue,
+                                courseSourceOfLearningLinkID: sourceOfLearningDropdownLinkID,
+                                coursePrerequisites: coursePrerequisitesInputValue,
+                                courseDescription: courseOptionalDescription,
+                                courseCreatorID: user?.uid,
+
+                                youtubeCourseThumbnail: thumbnail,
+                                youtubeCourseChannelName: channelName,
+                                youtubeCourseChannelID: channelId,
+                                youtubeCourseChannelLogo:  youtubeCourseChannelLogo,
+                                youtubeVideoID: videoID,
+                                youtubePlaylistID: "",
                             })
 
                             // ---- adding ID ----
@@ -368,7 +595,7 @@ const Index = () => {
                                                         onChange={(e) => setSourceOfLearningDropdownLinkID(e.target.value)}
                                                         required
                                                         type="text"
-                                                        placeholder='Source of Learning - Link'
+                                                        placeholder='Source of Learning - ID'
                                                         className='w-full h-10 absolute right-1 bottom-1 outline-none focus:ring-0 px-2 placeholder:px-2 border-2 border-black'
 
                                                     />

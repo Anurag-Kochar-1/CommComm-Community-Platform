@@ -14,6 +14,9 @@ import Image from 'next/image'
 
 import TimeAgo from 'react-timeago'
 import PostCardDropdown from '../../Modals/PostCardDropdown/PostCardDropdown'
+import { toast } from 'react-toastify'
+import { IUserData } from '../../../../customTypesAndInterfaces/User/userInterfaces'
+import { useSelector } from 'react-redux'
 
 interface IProps {
     postData: IPost
@@ -32,6 +35,25 @@ const PostCard = ({ postData, page }: IProps) => {
     const [isJoinedBtnClicked, setIsJoinedBtnClicked] = useState<boolean>(false)
     const [postLikeCount, setPostLikeCount] = useState<number>(postData.upvotedByUserID.length)
 
+    const currentUserData: IUserData = useSelector((state: any) => state?.user?.currentUserData)
+
+
+    const copiedToastSuccess = () => toast('✅ Copied to clipboard', {
+        position: "bottom-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+    });
+
+    const copyPostCommunityURLtoClipboard = () => {
+        navigator.clipboard.writeText(`https://th3-project.vercel.app/community/${postData?.postCreateAtCommunityID}`)
+        copiedToastSuccess()
+    }
+
     function convertDate(time: any) {
         let dateInMillis = time * 1000
         let date = new Date(dateInMillis)
@@ -44,6 +66,7 @@ const PostCard = ({ postData, page }: IProps) => {
 
 
     const postCreadedAt = convertDate(postData?.createdAt?.seconds)
+
 
 
     const fetchCommunityDetails = async () => {
@@ -123,44 +146,30 @@ const PostCard = ({ postData, page }: IProps) => {
 
 
 
-
-    // const checkIsUserMember = async () => {
-    //     if (user && !loading) {
-    //         const userRef = doc(db, "users", user?.uid as string)
-    //         const communityRef = doc(db, "communities", postData?.postCreateAtCommunityID)
-
-    //         const communityData = await getDoc(communityRef)
-    //         // communityData.data((dataDoc: any) => {
-    //         //     console.log(dataDoc)
-    //         // })
-
-    //         console.log(`CHECKING`)
-    //         console.log(communityData.data());
-
-    //         communityData.data()
-
-    //     }
-    // }
-
-
     const checkIsPostLikedByUser = () => {
-        if (user?.uid && !loading) {
-            postData.upvotedByUserID.map((user2: any) => {
-                if (user2 == user.uid) {
-                    setIsPostLiked(true)
-                } else {
-                    setIsPostLiked(false)
-                }
-            })
-        } else {
-            setIsPostLiked(false)
+        // if (user?.uid && !loading) {
+        //     postData.upvotedByUserID.map((user2: any) => {
+        //         if (user2 == user.uid) {
+        //             setIsPostLiked(true)
+        //         } else {
+        //             setIsPostLiked(false)
+        //         }
+        //     })
+        // } else {
+        //     setIsPostLiked(false)
+        // }
+
+        if(currentUserData) {
+            if(currentUserData?.likedPostsID?.includes(postData?.postID)) {
+                setIsPostLiked(true)
+            }
         }
+
+        
     }
 
     useEffect(() => {
         fetchCommunityDetails()
-        // checkIsUserJoinedInCommunity1()
-
         checkIsPostLikedByUser()
 
 
@@ -176,10 +185,8 @@ const PostCard = ({ postData, page }: IProps) => {
         if (communityDetails[0] && user?.uid && !loading) {
             if (communityDetails[0]?.communityMembersID.includes(user.uid)) {
                 setIsUserJoinedInCommunity(true)
-                // console.log(`ANS -> ${communityDetails[0]?.communityMembersID.includes(user.uid)}`)
-            } else if (!communityDetails[0]?.communityMembersID.includes(user.uid)) {
+            } else {
                 setIsUserJoinedInCommunity(false)
-                // console.log(`ANS -> ${communityDetails[0]?.communityMembersID.includes(user.uid)}`)
             }
         }
 
@@ -207,12 +214,12 @@ const PostCard = ({ postData, page }: IProps) => {
                     <div className='w-full h-full flex flex-col sm:flex-row items-start justify-start sm:items-center space-x-1'>
 
                         <div className='h-12 flex justify-start items-center space-x-2 hover:cursor-pointer' onClick={() => router.push(`/community/${postData?.postCreateAtCommunityID}`)}>
-                            <Image src={communityDetails[0]?.communityLogo as string} 
-                            alt="logo" 
-                            width={12} 
-                            height={12} 
-                            className="w-12 h-12 aspect-square rounded-sm border border-black" onClick={() => console.log(communityDetails)} draggable="false"
-                            unoptimized
+                            <Image src={communityDetails[0]?.communityLogo as string}
+                                alt="logo"
+                                width={12}
+                                height={12}
+                                className="w-12 h-12 aspect-square rounded-sm border border-black" onClick={() => console.log(communityDetails)} draggable="false"
+                                unoptimized
                             />
 
                             <div className='w-full flex flex-col justify-start items-start space-y-1'>
@@ -228,7 +235,7 @@ const PostCard = ({ postData, page }: IProps) => {
 
 
                     </div>
-                ): null}
+                ) : null}
 
 
 
@@ -247,7 +254,7 @@ const PostCard = ({ postData, page }: IProps) => {
                 ) : null}
 
 
-                {postData?.postCreatorID === user?.uid &&  <PostCardDropdown postData={postData} /> }
+                {postData?.postCreatorID === user?.uid && <PostCardDropdown postData={postData} />}
             </div>
 
             {/* Title */}
@@ -301,7 +308,7 @@ const PostCard = ({ postData, page }: IProps) => {
                     title='comment'
                     className='flex justify-center items-center space-x-2'
                 >
-                    <MdOutlineModeComment className='text-xl text-black' />
+                    <MdOutlineModeComment className='text-xl text-black  active:text-BrutalPurple2 active:scale-125' />
                     <span className='font-InriaSans'> 0 </span>
                 </button>
 
@@ -309,9 +316,10 @@ const PostCard = ({ postData, page }: IProps) => {
                 <button
                     type='button'
                     title='share'
-                    className='flex justify-center items-center space-x-2'
+                    className='flex justify-center items-center space-x-2 '
+                    onClick={copyPostCommunityURLtoClipboard}
                 >
-                    <AiOutlineShareAlt className='text-xl text-black' />
+                    <AiOutlineShareAlt className='text-xl text-black active:text-BrutalPurple2 active:scale-125' />
                 </button>
 
 

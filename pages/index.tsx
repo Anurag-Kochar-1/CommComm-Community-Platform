@@ -1,3 +1,4 @@
+import {useState} from "react"
 import Image from 'next/image'
 // import { Inter } from '@next/font/google'
 import { useRouter } from 'next/router'
@@ -33,6 +34,31 @@ export default function Home({ allPostsArray, popularCommunityCoursesData }: IPr
 
   const currentUserData: IUserData = useSelector((state: any) => state.user.currentUserData)
 
+  const [userJoinedCoursesState, setUserJoinedCoursesState] = useState <ICourse[]> ([])
+
+  const getUpcomingClasses = async () => {
+    if(currentUserData) {
+      try {
+        const communityCourseQuery = query(collection(db, "communityCourses"))
+        const communityCourseQueryRes = await getDocs(communityCourseQuery)
+        const allCommunityCoursesData = communityCourseQueryRes?.docs?.map(doc => doc.data())
+
+        const userJoinedCommunityCourses = allCommunityCoursesData.filter((course) => {
+          if(currentUserData?.communitiesJoinedID?.includes(course.communityID)) {
+            // setUserJoinedCoursesState( ...userJoinedCoursesState,  course )
+          }
+        })
+
+
+        console.log(userJoinedCommunityCourses)
+        console.log(`ssssssssss`)
+
+      } catch (error) {
+        console.error(error)
+      }
+    }
+  }
+
 
 
 
@@ -43,6 +69,11 @@ export default function Home({ allPostsArray, popularCommunityCoursesData }: IPr
 
 
   }, [allPostsArray])
+
+
+  // useEffect(() => {
+  //   getUpcomingClasses()
+  // },[loading, currentUserData])
 
 
   // useEffect(() => {
@@ -86,45 +117,44 @@ export default function Home({ allPostsArray, popularCommunityCoursesData }: IPr
 
       {/* <h1 className='text-4xl text-blue-500 font-bold mt-[7vh]' onClick={() => console.log(auth?.currentUser)}> LOG USER</h1> */}
       {/* <h1 className='font-bold text-xl my-5' onClick={() => console.log(currentUserData)}> LOG currentUserData </h1> */}
-
       {/* <h1 className='text-5xl my-2 text-black font-light'> HELLO  </h1> */}
-      {/* <h1 onClick={() => console.log(popularCommunityCoursesData)} className='text-5xl my-2 text-black font-Roboto font-light'> popularCommunityCoursesData </h1> */}
+      {/* <h1 onClick={() => console.log(userJoinedCoursesState)} className='text-5xl my-2 text-black font-Roboto font-light'> log userJoinedCoursesState </h1> */}
 
 
-      {/* Popular Courses */}
 
+      {/* ---- Popular Courses ---- */}
+      {true ? (
+        <div className='w-full bg-white border-2 border-black rounded-md flex flex-col justify-start items-center'>
+          <div className='w-full h-12 md:h-16 bg-[#7E4BDE] rounded-tr-sm rounded-tl-sm flex justify-between items-center px-3'>
+            {/* Dots */}
+            <div className='flex justify-self-start items-center space-x-1 md:space-x-2'>
+              <div className='w-3 h-3 md:w-4 md:h-4 rounded-full bg-[#DE5D53] border border-black hover:cursor-pointer' />
+              <div className='w-3 h-3 md:w-4 md:h-4 rounded-full bg-[#68C6BA] border border-black hover:cursor-pointer' />
+              <div className='w-3 h-3 md:w-4 md:h-4 rounded-full bg-[#F5A860] border border-black hover:cursor-pointer' />
+            </div>
+            <p className=' text-black text-xl md:text-3xl font-Roboto font-bold'> Popular Courses </p>
 
-      <div className='w-full bg-white border-2 border-black rounded-md flex flex-col justify-start items-center'>
-
-        <div className='w-full h-12 md:h-16 bg-[#7E4BDE] rounded-tr-sm rounded-tl-sm flex justify-between items-center px-3'>
-          {/* Dots */}
-          <div className='flex justify-self-start items-center space-x-1 md:space-x-2'>
-            <div className='w-3 h-3 md:w-4 md:h-4 rounded-full bg-[#DE5D53] border border-black hover:cursor-pointer' />
-            <div className='w-3 h-3 md:w-4 md:h-4 rounded-full bg-[#68C6BA] border border-black hover:cursor-pointer' />
-            <div className='w-3 h-3 md:w-4 md:h-4 rounded-full bg-[#F5A860] border border-black hover:cursor-pointer' />
-          </div>
-          <p className=' text-black text-xl md:text-3xl font-Roboto font-bold'> Popular Courses </p>
-
-          <span></span>
-        </div>
-
-        <div className='w-full flex flex-col justify-start items-start mb-5 scrollbar-hide py-5'>
-          <div className='w-full flex justify-center items-center'>
-
+            <span></span>
           </div>
 
-          <AliceCarousel
-            infinite
-            autoPlayInterval={2000}
-            animationDuration={2500}
-            disableButtonsControls
-            disableDotsControls
-            responsive={responsive}
-            items={items}
-            autoPlay
-          />
+          <div className='w-full flex flex-col justify-start items-start mb-5 scrollbar-hide py-5'>
+            <div className='w-full flex justify-center items-center'>
+
+            </div>
+
+            <AliceCarousel
+              infinite
+              autoPlayInterval={2000}
+              animationDuration={2500}
+              disableButtonsControls
+              disableDotsControls
+              responsive={responsive}
+              items={items}
+              autoPlay
+            />
+          </div>
         </div>
-      </div>
+      ) : null}
 
 
       {/* ---- All Posts - for signed out user ---- */}

@@ -30,8 +30,8 @@ const WalletDropdownMenu = () => {
             <Menu as="div" className="relative inline-block text-left z-50">
                 <Menu.Button className="inline-flex w-full justify-center rounded-md text-sm font-medium text-white">
                     <button type='button' title='searchIcon' className='relative w-10 h-10 border-black bg-black border rounded-full flex justify-center items-center'>
-                        <span className='w-10 h-10 rounded-full bg-BrutalGreen1 flex justify-center items-center absolute right-[1px] bottom-[1.5px] border border-black active:bottom-0 active:right-0'>
-                            <BiWallet className='text-lg text-black' />
+                        <span className='w-10 h-10 rounded-full bg-red-800 flex justify-center items-center absolute right-[1px] bottom-[1.5px] border border-black active:bottom-0 active:right-0'>
+                            <BiWallet className='text-lg text-white' />
                         </span>
                     </button>
                 </Menu.Button>
@@ -46,19 +46,19 @@ const WalletDropdownMenu = () => {
                     leaveTo="transform opacity-0 scale-95"
                 >
 
-                    <Menu.Items className="bg-white absolute right-0 mt-2 w-52 origin-top-right divide-y divide-gray-100 rounded-sm space-y-2 border-2 border-black p-2 z-50">
+                    <Menu.Items className="bg-white absolute right-0 mt-2 w-52 origin-top-right divide-y divide-gray-100 rounded-lg space-y-2 border-2 border-black p-2 z-50">
 
                         <div className="w-full px-3 py-2 z-50 bg-white rounded-md hover:cursor-pointer">
                             <Menu.Item as={Fragment}>
                                 <div
                                     className='w-full py-2 flex flex-col justify-start items-center space-y-3'
-                                    onClick={() => console.log(1)}>
+                                >
 
-                                    <p className='text-xl text-black font-Roboto font-bold'> My Coins </p>
+                                    <p className='text-xl text-black font-Roboto font-bold'> My coins </p>
 
                                     <div className='flex justify-center items-center space-x-2'>
                                         <Image unoptimized src={coinIcon as string} alt="icon" width={5} height={5} className="w-8 h-8 rounded-full" />
-                                        <span className='text-lg text-black font-Roboto font-medium'> {currentUserData?.userCoins} </span>
+                                        <span className='text-base text-black font-Roboto font-medium'> {currentUserData?.userCoins} </span>
                                     </div>
                                 </div>
                             </Menu.Item>

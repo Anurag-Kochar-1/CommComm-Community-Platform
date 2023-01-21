@@ -42,8 +42,8 @@ const Index = () => {
   const getLogo = (subCategoryValue: string) => {
     console.log(`getLogo is running`)
     communitySubCategoriesLogoArray.map((subCategory) => {
-      if(subCategoryValue === subCategory.value) {
-        setCommunityLogoURL(subCategory.logoURL)
+      if(subCategoryValue === subCategory?.value) {
+        setCommunityLogoURL(subCategory?.logoURL)
       } else {
         setCommunityLogoURL("https://firebasestorage.googleapis.com/v0/b/th3-hackathon.appspot.com/o/communityLogos%2Ftile-2822716_960_720.webp?alt=media&token=c7e987df-b500-42a2-9334-a87dfd33e1d1")
       }

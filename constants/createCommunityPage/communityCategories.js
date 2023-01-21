@@ -191,6 +191,7 @@ export const communitySubCategoriesLogoArray = [
     },
 
 
+
     {
         id: 4,
         label: "Fiction",
@@ -208,5 +209,100 @@ export const communitySubCategoriesLogoArray = [
         label: "Biography",
         value: "Biography",
         logoURL: "https://firebasestorage.googleapis.com/v0/b/th3-hackathon.appspot.com/o/communityLogos%2F3d-fluency-books.png?alt=media&token=026dd0a1-1456-4427-9008-373657c26e87"
+    } ,
+
+
+   
+    {
+        id: 7,
+        label: "Learning Veganism",
+        value: "Learning Veganism",
+        logoURL: "https://firebasestorage.googleapis.com/v0/b/th3-hackathon.appspot.com/o/communityLogos%2FGroup%2040.png?alt=media&token=f08feb3a-4409-45dd-bd1b-9b5a3aafe333"
+    },
+    {
+        id: 8,
+        label: "Dieting", 
+        value: "Dieting",
+        logoURL: "https://firebasestorage.googleapis.com/v0/b/th3-hackathon.appspot.com/o/communityLogos%2FGroup%2040%20(1).png?alt=media&token=120928bc-03d2-4926-871c-2b3c41b91ff1"
     }
+    ,
+    {
+        id: 9,
+        label: "Fat Loss", 
+        value: "Fat Loss",
+        logoURL: "https://firebasestorage.googleapis.com/v0/b/th3-hackathon.appspot.com/o/communityLogos%2FGroup%2040.png?alt=media&token=3c2a4c33-9964-4f36-9b91-571bc5f745fc"
+    },
+
+
+
+
+    
+    {
+        id: 10,
+        label: "UI Basics", 
+        value: "UI Basics",
+        logoURL: "https://firebasestorage.googleapis.com/v0/b/th3-hackathon.appspot.com/o/communityLogos%2FGroup%2040%20(2).png?alt=media&token=d2dfdbac-1686-4268-a730-96561c188fdb"
+    },
+    {
+        id: 11,
+        label: "Learning Figma", 
+        value: "Learning Figma",
+        logoURL: "https://firebasestorage.googleapis.com/v0/b/th3-hackathon.appspot.com/o/communityLogos%2FGroup%2040%20(3).png?alt=media&token=76794700-efd2-41a3-b039-00f4572bf295"
+    },
+    {
+        id: 12,
+        label: "Learning XD", 
+        value: "Learning XD",
+        logoURL: "https://firebasestorage.googleapis.com/v0/b/th3-hackathon.appspot.com/o/communityLogos%2FGroup%2040%20(4).png?alt=media&token=88c6672a-46ce-4393-9f86-a4897e4eb090"
+    },
+    {
+        id: 13,
+        label: "Building Projects", 
+        value: "Building Projects",
+        logoURL: "https://firebasestorage.googleapis.com/v0/b/th3-hackathon.appspot.com/o/communityLogos%2FGroup%2040%20(5)%20-%20Copy.png?alt=media&token=27e3a964-6dc8-49f5-a186-fd4fdfed7f94"
+    },
+
+
+
+    {
+        id: 14,
+        label: "JEE", 
+        value: "JEE",
+        logoURL: "https://firebasestorage.googleapis.com/v0/b/th3-hackathon.appspot.com/o/communityLogos%2FGroup%2040%20(6).png?alt=media&token=f32ae30e-699f-4aa3-a982-274bcd2cd7c0"
+    },
+    {
+        id: 15,
+        label: "NEET", 
+        value: "NEET",
+        logoURL: "https://firebasestorage.googleapis.com/v0/b/th3-hackathon.appspot.com/o/communityLogos%2FGroup%2040%20(7).png?alt=media&token=e73165d2-bae4-47d8-b34f-a506ac495f29"
+    },
+    {
+        id: 16,
+        label: "NATA", 
+        value: "NATA",
+        logoURL: "https://firebasestorage.googleapis.com/v0/b/th3-hackathon.appspot.com/o/communityLogos%2FGroup%2040%20(8).png?alt=media&token=bc900f35-f26c-4d29-b4b6-5ed9426f5940"
+    },
+
+
+    ,
+    {
+        id: 17,
+        label: "Astrophysics", 
+        value: "Astrophysics",
+        logoURL: "https://firebasestorage.googleapis.com/v0/b/th3-hackathon.appspot.com/o/communityLogos%2FGroup%2040%20(9).png?alt=media&token=ec56ba6f-3d51-4b96-a191-1ed3e2f000b9"
+    },
+    {
+        id: 18,
+        label: "Neuroscience", 
+        value: "Neuroscience",
+        logoURL: "https://firebasestorage.googleapis.com/v0/b/th3-hackathon.appspot.com/o/communityLogos%2FGroup%2040%20(10).png?alt=media&token=080b1bbc-7442-4ad7-a4f9-87b7337aeb3e"
+    },
+    {
+        id: 19,
+        label: "Psychology", 
+        value: "Psychology",
+        logoURL: "https://firebasestorage.googleapis.com/v0/b/th3-hackathon.appspot.com/o/communityLogos%2FGroup%2040%20(11).png?alt=media&token=2a090d52-5457-4cfa-a248-702d7da61db1"
+    },
+    
+    
 ]

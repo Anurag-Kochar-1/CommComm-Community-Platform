@@ -11,17 +11,20 @@ interface IProps {
 
 const Index = ({ allCommunityCoursesData }: IProps) => {
   return (
-    <main className='w-full lg:w-[60%] h-[80vh] lg:h-[90vh] mt-[10vh] mb-[10vh] lg:mb-0 bg-white flex flex-col justify-start items-center'>
+    <main className='w-full lg:w-[60%] h-[80vh] lg:h-[90vh] mt-[12vh] mb-[10vh] lg:mb-0 bg-white flex flex-col justify-start items-center scrollbar-hide'>
       <ExploreTabs />
-      
+
 
       {allCommunityCoursesData[0] && (
         <div className='w-full h-auto bg-white flex flex-col justify-start items-center overflow-x-hidden overflow-y-scroll py-10 scrollbar-hide space-y-2'>
           {allCommunityCoursesData?.map((communityCourse) => {
-            return <CommunityCourseCard communityCourseData={communityCourse} key={communityCourse?.courseID}  />
+            return(
+                 <CommunityCourseCard communityCourseData={communityCourse} key={communityCourse?.courseID} />
+            )
           })}
         </div>
       )}
+
 
     </main>
   )

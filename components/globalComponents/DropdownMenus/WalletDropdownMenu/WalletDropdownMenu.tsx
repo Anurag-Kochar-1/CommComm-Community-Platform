@@ -46,12 +46,12 @@ const WalletDropdownMenu = () => {
                     leaveTo="transform opacity-0 scale-95"
                 >
 
-                    <Menu.Items className="bg-white absolute right-0 mt-2 w-52 origin-top-right divide-y divide-gray-100 rounded-lg space-y-2 border-2 border-black p-2 z-50">
+                    <Menu.Items className="bg-white absolute right-0 mt-2 w-52 origin-top-right divide-y divide-gray-100 rounded-lg space-y-2 border-2 border-black p-1 z-50">
 
-                        <div className="w-full px-3 py-2 z-50 bg-white rounded-md hover:cursor-pointer">
+                        <div className="w-full px-3 py-1 z-50 bg-white rounded-md hover:cursor-pointer">
                             <Menu.Item as={Fragment}>
                                 <div
-                                    className='w-full py-2 flex flex-col justify-start items-center space-y-3'
+                                    className='w-full py-1 flex flex-col justify-start items-center space-y-3'
                                 >
 
                                     <p className='text-xl text-black font-Roboto font-bold'> My coins </p>

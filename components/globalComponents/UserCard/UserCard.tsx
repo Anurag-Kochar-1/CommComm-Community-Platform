@@ -17,11 +17,12 @@ const UserCard = ({ userData }: IProps) => {
         >
             <div className={`w-full h-full -mt-1 -ml-1 bg-white  border border-black rounded-sm flex justify-start items-center space-x-2 px-3`}>
                 <Image
+                    unoptimized
                     src={userData?.userDisplayPicture as string || "https://firebasestorage.googleapis.com/v0/b/th3-hackathon.appspot.com/o/postImages%2F6cf18550-5ca7-491f-9725-171e5c38b6fc--220703-minions-music-hero_tfqnbm.jpg?alt=media&token=8c0fc36a-394a-413c-9b49-2e86342095a3"}
                     width={8}
                     height={8}
                     alt="pfp"
-                    className='w-auto h-[70%] rounded-sm aspect-square' draggable="false"
+                    className='w-auto h-[70%] rounded-sm aspect-square border border-black' draggable="false"
                 />
 
 

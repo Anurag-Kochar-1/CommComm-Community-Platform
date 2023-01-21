@@ -1,3 +1,6 @@
+const { fontFamily } = require('tailwindcss/defaultTheme')
+
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
@@ -16,16 +19,26 @@ module.exports = {
         BrutalBlack1 : "#000000",
 
         BgBrutalSkin1: "#FFDCA8",
+        // BgBrutalSkin1: "#F5F2DA",
         BrutalAqua1: "#15FDD3",
         BrutalPurple2: "#C83FD3",
         BrutalGreen2: "#11EA50",
 
+        BgSecondaryBrutalSkin1: "#FFE5C0",
+        // BgSecondaryBrutalSkin1: "#FCF5EB"
+        // BgSecondaryBrutalSkin1: "#FFFFFF"
+
+
+        BrutalWhite: "#FFFFFF"
+
       },
 
       fontFamily: {
-        Overpass: "Overpass, cursive",
+        Overpass: "Overpass, arial",
         BebasNeue : "Bebas Neue, arial",
-        InriaSans: 'Inria Sans, cursive'  
+        InriaSans: 'Inria Sans, cursive',
+        
+        Roboto: 'Roboto, cursive'
       },
 
     },
@@ -66,6 +79,17 @@ module.exports = {
     {
       pattern: /(bg|text|border)-BrutalGreen2/,
     },
+
+    ,
+    {
+      pattern: /(bg|text|border)-BgSecondaryBrutalSkin1/,
+    },
+    
+    
+    {
+      pattern: /(bg|text|border)-BrutalWhite/,
+
+    }
     
   ],
   plugins: [

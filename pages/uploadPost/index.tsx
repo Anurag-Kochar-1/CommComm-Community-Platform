@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { addDoc, arrayUnion, collection, doc, getDocs, query, updateDoc, where } from 'firebase/firestore'
+import { addDoc, arrayUnion, collection, doc, getDocs, query, serverTimestamp, Timestamp, updateDoc, where } from 'firebase/firestore'
 import { BsCameraVideo, BsImage, BsTextCenter } from 'react-icons/bs'
 import { GrAdd } from 'react-icons/gr'
 import { auth, db, storage } from '../../firebaseConfig'
@@ -10,8 +10,11 @@ import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage"
 import { v4 as uuidv4 } from "uuid"
 import { useRouter } from 'next/router'
 import { AiOutlineLoading3Quarters } from 'react-icons/ai'
+import { useSelector } from 'react-redux'
+import { ICommunityData } from '../../customTypesAndInterfaces/Community/CommunityInterfaces'
+import Link from 'next/link'
 
-const uploadPost = () => {
+const UploadPost = () => {
   const router = useRouter()
   const [user, loading] = useAuthState(auth)
   const [postType, setPostType] = useState<string>("caption")
@@ -21,26 +24,32 @@ const uploadPost = () => {
   const [image, setImage] = useState<any[]>([])
   const [video, setVideo] = useState<any[]>([])
 
-  const [userJoinedCommunitiesState, setUserJoinedCommunitiesState] = useState<any[] | []>([])
+  // States
   const [selectedCommunity, setSelectedCommunity] = useState<any | null>(null)
+  const [imagePreview, setImagePreview] = useState<any>(null)
+  const [videoPreview, setVideoPreview] = useState<any>(null)
+
+
+  // Redux states
+  const userJoinedCommunitiesData: ICommunityData[] = useSelector((state: any) => state?.user?.userJoinedCommunities)
 
 
 
   const communityCollectionRef = collection(db, "communities")
   const postsCollectionRef = collection(db, "posts")
 
-  const fetchUserJoinedAndOwnedCommunities = async () => {
-    console.log(` ---- fetchUserJoinedAndOwnedCommunities is running ----`)
-    const userJoinedCommunitiesArray: any[] = []
-    const queryTheUser = query(communityCollectionRef, where("communityMembersID", "array-contains", auth?.currentUser?.uid))
-    const queryData = await getDocs(queryTheUser)
-    queryData.forEach((doc) => {
-      userJoinedCommunitiesArray.push(doc.data())
-    })
+  // const fetchUserJoinedAndOwnedCommunities = async () => {
+  //   console.log(` ---- fetchUserJoinedAndOwnedCommunities is running ----`)
+  //   const userJoinedCommunitiesArray: any[] = []
+  //   const queryTheUser = query(communityCollectionRef, where("communityMembersID", "array-contains", auth?.currentUser?.uid))
+  //   const queryData = await getDocs(queryTheUser)
+  //   queryData.forEach((doc) => {
+  //     userJoinedCommunitiesArray.push(doc.data())
+  //   })
 
-    setUserJoinedCommunitiesState(queryData.docs.map((doc: any) => ({ ...doc.data(), id: doc.id })));
+  //   setUserJoinedCommunitiesState(queryData.docs.map((doc: any) => ({ ...doc.data(), id: doc.id })));
 
-  }
+  // }
 
   const uploadImage = async () => {
     if (image[0][0]) {
@@ -100,7 +109,9 @@ const uploadPost = () => {
         postCreatorName: user?.displayName,
         postCreateAtCommunityID: selectedCommunity,
         upvotedByUserID: [],
-        downvotedByUserID: []
+
+        createdAt: serverTimestamp()
+        // createdAt: Timestamp.now()
       })
 
       // Upading post to add ID manually
@@ -136,29 +147,58 @@ const uploadPost = () => {
   }
 
 
-  useEffect(() => {
-    if (user && !loading) {
-      fetchUserJoinedAndOwnedCommunities()
+
+
+  // useEffect(() => {
+  //   if (userJoinedCommunitiesData[0]) {
+  //     console.log("second useEffect is running")
+  //     setSelectedCommunity(userJoinedCommunitiesData[0]?.communityID)
+  //   } else if (!userJoinedCommunitiesData[0]) {
+  //     router.push("/")
+  //   }
+  // }, [userJoinedCommunitiesData])
+
+
+
+  const createImagePreview = () => {
+    if (image[0]?.[0]) {
+      setImagePreview(URL?.createObjectURL(image[0][0]));
     }
-  }, [loading])
+  }
+
+  const createVideoPreview = () => {
+    if (video[0]?.[0]) {
+      setVideoPreview(URL?.createObjectURL(video[0][0]));
+    }
+  }
 
   useEffect(() => {
-    if (userJoinedCommunitiesState) {
-      console.log("second useEffect is running")
-      setSelectedCommunity(userJoinedCommunitiesState[0]?.communityID)
-    }
-  }, [userJoinedCommunitiesState])
+    createImagePreview()
+  }, [image])
 
   useEffect(() => {
-    if (!user && loading === false) {
+    createVideoPreview()
+  }, [video])
+
+
+  useEffect(() => {
+    if (!user && !loading) {
       router.push("/register")
     }
   }, [loading])
 
 
+  if (!userJoinedCommunitiesData[0]) return (
+    <main className='w-full lg:w-[60%] h-[80vh] lg:h-[90vh] mt-[10vh] mb-[10vh] lg:mb-0 bg-blue-100 flex flex-col justify-center items-center space-y-2'>
+      <p className='text-center text-black font-Roboto font-bold text-xl'> Join some community to post  </p>
+      <Link href={`/explore/communities`} className='text-center text-blue-500 font-Roboto font-semibold text-xl'> Explore Communities </Link>
+
+      <span onClick={() => console.log(userJoinedCommunitiesData)}>  Log </span>
+    </main>
+  )
 
   return (
-    <main className='w-full lg:w-[70%] h-[80vh] lg:h-[90vh] mt-[10vh] mb-[10vh] lg:mb-0 bg-BgBrutalSkin1 flex flex-col justify-center items-center'>
+    <main className='w-full lg:w-[60%] h-[80vh] lg:h-[90vh] mt-[10vh] mb-[10vh] lg:mb-0 bg-white flex flex-col justify-center items-center'>
 
       {/*  Large Screen  */}
       <div className='hidden lg:inline-flex flex-col relative w-[80%] lg:w-[70%] xl:w-[65%] h-[45vh] bg-black justify-center items-center rounded-md' onClick={() => {
@@ -236,8 +276,8 @@ const uploadPost = () => {
                     value={selectedCommunity}
                     onChange={(e) => setSelectedCommunity(e.target.value)}>
 
-                    {userJoinedCommunitiesState && (
-                      userJoinedCommunitiesState.map((community) => {
+                    {userJoinedCommunitiesData && (
+                      userJoinedCommunitiesData.map((community) => {
                         return (
                           <option
                             key={community?.communityID}
@@ -286,18 +326,17 @@ const uploadPost = () => {
                   />
                 </div>
 
-                <div className='w-full h-full flex justify-center items-center py-2 bg-lightColor'>
-                  <div className='w-[90%] h-[90%] rounded-sm border-2 border-dashed bg-lightColor border-black flex justify-center items-center '>
-                    <label className='w-full h-full flex justify-center items-center hover:cursor-pointer'>
+                <div className='w-full h-full flex justify-center items-center py-2'>
+                  <div className='w-[90%] h-[90%] rounded-sm border-2 border-dashed  border-black flex justify-center items-center'>
+                    <label className='h-full w-full flex justify-center items-center hover:cursor-pointer'>
                       <input type="file" placeholder='image' accept="image/*" hidden
                         onChange={(e) => {
                           const imageFile = e.target.files
                           setImage([imageFile])
-                          // setImage( URL.createObjectURL(imageFile[0]) )
-
                         }}
                       />
-                      <RxImage className='text-3xl' />
+                      {!imagePreview && !image[0] && <RxImage className='text-3xl text-BrutalPurple2' />}
+                      {imagePreview && image[0] && <img src={imagePreview} alt="preview" className='w-[30%] h-[30%]aspect-square' />}
                     </label>
                   </div>
                 </div>
@@ -314,8 +353,8 @@ const uploadPost = () => {
                     value={selectedCommunity}
                     onChange={(e) => setSelectedCommunity(e.target.value)}>
 
-                    {userJoinedCommunitiesState && (
-                      userJoinedCommunitiesState.map((community) => {
+                    {userJoinedCommunitiesData && (
+                      userJoinedCommunitiesData.map((community) => {
                         return (
                           <option
                             key={community?.communityID}
@@ -364,16 +403,17 @@ const uploadPost = () => {
                   />
                 </div>
 
-                <div className='w-full h-full flex justify-center items-center py-2 bg-lightColor'>
-                  <div className='w-[90%] h-[90%] rounded-sm border-2 border-dashed bg-white border-black flex justify-center items-center '>
-                    <label className='w-full h-full flex justify-center items-center hover:cursor-pointer'>
+                <div className='w-full h-full flex justify-center items-center py-2'>
+                  <div className='w-[90%] h-[90%] rounded-sm border-2 border-dashed  border-black flex justify-center items-center'>
+                    <label className='h-full w-full flex justify-center items-center hover:cursor-pointer'>
                       <input type="file" placeholder='image' accept="video/*" hidden
                         onChange={(e) => {
                           const videoFile = e.target.files
                           setVideo([videoFile])
                         }}
                       />
-                      <RiVideoAddFill className='text-3xl' />
+                      {!videoPreview && !video[0] && <RiVideoAddFill className='text-2xl text-BrutalPurple2' />}
+                      {videoPreview && video[0] && <video src={videoPreview} controls className='w-[30%] aspect-video' />}
                     </label>
                   </div>
                 </div>
@@ -390,8 +430,8 @@ const uploadPost = () => {
                     value={selectedCommunity}
                     onChange={(e) => setSelectedCommunity(e.target.value)}>
 
-                    {userJoinedCommunitiesState && (
-                      userJoinedCommunitiesState.map((community) => {
+                    {userJoinedCommunitiesData && (
+                      userJoinedCommunitiesData.map((community) => {
                         return (
                           <option
                             key={community?.communityID}
@@ -430,12 +470,13 @@ const uploadPost = () => {
 
 
       {/*  Small Screen  */}
-      <div className='lg:hidden w-full h-full bg-BgBrutalSkin1 flex flex-col justify-start items-center'>
+      <div className='lg:hidden w-full h-full bg-white flex flex-col justify-start items-center overflow-x-hidden overflow-y-scroll scrollbar-hide'>
 
-        <div className='w-full flex space-x-2 justify-start items-center mb-4 bg-lightColor px-3 py-5'>
-          <p className='text-lg font-normal' onClick={() => console.log(selectedCommunity)}>Posting to  </p>
+        {/* dropdown */}
+        <div className='w-full flex space-x-2 justify-start items-center mb-4 bg-lightColor px-5 py-5'>
+          <p className='text-base font-Roboto font-medium' onClick={() => console.log(selectedCommunity)}>Posting to  </p>
 
-          {/* dropdown */}
+
           <div className='w-[40%] h-10 relative bg-black flex justify-start items-center '>
             <select
               title='choose'
@@ -443,8 +484,8 @@ const uploadPost = () => {
               value={selectedCommunity}
               onChange={(e) => setSelectedCommunity(e.target.value)}>
 
-              {userJoinedCommunitiesState && (
-                userJoinedCommunitiesState.map((community) => {
+              {userJoinedCommunitiesData && (
+                userJoinedCommunitiesData.map((community) => {
                   return (
                     <option
                       key={community?.communityID}
@@ -465,7 +506,7 @@ const uploadPost = () => {
           <input
             type="text"
             placeholder="An interesting title"
-            className='w-[90%] border-none outline-none text-lg bg-[#AA9595] font-InriaSans font-semibold focus:ring-0 px-2 placeholder:text-white text-white py-1 rounded-sm'
+            className='w-[90%] border-none outline-none text-base bg-gray-100 font-Roboto font-medium focus:ring-0 px-2 placeholder:text-black text-black py-1 rounded-sm'
             autoFocus
             onChange={(e) => setPostTitleInputValue(e.target.value)}
             value={postTitleInputValue}
@@ -475,35 +516,39 @@ const uploadPost = () => {
             <textarea
               typeof='text'
               placeholder='Add caption'
-              className='w-[90%] h-[60%] border-none outline-none bg-[#AA9595] font-InriaSans font-medium focus:ring-0 px-2 placeholder:text-white text-white py-1 rounded-sm'
+              className='w-[90%] h-[60%] border-none outline-none text-base bg-gray-100 font-Roboto font-medium focus:ring-0 px-2 placeholder:text-black text-black py-1 rounded-sm'
               onChange={(e) => setPostCaptionInputValue(e.target.value)}
               value={postCaptionInputValue}
             />
           )}
 
           {postType === "image" && (
-            <div className='w-full flex justify-start items-center px-3 py-2'>
-              <div className='w-32 h-32 rounded-sm border border-dashed border-BrutalPurple2 flex justify-center items-center '>
+            <div className='w-full h-full flex justify-center items-center px-3 py-2'>
+              <div className='w-[90%] h-[90%]  rounded-sm border border-dashed border-BrutalPurple2 flex justify-center items-center'>
                 <label className='w-full h-full flex justify-center items-center hover:cursor-pointer'>
                   <input type="file" placeholder='image' accept="image/*" hidden
                     onChange={(e) => {
                       const imageFile = e.target.files
                       setImage([imageFile])
-                      // setImage( URL.createObjectURL(imageFile[0]) )
-
                     }}
                   />
-                  <RxImage className='text-2xl text-BrutalPurple2' />
+                  {!imagePreview && !image[0] && <RxImage className='text-2xl text-BrutalPurple2' />}
+                  {imagePreview && image[0] && <img src={imagePreview} alt="preview" className='w-[90%] h-[90%]' />}
 
 
                 </label>
               </div>
+              {/* <span onClick={() => console.log(image)}> Log image </span>
+              <span onClick={() => console.log(imagePreview)}> Log image  preview</span> */}
+
+
+
             </div>
           )}
 
           {postType === "video" && (
-            <div className='w-full flex justify-start items-center px-3 py-2'>
-              <div className='w-32 h-32 rounded-sm border border-dashed border-BrutalPurple2 flex justify-center items-center '>
+            <div className='w-full h-full flex justify-center items-center px-3 py-2'>
+              <div className='w-[90%] h-[90%]  rounded-sm border border-dashed border-BrutalPurple2 flex justify-center items-center'>
                 <label className='w-full h-full flex justify-center items-center hover:cursor-pointer'>
                   <input type="file" placeholder='image' accept="video/*" hidden
                     onChange={(e) => {
@@ -511,15 +556,20 @@ const uploadPost = () => {
                       setVideo([videoFile])
                     }}
                   />
-                  <RiVideoAddFill className='text-2xl text-BrutalPurple2' />
+                  {!videoPreview && !video[0] && <RiVideoAddFill className='text-2xl text-BrutalPurple2' />}
+                  {videoPreview && video[0] && <video src={videoPreview} controls className='w-[90%] h-[90%]' />}
                 </label>
               </div>
+
+              {/* <span onClick={() => console.log(video)} className="mx-2"> LOG VIDEO </span>
+              <span onClick={() => console.log(videoPreview)} className="mx-2"> LOG VIDEO </span> */}
             </div>
           )}
 
         </form>
 
-        <div className='w-full  px-5 w-full h-[15vh] border-t border-t-black flex justify-between items-center py-2'>
+        {/* ---- Choose media type bottom bar ---- */}
+        <div className='w-full px-5 h-[15vh] border-t border-t-black flex justify-between items-center py-2'>
           <div className='w-full flex justify-start items-center space-x-3'>
 
             <button
@@ -570,10 +620,10 @@ const uploadPost = () => {
           {/* MOBILE POST BTN */}
           <button
             onClick={() => {
-              if(!postTitleInputValue) {
+              if (!postTitleInputValue) {
                 alert("Fill the required fields")
               } else {
-                if( postCaptionInputValue || image || video ) {
+                if (postCaptionInputValue || image || video) {
                   if (postType === "caption") {
                     addPost(null, null)
                   } else if (postType === "image") {
@@ -581,17 +631,17 @@ const uploadPost = () => {
                   } else if (postType === "video") {
                     uploadVideo()
                   }
-                } else if( !postCaptionInputValue || !image || !video ) {
+                } else if (!postCaptionInputValue || !image || !video) {
                   alert("Fill the required fields")
                 }
               }
             }}
             type='button'
             title='post'
-            className='w-[40%] h-9 relative flex justify-center items-center bg-black rounded-sm border-2 border-black '>
-            <span className='w-full h-10 absolute bottom-[2px] right-[2px] bg-BrutalPurple2 flex justify-center items-center rounded-sm border-2 border-black active:right-0 active:bottom-0 hover:right-0 hover:bottom-0'>
+            className='w-[40%] h-10 flex justify-center items-center bg-black rounded-sm border border-black '>
+            <div className='w-full h-full -mt-2 -ml-2 bg-BrutalPurple1 flex justify-center items-center rounded-sm border-2 border-black active:-mt-0 active:-ml-0'>
               <p className='text-sm font-semibold'> POST  </p>
-            </span>
+            </div>
           </button>
         </div>
 
@@ -609,4 +659,4 @@ const uploadPost = () => {
   )
 }
 
-export default uploadPost
+export default UploadPost

@@ -5,10 +5,11 @@ interface IProps {
   tagColor: string
 }
 
-const TagBox = ( {tagName, tagColor}:IProps ) => {
+const TagBox = ({ tagName, tagColor }: IProps) => {
   return (
-    <div className='relative w-32 h-9 bg-black border border-black flex justify-center items-center'>
-      <div className={`absolute w-32 h-9 flex justify-center items-center right-[2px] bottom-[2px] border border-black bg-${tagColor}`} > {tagName} </div>
+    <div className='min-w-[128px] h-7 bg-black border border-black flex justify-center items-center my-2 rounded-full'>
+
+      <div className={`w-full h-full -mt-1 -mr-1 flex justify-center items-center border border-black ${tagColor} hover:cursor-pointer rounded-full `} > <p className='font-BebasNeue text-base font-medium text-black'> {tagName} </p> </div>
     </div>
   )
 }

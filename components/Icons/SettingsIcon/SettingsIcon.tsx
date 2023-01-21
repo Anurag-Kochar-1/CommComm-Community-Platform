@@ -66,7 +66,7 @@ const SettingsIcon = () => {
     //     } 
     // }
 
-    if (user?.uid !== communityData?.communityOwnerID) return null
+    if (user?.uid !== communityData?.communityOwnerID || router.pathname === `/community/[id]/Courses/createCourse` || router.pathname === `/community/[id]/Classes/createClass`) return null
     return (
         <>
             {user?.uid === communityData?.communityOwnerID && (
@@ -80,7 +80,7 @@ const SettingsIcon = () => {
                                         title='settings'
                                         type='button'
                                         className='w-full h-full -mt-2 -ml-2 flex justify-center items-center bg-gray-400 text-xl font-medium text-black border-2 border-black active:-mt-0 active:-ml-0 rounded-full font-BebasNeue'>
-                                        <BsFillGearFill className='text-xl text-black' />
+                                        <BsFillGearFill className='text-xl text-black' onClick={() => console.log(router.pathname)} />
                                     </button>
                                 </div>
                             </Menu.Button>

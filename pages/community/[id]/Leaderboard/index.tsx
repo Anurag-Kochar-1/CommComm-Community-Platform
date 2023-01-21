@@ -30,7 +30,7 @@ const Index = () => {
     <CommunityLayout>
       <main className='w-full h-full flex flex-col justify-start items-center bg-white pt-12 pb-36'>
       <div className='w-[90%] flex flex-col justify-start items-center space-y-4 bg-BrutalBlue1 border-2 border-black py-10 rounded-sm' >
-            <h3 className='font-BebasNeue px-2 text-center lg:text-3xl xl:text-4xl text-black' onClick={() => console.log(communityUsersLeaderboardState)}> Community Leaderboard </h3>
+            <h3 className='font-BebasNeue px-2 text-center text-3xl lg:text-3xl xl:text-4xl text-black' onClick={() => console.log(communityUsersLeaderboardState)}> Community Leaderboard </h3>
 
             {communityUsersLeaderboardState[0] && (
               communityUsersLeaderboardState?.map((user: IUserData) => {

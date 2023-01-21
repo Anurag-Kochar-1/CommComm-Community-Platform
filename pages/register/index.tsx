@@ -11,7 +11,7 @@ import { SignInWithGoogleFunction } from "../../utils/SignInWithGoogle/SignInWit
 import { SignInWithFacebookFunction } from "../../utils/SignInWithFacebook/SignInWithFacebook"
 import { useDispatch } from 'react-redux'
 import { setIsBottomBarVisible } from "../../redux/slices/bottomBarSlice"
-import { doc, setDoc } from 'firebase/firestore'
+import { addDoc, collection, doc, serverTimestamp, setDoc, updateDoc } from 'firebase/firestore'
 import { useAuthState } from 'react-firebase-hooks/auth'
 
 import logoTwo from "../../public/images/logos/logoTwo.png"
@@ -46,7 +46,7 @@ const Index = () => {
                 console.log('PROFILE UPDATED !')
                 setIsLoading(false)
                 createUserInDB(auth.currentUser?.uid as string)
-                router.push("/")
+                
               }).catch((error) => {
                 console.log(error)
                 setIsLoading(false)
@@ -79,7 +79,7 @@ const Index = () => {
 
     await setDoc(doc(db, "users", userID), {
       userName: userNameInputValue,
-      userDisplayPicture: UserProfileDisplayPictures[`${Math.floor(Math.random() * 4) }`],
+      userDisplayPicture: UserProfileDisplayPictures[`${Math.floor(Math.random() * 4)}`],
       userEmail: emailInputValue,
       userID: userID,
       userProfileBanner: "",
@@ -92,6 +92,32 @@ const Index = () => {
 
       userCoins: 100
     })
+
+    sendSignUpRewardNotification(userID)
+    router.push("/")
+  }
+
+
+  const sendSignUpRewardNotification = async (userID: string) => {
+      console.log(`sendSignUpRewardNotification is running`);
+      try {
+        const userNotificationSubCollectionRef = collection(db, 'users', userID , 'notifications')
+        const sendingNotification = await addDoc(userNotificationSubCollectionRef, {
+          notificationID: "",
+          notificationText: "You got 100 coins",
+          notificationIconName: "coinIcon",
+          notificationSendedAt: serverTimestamp()
+        })
+
+        // adding id 
+        const notificationRef = doc(db, 'users', userID, 'notifications', sendingNotification?.id)
+        await updateDoc(notificationRef, {
+          notificationID: sendingNotification?.id
+        })
+
+      } catch (error) {
+        console.error(error);
+      }
   }
 
 
@@ -114,7 +140,7 @@ const Index = () => {
           {/* ---- LOGO ---- */}
           <Link href={'/'} className='flex justify-center items-center space-x-3'>
             {/* <div className='w-6 h-6 rounded-full bg-BrutalPurple2 flex justify-center items-center text-white' /> */}
-            <Image src={logoTwo as any} alt="logo" className='w-6 h-6 rounded-full' width={6} height={6} unoptimized quality={100}/>
+            <Image src={logoTwo as any} alt="logo" className='w-6 h-6 rounded-full' width={6} height={6} unoptimized quality={100} />
             <span className='font-semibold'> CommComm </span>
           </Link>
 

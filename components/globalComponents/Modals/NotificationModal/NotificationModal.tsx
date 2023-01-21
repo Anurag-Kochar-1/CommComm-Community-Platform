@@ -31,31 +31,31 @@ export default function NotificationModal() {
         dispatch(setIsNotificationModalOpen(false))
     }
 
-    const sendNotifictationToUser = async () => {
-        if (user) {
-            try {
-                const userNotificationSubCollectionRef = collection(db, 'users', user?.uid as string, 'notifications')
-                const sendingNotification = await addDoc(userNotificationSubCollectionRef, {
-                    notificationID: "",
-                    notificationText: "You got 100 coins",
-                    notificationIconName: "coinIcon",
-                    notificationSendedAt: serverTimestamp()
-                })
+    // const sendNotifictationToUser = async () => {
+    //     if (user) {
+    //         try {
+    //             const userNotificationSubCollectionRef = collection(db, 'users', user?.uid as string, 'notifications')
+    //             const sendingNotification = await addDoc(userNotificationSubCollectionRef, {
+    //                 notificationID: "",
+    //                 notificationText: "You got 100 coins",
+    //                 notificationIconName: "coinIcon",
+    //                 notificationSendedAt: serverTimestamp()
+    //             })
 
-                // adding id 
-                const notificationRef = doc(db, 'users', user?.uid as string, 'notifications', sendingNotification?.id)
-                await updateDoc(notificationRef, {
-                    notificationID: sendingNotification?.id
-                })
-
-
+    //             // adding id 
+    //             const notificationRef = doc(db, 'users', user?.uid as string, 'notifications', sendingNotification?.id)
+    //             await updateDoc(notificationRef, {
+    //                 notificationID: sendingNotification?.id
+    //             })
 
 
-            } catch (error) {
-                console.error(error);
-            }
-        }
-    }
+
+
+    //         } catch (error) {
+    //             console.error(error);
+    //         }
+    //     }
+    // }
 
 
     useEffect(() => {
@@ -123,8 +123,6 @@ export default function NotificationModal() {
                                             </button>
                                         </div>
 
-                                        <p onClick={sendNotifictationToUser}> Send Notification </p>
-
 
                                         {/* Notification Cards */}
                                         <div className='w-full  flex flex-col items-center justify-start my-8 space-y-2'>
@@ -135,7 +133,7 @@ export default function NotificationModal() {
                                                             <div className='flex justify-center items-center'>
                                                                 <Image src={coinIcon} alt="coin" width={6} height={6} className="w-8 h-8 rounded-full" />
                                                             </div>
-                                                            <p className='flex-1'> {notification?.notificationText} </p>
+                                                            <p className='flex-1 font-bold font-Roboto text-bas'> {notification?.notificationText} </p>
                                                         </div>
                                                     </div>
                                                 )

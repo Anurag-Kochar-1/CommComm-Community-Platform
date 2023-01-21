@@ -1,5 +1,5 @@
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
-import { doc, getDoc, setDoc } from 'firebase/firestore'
+import { addDoc, collection, doc, getDoc, serverTimestamp, setDoc, updateDoc } from 'firebase/firestore'
 import { useRouter } from 'next/router'
 import { auth, db } from '../../firebaseConfig'
 
@@ -32,6 +32,26 @@ const SignInWithGoogleFunction = async () => {
                 userCoins: 100,
                 userProfileBanner: ""
             })
+
+            console.log(`sendSignUpRewardNotification is running`);
+            try {
+                const userNotificationSubCollectionRef = collection(db, 'users', result?.user?.uid as string, 'notifications')
+                const sendingNotification = await addDoc(userNotificationSubCollectionRef, {
+                    notificationID: "",
+                    notificationText: "You got 100 coins",
+                    notificationIconName: "coinIcon",
+                    notificationSendedAt: serverTimestamp()
+                })
+
+                // adding id 
+                const notificationRef = doc(db, 'users', result?.user?.uid as string, 'notifications', sendingNotification?.id)
+                await updateDoc(notificationRef, {
+                    notificationID: sendingNotification?.id
+                })
+
+            } catch (error) {
+                console.error(error);
+            }
         }
 
 

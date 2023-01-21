@@ -36,7 +36,7 @@ const BaseOneLayout = ({ children }: IHomeLayoutProps) => {
   // ----  Fetch Current User ---
   const fetchCurrentUser = async () => {
     if (user && !loading) {
-      if (!currentUserData.communitiesJoinedID) {
+      if (!currentUserData?.communitiesJoinedID) {
         console.log(`Setting user data into redux`);
         const userRef = doc(db, "users", user?.uid as string)
         const data = await getDoc(userRef)

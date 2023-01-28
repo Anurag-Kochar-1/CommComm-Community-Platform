@@ -32,5 +32,5 @@ On our CommComm Platform, you can build or find learning communities, where you 
 3. Explore Classes
 
 ### 🎮 Gamification
-1. Earn coins by completing a path under the communtity track, by creating a community, or by uploading post.
+1. Earn coins by completing a path under the communtity track, by creating a community, or by uploading a post in a community.
 1. Climb the global or community leaderboard by earning coins

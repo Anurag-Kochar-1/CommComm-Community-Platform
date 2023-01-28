@@ -8,7 +8,7 @@ const ExploreTabs = () => {
         href={'/explore'}
         className="w-16 h-10 relative bg-black border border-black flex justify-center items-center rounded-lg my-2"
         >
-          <div className='absolute w-16 h-10 right-1 bottom-1 bg-BrutalAqua1 border border-black flex justify-center items-center rounded-lg active:right-0 active:bottom-0'>
+          <div className='absolute w-16 h-10 right-1 bottom-1 bg-BrutalAqua1 border-4 border-black flex justify-center items-center rounded-lg active:right-0 active:bottom-0'>
             <p className='font-BebasNeue text-black text-xl '> Posts </p>
           </div>
         </Link>
@@ -17,7 +17,7 @@ const ExploreTabs = () => {
         href={'/explore/communities'}
         className="w-28 h-10 relative bg-black border border-black flex justify-center items-center rounded-lg my-2"
         >
-          <div className='absolute w-28 h-10 right-1 bottom-1 bg-BrutalAqua1 border border-black flex justify-center items-center rounded-lg active:right-0 active:bottom-0'>
+          <div className='absolute w-28 h-10 right-1 bottom-1 bg-BrutalAqua1 border-4 border-black flex justify-center items-center rounded-lg active:right-0 active:bottom-0'>
             <p className='font-BebasNeue text-black text-xl '> Communities </p>
           </div>
         </Link>
@@ -26,7 +26,7 @@ const ExploreTabs = () => {
         href={'/explore/courses'}
         className="w-20 h-10 relative bg-black border border-black flex justify-center items-center rounded-lg my-2"
         >
-          <div className='absolute w-20 h-10 right-1 bottom-1 bg-BrutalAqua1 border border-black flex justify-center items-center rounded-lg active:right-0 active:bottom-0'>
+          <div className='absolute w-20 h-10 right-1 bottom-1 bg-BrutalAqua1 border-4 border-black flex justify-center items-center rounded-lg active:right-0 active:bottom-0'>
             <p className='font-BebasNeue text-black text-xl '> Courses </p>
           </div>
         </Link>

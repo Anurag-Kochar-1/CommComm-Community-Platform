@@ -29,7 +29,9 @@ module.exports = {
         // BgSecondaryBrutalSkin1: "#FFFFFF"
 
 
-        BrutalWhite: "#FFFFFF"
+        BrutalWhite: "#FFFFFF",
+
+        fakeBlackNeu: "#2c2b2b"
 
       },
 
@@ -89,6 +91,9 @@ module.exports = {
     {
       pattern: /(bg|text|border)-BrutalWhite/,
 
+    },
+    {
+      pattern: /(bg|text|border)-fakeBlackNeu/,
     }
     
   ],

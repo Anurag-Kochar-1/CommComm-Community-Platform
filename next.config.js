@@ -8,14 +8,7 @@ const nextConfig = {
       'ih1.redbubble.net',
       "i.ytimg.com"
     ],
-
-    
-    
-    
   },
-
-  
-  
 }
 
 module.exports = nextConfig
